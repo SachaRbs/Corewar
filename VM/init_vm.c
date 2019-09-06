@@ -6,11 +6,12 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/05 17:11:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/09/06 16:12:07 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
+#include <stdio.h>
 
 void    parsing(t_vm *vm, int ac, char **av)
 {
@@ -39,16 +40,64 @@ void    parsing(t_vm *vm, int ac, char **av)
 	}
 }
 
-#include <stdio.h>
+void	read_proc(t_proc *current, int fd, char *prog, char **name) // parse le chmpion
+{
+	header_t h;
+
+	read(fd, &h.magic, 8);
+}
+
+void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)  //rentre le champion dans la memoire
+{
+	char prog[CHAMP_MAX_SIZE];
+	int i;
+
+	read_proc(current, fd, prog, &vm->names[pn]);
+	/*i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);// verifier
+	while (i--)
+		vm->mem[current->pc - i] = i >= vm->sizes[pn] ? 0 : prog[i];
+	//
+		//plein de chose a faire encore
+	//
+*/}
+
+void   pushfront_proc(t_proc **head, t_proc *new)
+{
+    if (head && *head && new)
+    {
+        new->next = *head;
+        *head = new;
+    }
+    else
+        *head = new;
+}
+
+void	check_proc(t_vm *vm, t_proc *current, int pn)
+{
+	int fd;
+
+	pushfront_proc(&vm->proc, current);
+	if (fd = open(vm->names[pn], O_RDONLY))
+		exit(1);
+	current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct); //pc = emplacement dans la memoire du curseur du processus
+	load_proc(vm, fd, current, pn);
+}
 
 int     initialize(t_vm *vm, int ac, char **av)
 {
+	int i;
+	t_proc *proc;
+	
+	i = -1;
 	vm->pct = 0;
     if (ac > 1)
         parsing(vm, ac, av);
 	else if (write (2 ,"ERROR aucun champions fournis\n", 31))
 		exit(1);//ERROR
-	check(vm);
-	int i = 0;
+	while (++i < vm->pct)
+	{
+		proc = malloc(sizeof(t_proc));
+		check_proc(vm, proc, i);
+	}
 	return (0);
 }
