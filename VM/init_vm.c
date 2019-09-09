@@ -6,13 +6,23 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/09 11:20:11 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/09/09 18:17:48 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
 #include <stdio.h>
 
+void   pushfront_proc(t_proc **head, t_proc *new)
+{
+    if (head && *head && new)
+    {
+        new->next = *head;
+        *head = new;
+    }
+    else
+        *head = new;
+}
 void    parsing(t_vm *vm, int ac, char **av)
 {
 	int i;
@@ -65,33 +75,29 @@ int		read_proc(t_proc *current, int fd, char *prog, char **name) // parse le chm
 	while(i--)
 		(*name)[i] = h.prog_name[i];
 	close(fd);
-	return (1);
+	return (h.prog_size);
 }
 
 void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)  //rentre le champion dans la memoire
 {
 	char prog[CHAMP_MAX_SIZE];
 	int i;
+	int orig;
 
-	read_proc(current, fd, prog, &vm->names[pn]);
+	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn])) == -1)
+		exit(1); //ERROR
 	i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);// verifier
 	while (i--)
 		vm->mem[current->pc - i] = i >= vm->sizes[pn] ? 0 : prog[i];
-	//
-		//plein de chose a faire encore
-	//
-*/}
-
-void   pushfront_proc(t_proc **head, t_proc *new)
-{
-    if (head && *head && new)
-    {
-        new->next = *head;
-        *head = new;
-    }
-    else
-        *head = new;
+	if ((orig = vm->pnum[pn]) == -1) // si pas de flag -n
+		vm->pnum[pn] = pn ? vm->pnum[pn - 1] : 1; //playeur precedent plus 1 si pas le premier, sinon Pl1
+	i = pn;
+	while (i--) {
+		if (vm->pnum[pn] < 0 || vm->pnum[pn] == orig)
+			;//continuer ici
+	}
 }
+
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)
 {
