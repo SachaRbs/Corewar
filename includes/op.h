@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/05 12:03:56 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/09/12 12:27:19 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef char	t_arg_type;
 #define T_IND					4
 #define T_LAB					8
 
+# define NBR_OP					16
+
 /*
 **
 */
@@ -66,6 +68,7 @@ typedef char	t_arg_type;
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
+
 
 typedef struct		header_s
 {
@@ -86,3 +89,5 @@ typedef struct      s_op
     unsigned char   ocp;
     unsigned char   index;
 }                   t_op;
+
+extern t_op				op_tab[NBR_OP + 1];

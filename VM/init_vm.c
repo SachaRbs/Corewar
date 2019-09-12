@@ -6,12 +6,11 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/11 10:46:55 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/09/12 10:00:34 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
-#include <stdio.h>
 
 void   pushfront_proc(t_proc **head, t_proc *new)
 {
@@ -124,6 +123,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		exit(-1);
 	}
 	current->carry = false;
+	current->cycle_to_do = 0;
 	current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct); //pc = emplacement dans la memoire du curseur du processus
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
@@ -157,9 +157,10 @@ int     initialize(t_vm *vm, int ac, char **av)
 		proc = malloc(sizeof(t_proc));
 		check_proc(vm, proc, i);
 	}
-	// i = -1;
-	// while(++i <MEM_SIZE){              //Print memory
-	// 	printf("%x ", vm->mem[i]);
-	// }
+	i = -1;
+	while(++i <MEM_SIZE){              //Print memory
+		printf("%x", vm->mem[i]);
+	}
+	printf("\n--------------------RUN------------------\n");
 	return (0);
 }
