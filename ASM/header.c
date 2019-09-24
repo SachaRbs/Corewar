@@ -23,26 +23,44 @@ int		is_whitespace(int c)
 
 int		get_champion(t_asm *p, char *str)
 {
-    int     size;
+    char    *end;
 
-    size = 0;
-    if (!ft_strncmp(str, ".name", 4) && !p->champ)
+    if (!ft_strncmp(str, NAME_CMD_STRING, 5) && !p->champ)
         {
             str += 5;
-            while (is_whitespace(*str))
+            while (is_whitespace(*str) && *str)
                 str++;
-            printf("[%s]\n", str);
             if (*str == '"')
             {
                 str++;
-                while(str[size] != '"')
-                    size++;
+                if (!(end = ft_strchr(str, '"')))
+                    return (0);
             }
-            printf("%d", size);
-            p->champ = ft_strsub(str, 0, size);
+            p->champ = ft_strsub(str, 0, end - str);
             printf("champ:[%s]\n", p->champ);
-            printf("\n\n\n\n");
             return(1);
         }
+    return (0);
+}
+
+int     get_comment(t_asm *p, char *str)
+{
+    char    *end;
+
+    if (!ft_strncmp(str, COMMENT_CMD_STRING, 8) && !p->comment)
+    {
+        str += 8;
+        while (is_whitespace(*str) && *str)
+            str++;
+        if (*str == '"')
+        {
+            str++;
+            if (!(end = ft_strchr(str, '"')))
+                return (0);
+        }
+        p->comment = ft_strsub(str, 0, end - str);
+        printf("comment:[%s]\n\n", p->comment);
+        return (1);
+    }
     return (0);
 }

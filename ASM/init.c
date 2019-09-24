@@ -21,6 +21,7 @@ t_asm	*init_struct(int fd)
 	p->fd = fd;
 	p->file = ft_strnew(0);
 	p->champ = 0;
+	p->comment = 0;
 	if (!(p->header = malloc(sizeof(header_t))))
 		exit(1);
 	return (p);

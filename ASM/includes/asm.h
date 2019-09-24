@@ -22,6 +22,7 @@ typedef	struct	s_asm
 	char			*file;
 	size_t			linecount;
 	char			*champ;
+	char			*comment;
 	struct s_header	*header;
 }				t_asm;
 
@@ -30,6 +31,7 @@ typedef	struct	s_asm
 ** asm
 */
 int		get_champion(t_asm *p, char *str);
+int     get_comment(t_asm *p, char *str);
 
 /*
 ** init

@@ -59,9 +59,10 @@ void	read_file(t_asm *p)
 	while ((ft_readline(p->fd, &str, &buffer) > 0))
 	{
 		get_champion(p, buffer);
+		get_comment(p, buffer);
 		printf("[%s]\n", buffer);
 		p->linecount++;
-	}	
+	}
 	close(p->fd);
 }
 
