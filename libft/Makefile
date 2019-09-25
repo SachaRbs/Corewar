@@ -1,81 +1,61 @@
-NAME= libft.a
-SRC_NAME=\
-		ft_strjoin.c \
-		ft_memalloc.c \
-		ft_strcat.c \
-		ft_strcpy.c \
-		ft_memset.c \
-		ft_strlen.c \
-		ft_bzero.c \
-		ft_memcpy.c \
-		ft_memccpy.c \
-		ft_putchar.c \
-		ft_putstr.c \
-		ft_strcmp.c \
-		ft_strncmp.c \
-		ft_strncpy.c \
-		ft_strncat.c \
-		ft_strdup.c \
-		ft_strstr.c \
-		ft_strnstr.c \
-		ft_memmove.c \
-		ft_memchr.c \
-		ft_memdel.c \
-		ft_strdel.c \
-		ft_memcmp.c \
-		ft_strlcat.c \
-		ft_strchr.c \
-		ft_strrchr.c \
-		ft_atoi.c \
-		ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
-		ft_toupper.c \
-		ft_tolower.c \
-		ft_strnew.c \
-		ft_strdel.c \
-		ft_strclr.c \
-		ft_striter.c \
-		ft_striteri.c \
-		ft_strmap.c \
-		ft_putnbr.c \
-		ft_putendl.c \
-		ft_strequ.c \
-		ft_strnequ.c \
-		ft_putchar_fd.c \
-		ft_putstr_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_itoa.c \
-		ft_strsub.c \
-		ft_strmapi.c \
-		ft_strtrim.c \
-		ft_strsplit.c \
-		ft_lstadd.c \
-		ft_lstdel.c \
-		ft_lstdelone.c \
-		ft_lstnew.c \
-		ft_lstiter.c \
-		ft_lstmap.c   \
-		get_next_line.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/09/25 16:37:43 by crfernan          #+#    #+#              #
+#    Updated: 2019/09/25 16:45:39 by crfernan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJ= $(SRC_NAME:.c=.o)
+include ./dependancies_libft.mk
+-include ../shared_val.mk
+
+ifeq ($(CHECK_SHARED_VAL),)
+$(error SHARE_VAL not included)
+endif
+ifeq ($(CHECK_LIBFT_DEP),)
+$(error LIBFT_DEPENDANCIES not included)
+endif
+
+NAME 	:= $(NAME_LIBFT)
+SRC_DIR := $(SHARE_SRC_DIR)
+INC_DIR := $(SHARE_INC_DIR)
+OBJ_DIR := $(SHARE_OBJ_DIR)
+SRC 	:= $(SRC_LIBFT)
+OBJ		:= $(patsubst %.c,%.o,$(SRC))
+DEPENDANCIES:= $(DEPENDANCIES_LIBFT)
+
+CC      := gcc
+CFLAGS  := $(SHARE_FLAGS)
+
+
+.PHONY: all clean fclean re debug
 
 all: $(NAME)
 
-$(NAME):
-	@gcc -Wall -Wextra -Werror -g -c $(SRC_NAME)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
-	@echo "\033[32mYour lib is ready\033[0m"
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+%.o:%.c $(DEPENDANCIES_LIBFT)
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(OPTI_FLAGS) $(CFLAGS)  -o $(OBJ_DIR)/$@ -c $<
+
+-include ./dependancies_$(L_LIBFT_DIR)_object.mk
+
+$(NAME): $(OBJ)
+	ar rc $(NAME) $(addprefix $(OBJ_DIR)/,$(OBJ))
+	ranlib $(NAME)
+
+debug: OPTI_FLAGS := $(SHARE_DEBUG)
+debug: re clean
+
 clean:
-	@rm -rf $(OBJ)
-	@echo "\033[41mFile .o are removed\033[0m"
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "\033[41m$(NAME) is deleted\033[0m"
+	rm -f $(NAME)
 
 re: fclean all
