@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/26 12:30:00 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/09/26 12:37:30 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name) // par
 {
 	header_t *h;
 	int rd;
-	
+	(void)name;
 	if (!(h = malloc(sizeof(header_t))) && write(1, "MALLOC erreur\n", 14))
 		return(-1);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0 && write(2, "impossible de lire le fichier\n", 31))
@@ -100,7 +100,6 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)  //rentre le champion 
 {
 	unsigned char prog[CHAMP_MAX_SIZE];
 	int i;
-	int orig;
 
 	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn])) == -1)
 		exit(-1);
@@ -138,7 +137,6 @@ int     initialize(t_vm *vm, int ac, char **av)
 	t_proc *proc;
 	
 	i = -1;
-	int j = -1;
 	bzero(vm->play_free, MAX_PLAYERS);
 	vm->dump = -1;
 	vm->pct = 0;
