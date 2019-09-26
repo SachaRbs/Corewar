@@ -21,12 +21,12 @@ int		is_whitespace(int c)
 			c == ' ');
 }
 
-int		get_champion(t_asm *p, char *str)
+void	get_champion(t_asm *p, char *str)
 {
     char    *end;
 
     if (!ft_strncmp(str, NAME_CMD_STRING, 5) && !p->champ)
-        {
+    {
             str += 5;
             while (is_whitespace(*str) && *str)
                 str++;
@@ -34,16 +34,16 @@ int		get_champion(t_asm *p, char *str)
             {
                 str++;
                 if (!(end = ft_strchr(str, '"')))
-                    return (0);
+                    ft_error("INVALID CHAMPION NAME");
             }
             p->champ = ft_strsub(str, 0, end - str);
-            printf("champ:[%s]\n", p->champ);
-            return(1);
-        }
-    return (0);
+            if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
+                ft_error("CHAMPION NAME TOO LONG");
+            printf(GRN"[%s]\n"RESET, p->champ);
+    }
 }
 
-int     get_comment(t_asm *p, char *str)
+void    get_comment(t_asm *p, char *str)
 {
     char    *end;
 
@@ -56,11 +56,11 @@ int     get_comment(t_asm *p, char *str)
         {
             str++;
             if (!(end = ft_strchr(str, '"')))
-                return (0);
+                ft_error("INVALID CHAMPION COMMENT");
         }
         p->comment = ft_strsub(str, 0, end - str);
-        printf("comment:[%s]\n\n", p->comment);
-        return (1);
+        printf(GRN"[%s]\n\n"RESET, p->comment);
+        if (ft_strlen(p->comment) > COMMENT_LENGTH)
+            ft_error("CHAMPION COMMENT TOO LONG");
     }
-    return (0);
 }

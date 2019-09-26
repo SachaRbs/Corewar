@@ -27,27 +27,54 @@ char	*check_filename(char *file)
 	return (filename);
 }
 
-int		ft_readline(int fd, char **string, char **line)
+int		ft_readline(int fd, char **str, char **line)
 {
 	char	buffer[BUFF_SIZE + 1];
 	char	*ptr;
 	ssize_t sz;
 
-	while (!ft_strchr(*string, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
-		if (!(*string = ft_strnjoin_free(*string, buffer, sz)))
+	while (!ft_strchr(*str, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
+		if (!(*str = ft_strnjoin_free(*str, buffer, sz)))
 			return (-1);
 	sz = 0;
-	while ((*string)[sz] && (*string)[sz] != '\n')
+	while ((*str)[sz] && (*str)[sz] != '\n')
 		++sz;
-	if ((*line = ft_strndup(*string, sz)) == NULL)
+	if ((*line = ft_strndup(*str, sz)) == NULL)
 		return (-1);
-	if ((*string)[sz] == '\n')
+	if ((*str)[sz] == '\n')
 		++sz;
-	ptr = *string;
-	if ((*string = ft_strdup(ptr + sz)) == NULL)
+	ptr = *str;
+	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
 	free((void *)ptr);
 	return (sz > 0 ? sz : 0);
+}
+
+void	get_function(t_asm *p, char **line)
+{
+	int		i;
+
+	i = 0;
+	if (*line == '.')
+	{
+		get_champion(p, *line);
+		get_comment(p, *line);
+	}
+	else if (p->champ && p->comment)
+	{
+		while (line[i] && !is_whitespace(line[i]) && line[i] != ':'
+		&& line[i] != '%')
+			i++;
+		if (line[i] == ':')
+		{
+			p->f_label = 1;
+			add_label(p, &line);
+		}
+		else if (line[i] == '%')
+		{
+
+		}
+	}
 }
 
 void	read_file(t_asm *p)
@@ -58,11 +85,11 @@ void	read_file(t_asm *p)
 	str = ft_strnew(1);
 	while ((ft_readline(p->fd, &str, &buffer) > 0))
 	{
-		get_champion(p, buffer);
-		get_comment(p, buffer);
 		printf("[%s]\n", buffer);
+		get_function(p, &buffer);
 		p->linecount++;
 	}
+	print_labels(p->labels);
 	close(p->fd);
 }
 
@@ -72,7 +99,7 @@ int		main(int argc, char **argv)
 	int		fd;
 
 	if (argc != 2)
-		ft_error("usage: ./asm champion.s", 1);
+		ft_error("usage: ./asm champion.s");
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		exit(1);
 	p = init_struct(fd);

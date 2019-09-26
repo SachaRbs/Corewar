@@ -1,20 +1,27 @@
 /* ************************************************************************** */
-
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 15:06:54 by anonymous         #+#    #+#             */
-/*   Updated: 2019/09/10 16:00:50 by anonymous        ###   ########.fr       */
+/*   Created: 2019/09/25 17:27:06 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/09/25 17:27:06 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-int		ft_error(char *str)
+int     is_instruction(t_asm *p, char *line)
 {
-	ft_putendl_fd(str, 2);
-	exit(1);
+    int     i;
+
+    i = 0;
+    while (p->op_tab[i].name)
+    {
+        if(!ft_strcmp(p->op_tab[i].name, line))
+            return (i);
+        i++;
+    }
+    return (0);
 }
