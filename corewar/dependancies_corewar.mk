@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/09/25 17:32:27 by crfernan         ###   ########.fr        #
+#    Updated: 2019/09/26 12:51:09 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ SRC_COREWAR =  \
 	op.c
 
 INC_COREWAR					:= corewar.h \
-							op.h \
-							libft/libft.h
+							libft/libft.h \
+							../includes/op.h 
 
 DEPENDANCIES_COREWAR_O		:= Makefile ./dependancies_$(L_COREWAR_DIR).mk\
 								 ./dependancies_$(L_COREWAR_DIR)_object.mk\
