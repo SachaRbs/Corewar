@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/12 10:00:34 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/09/26 11:47:51 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		exit(-1);
 	}
 	current->carry = false;
-	current->cycle_to_do = 0;
+	current->cycle = 0;
 	current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct); //pc = emplacement dans la memoire du curseur du processus
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
