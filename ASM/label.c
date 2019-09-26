@@ -16,22 +16,18 @@ t_label     *init_label(char **str)
 {
     t_label     *new;
 	char		*tmp;
-    size_t      size;
 
-    size = 0;
 	tmp = *str;
     while (**str != LABEL_CHAR)
-	{
-		size++;
-        *str++;
-	}
-    if (!size)
+        (*str)++;
+	if (tmp == *str)
         ft_error("LABEL SIZE INVALID");
-    if (!(new = malloc(sizeof(t_label))))
+	if (!(new = malloc(sizeof(t_label))))
         return (NULL);
-    if (!(new->name = ft_strndup(tmp, size)))
+    if (!(new->name = ft_strndup(tmp, *str - tmp)))
         return (NULL);
-	printf(GRN"%s\n"RESET, new->name);
+	(*str)++;											// skip ":"
+	printf(GRN"[%s]\n"RESET, new->name);
     new->next = NULL;
     return (new);
 }

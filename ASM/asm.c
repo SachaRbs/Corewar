@@ -55,22 +55,24 @@ void	get_function(t_asm *p, char **line)
 	int		i;
 
 	i = 0;
-	if (*line == '.')
+	if (**line == '.')
 	{
 		get_champion(p, *line);
 		get_comment(p, *line);
 	}
 	else if (p->champ && p->comment)
 	{
-		while (line[i] && !is_whitespace(line[i]) && line[i] != ':'
-		&& line[i] != '%')
+		while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':'
+		&& (*line)[i] != '%')
 			i++;
-		if (line[i] == ':')
+		if ((*line)[i] == ':')
 		{
 			p->f_label = 1;
-			add_label(p, &line);
+			printf("line = %s\n", *line);
+			add_label(p, line);
+			printf("line = %s\n", *line);
 		}
-		else if (line[i] == '%')
+		else if ((*line)[i] == '%')
 		{
 
 		}
