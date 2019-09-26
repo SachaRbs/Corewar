@@ -6,12 +6,11 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/25 17:47:48 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/09/26 12:30:00 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-#include "libft/libft.h"
 
 void   pushfront_proc(t_proc **head, t_proc *new)
 {
@@ -69,8 +68,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name) // par
 {
 	header_t *h;
 	int rd;
-
-	(void)name;
+	
 	if (!(h = malloc(sizeof(header_t))) && write(1, "MALLOC erreur\n", 14))
 		return(-1);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0 && write(2, "impossible de lire le fichier\n", 31))
@@ -102,7 +100,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)  //rentre le champion 
 {
 	unsigned char prog[CHAMP_MAX_SIZE];
 	int i;
-	// int orig;
+	int orig;
 
 	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn])) == -1)
 		exit(-1);
@@ -125,7 +123,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		exit(-1);
 	}
 	current->carry = false;
-	current->cycle_to_do = 0;
+	current->cycle = 0;
 	current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct); //pc = emplacement dans la memoire du curseur du processus
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
@@ -140,7 +138,7 @@ int     initialize(t_vm *vm, int ac, char **av)
 	t_proc *proc;
 	
 	i = -1;
-	// int j = -1;
+	int j = -1;
 	bzero(vm->play_free, MAX_PLAYERS);
 	vm->dump = -1;
 	vm->pct = 0;

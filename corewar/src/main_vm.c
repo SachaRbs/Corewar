@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:15:41 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/25 17:48:12 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/09/26 12:30:03 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,4 @@ int main(int ac, char **av)
     t_vm vm;
     initialize(&vm, ac, av);
 	run_corewar(&vm);
-    return(0);
 }

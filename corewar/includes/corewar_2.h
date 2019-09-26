@@ -6,21 +6,21 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/26 12:31:21 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:44:10 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
-#include "libft/libft.h"
+#ifndef COREWAR_H
+# define COREWAR_H
+
+# include "op.h"
+# include <stdio.h>
 
 typedef int bool;
-#define true 1
-#define false 0
+# define true 				1
+# define false				0
 
-
-#include <stdio.h>
-
-#define CYCLE_TO_DIE 1536
+# define CYCLE_TO_DIE		1536
 
 typedef struct		s_proc
 {
@@ -30,7 +30,7 @@ typedef struct		s_proc
 	int				carry;
 	int				oc;
 	int				cycle_live;
-	int				cycle;
+	int				cycle_to_do;
 	int 			crossed;
 	unsigned int	action;
 	unsigned int	arcode;
@@ -56,6 +56,8 @@ typedef struct		s_vm
 	t_proc			*proc;
 }             		t_vm;
 
-int     initialize(t_vm *vm, int ac, char **av);
-void	run_corewar(t_vm *vm);
-unsigned int get_instruction(t_vm *vm, int size, unsigned int *pc);
+int				initialize(t_vm *vm, int ac, char **av);
+void			run_corewar(t_vm *vm);
+unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc);
+
+#endif
