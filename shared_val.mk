@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:20:56 by crfernan          #+#    #+#              #
-#    Updated: 2019/09/25 15:21:21 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/03 16:11:47 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,5 +21,5 @@ vpath %.o $(SHARE_OBJ_DIR)
 
 SHARE_FLAGS				:= -Wall -Wextra -Werror
 OPTI_FLAGS				:= -O3 -ffreestanding -fno-builtin -flto
-SHARE_FLAGS				+= -I $(SHARE_INC_DIR)
+SHARE_FLAGS				+= -I $(SHARE_INC_DIR) -I ../includes
 SHARE_DEBUG				:= -g3

@@ -6,11 +6,11 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:23:17 by crfernan          #+#    #+#              #
-#    Updated: 2019/09/25 15:25:45 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/03 16:07:59 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-include ./dependancies_corewar.mk
+include ./dependancies_vm.mk
 include ../libft/dependancies_libft.mk
 include ../shared_val.mk
 
@@ -26,8 +26,7 @@ endif
 
 DEPENDANCY_OBJ_INC_FILE := ./dependancies_$(L_COREWAR_DIR)_object.mk
 L_FT    := ../libft
-EXFLAGS := -L $(L_FT) -lft $(SHARE_FLAGS)
-# SIMULINK := $(SHARE_INC_DIR)/$(NAME_LIBFT)
+EXFLAGS := -L $(L_FT) -lft
 
 NAME 	:= $(NAME_COREWAR)
 SRC_DIR := $(SHARE_SRC_DIR)
@@ -39,13 +38,9 @@ OBJ		:= $(patsubst %.c,%.o,$(SRC))
 CC      := gcc
 CFLAGS  := $(SHARE_FLAGS)
 
-.PHONY: all clean fclean re debug #simulink
+.PHONY: all clean fclean re debug
 
 all: $(NAME)
-
-# simulink:
-# 	rm -rf	$(INC_DIR)/$(L_LIBFT_DIR)
-# 	ln -s	../$(L_FT)/$(INC_DIR) $(INC_DIR)/$(L_LIBFT_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -68,7 +63,7 @@ fclean: clean
 	$(MAKE) fclean -C $(L_FT) --no-print-directory
 	rm -f $(NAME)
 
-# debug: OPTI_FLAGS := $(SHARE_DEBUG)
-# debug: re clean
+debug: OPTI_FLAGS := $(SHARE_DEBUG)
+debug: re clean
 
 re: fclean all

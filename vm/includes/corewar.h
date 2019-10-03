@@ -6,11 +6,11 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/26 12:48:07 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:21:58 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/op.h"
+#include "op.h"
 #include "libft/libft.h"
 
 typedef int bool;

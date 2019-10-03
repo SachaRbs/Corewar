@@ -6,11 +6,11 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:47 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/26 12:49:32 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:21:35 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/op.h"
+#include "op.h"
 
 t_op    op_tab[17] =
 {
