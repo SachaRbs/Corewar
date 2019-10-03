@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/03 15:21:04 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:14:44 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,14 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 
 int     initialize(t_vm *vm, int ac, char **av)
 {
-	int i;
-	t_proc *proc;
+	int		i;
+	t_proc	*proc;
 	
 	i = -1;
-	bzero(vm->play_free, MAX_PLAYERS);
+	
+	// ft_bzero(vm->play_free, MAX_PLAYERS + 1);
+	// ft_bzero(vm->pnum, MAX_PLAYERS + 1);
+	
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
@@ -152,7 +155,7 @@ int     initialize(t_vm *vm, int ac, char **av)
 	printf("Introducing contestants...\n");
 	while (++i < vm->pct)
 	{
-		proc = malloc(sizeof(t_proc));
+		proc = ft_memalloc(sizeof(t_proc*));
 		check_proc(vm, proc, i);
 	}
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/03 15:21:58 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:52:08 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct		s_proc
 
 typedef struct		s_vm
 {
-	int				play_free[MAX_PLAYERS + 1 ];
+	int				play_free[MAX_PLAYERS + 1];
 	unsigned char	mem[MEM_SIZE];
 	int				pnum[MAX_PLAYERS + 1]; // +1 ou pas ?
 	char			*names[MAX_PLAYERS];
