@@ -6,11 +6,12 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:20:56 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/03 16:11:47 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/04 16:54:54 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CHECK_SHARED_VAL		:= 1
+
 SHARE_SRC_DIR			:= src
 SHARE_OBJ_DIR			:= obj
 SHARE_INC_DIR			:= includes
@@ -19,7 +20,9 @@ vpath %.c $(SHARE_SRC_DIR)
 vpath %.h $(SHARE_INC_DIR)
 vpath %.o $(SHARE_OBJ_DIR)
 
-SHARE_FLAGS				:= -Wall -Wextra -Werror
-OPTI_FLAGS				:= -O3 -ffreestanding -fno-builtin -flto
-SHARE_FLAGS				+= -I $(SHARE_INC_DIR) -I ../includes
-SHARE_DEBUG				:= -g3
+SHARE_FLAGS				:=	-Wall -Wextra -Werror
+OPTI_FLAGS				:=	-O3 -ffreestanding -fno-builtin -flto
+SHARE_FLAGS				+=	-I $(SHARE_INC_DIR) \
+							-I $(addprefix ../,$(SHARE_INC_DIR)) \
+							-I $(addprefix ../libft/,$(SHARE_INC_DIR))
+SHARE_DEBUG				:=	-g3
