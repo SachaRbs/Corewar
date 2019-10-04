@@ -6,12 +6,12 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/03 18:52:08 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:56:53 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
-#include "libft/libft.h"
+#include "../includes/op.h"
+#include "../libft/includes/libft.h"
 
 typedef int bool;
 #define true 1
