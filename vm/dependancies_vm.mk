@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/04 16:54:51 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/07 16:29:41 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,11 @@ SRC_COREWAR 				=	corewar.c \
 								init_vm.c \
 								main_vm.c \
 								utils.c \
+								error.c \
 								op.c
 
-INC_COREWAR					:=	corewar.h
+INC_COREWAR					:=	corewar.h \
+								error.h
 
 DEPENDANCIES_COREWAR_O		:=	Makefile \
 								./dependancies_$(L_COREWAR_DIR).mk \

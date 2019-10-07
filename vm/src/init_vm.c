@@ -6,11 +6,12 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/07 14:49:27 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:41:47 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+#include "error.h"
 
 void	pushfront_proc(t_proc **head, t_proc *new)
 {
@@ -41,22 +42,16 @@ void	parsing(t_vm *vm, int ac, char **av)
 			}
 			else if (av[i][1] == 'd')
 				vm->dump = ft_atoi(av[i]);
-			else //ft_error
-			{
-				write(2, "ERROR mauvaise option\n", 23);
-				exit(-1);
-			}
+			else
+				ft_exit(vm, MAUVAISE_OPTION);
 		}
 		else if (vm->pct < MAX_PLAYERS)
 		{
 			vm->names[vm->pct++] = av[i];
 			vm->pnum[vm->pct] = -1;
 		}
-		else //ft_error
-		{
-			write(2, "ERROR trop de champions\n", 25);
-			exit(-1);
-		}
+		else
+			ft_exit(vm, TROP_DE_CHAMPS);
 	}
 }
 
@@ -79,33 +74,22 @@ int32_t		reverser_32(int32_t a)
 ***	PARSE LE CHAMPION
 */
 
-int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name)
+int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *vm)
 {
 	header_t	*h;
 	int			rd;
 
 	(void)name;
 	if (!(h = ft_memalloc(sizeof(header_t))))
-	{
-		write(1, "MALLOC erreur\n", 14); //ft_error
-		return (-1);
-	}
+		ft_exit(vm, ERROR_MALLOC);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0)
-	{
-		write(2, "impossible de lire le fichier\n", 31); //ft_error
-		return (-1);
-	}
+		ft_exit(vm, FAIL_ON_READ);
 	if (reverser_32(h->magic) != COREWAR_EXEC_MAGIC)
-	{
-		write(2, "Nombre magique faux\n", 21); //ft_error
-		return (-1);
-	}
+		ft_exit(vm, NOMBRE_MAGIQUE);
 	if (reverser_32(h->prog_size) > CHAMP_MAX_SIZE)
-	{
-		write(2, "size du champion trop grande\n", 30); //ft_error
-		return (-1);
-	}
-	read(fd, prog, CHAMP_MAX_SIZE + 1);
+		ft_exit(vm, SIZE_TROP_GRANDE);
+	if (read(fd, prog, CHAMP_MAX_SIZE + 1) < 0)
+		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
 	return (reverser_32(h->prog_size));
@@ -113,11 +97,11 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name)
 
 int		find_playernum(t_vm *vm)
 {
-	int		min;
 	int		i;
+	int		min;
 
-	min = 10;
 	i = 0;
+	min = 10;
 	while (i++ < MAX_PLAYERS)
 		if (min > i && vm->play_free[i] == 0)
 			min = i;
@@ -131,11 +115,11 @@ int		find_playernum(t_vm *vm)
 
 void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 {
-	unsigned char	prog[CHAMP_MAX_SIZE];
 	int				i;
+	unsigned char	prog[CHAMP_MAX_SIZE];
 
-	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn])) == -1)
-		exit(-1);
+	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
+		ft_exit(vm, READ_PROCESUS);
 	// verifier
 	i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);
 	while (i--)
@@ -150,10 +134,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 
 	pushfront_proc(&vm->proc, current);
 	if ((fd = open(vm->names[pn], O_RDONLY)) == -1)
-	{
-		printf("fail to open\nfd = %d", fd);
-		exit(-1);
-	}
+		ft_exit(vm, FAIL_ON_READ);
 	current->carry = false;
 	current->cycle = 0;
 	//pc = emplacement dans la memoire du curseur du processus
@@ -165,6 +146,16 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	load_proc(vm, fd, current, pn);
 }
 
+void	print_memory(unsigned char *mem)
+{
+	int i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+		printf("%x", mem[i]);
+	ft_putendl("\n--------------------RUN------------------");
+}
+
 int		initialize(t_vm *vm, int ac, char **av)
 {
 	int		i;
@@ -172,6 +163,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 
 	i = -1;
 	ft_bzero(vm->play_free, MAX_PLAYERS + 1);
+	ft_bzero(vm->mem, MEM_SIZE);
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
@@ -180,24 +172,16 @@ int		initialize(t_vm *vm, int ac, char **av)
 	if (ac > 1)
 		parsing(vm, ac, av);
 	else
-	{
-		write(2, "USAGE\n", 31);
-		exit(-1); //ft_error
-	}
+		ft_exit(vm, INVALID_INPUT);
 	if (!vm->pct)
-	{
-		write(2, "Error: please provide champions\n", 32); //ft_error
-		exit(-1);
-	}
-	printf("Introducing contestants...\n");
+		ft_exit(vm, NO_CHAMPIONS);
+	ft_putendl("Introducing contestants...");
 	while (++i < vm->pct)
 	{
-		proc = ft_memalloc(sizeof(t_proc*));
+		if ((proc = ft_memalloc(sizeof(t_proc*))) == NULL)
+			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
-	i = -1;
-	while (++i < MEM_SIZE)
-		printf("%x", vm->mem[i]); //Print memory
-	printf("\n--------------------RUN------------------\n");
+	print_memory(vm->mem);
 	return (0);
 }

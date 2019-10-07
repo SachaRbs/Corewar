@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_vm.c                                          :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 12:15:41 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/07 19:10:31 by crfernan         ###   ########.fr       */
+/*   Created: 2019/10/07 15:20:58 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/07 18:38:41 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
-#include "error.h"
+#ifndef ERROR_H
+# define ERROR_H
 
-/*
-***		THE WAY WE'RE FILLING THE MEMORY IS INCORRECT -> CHACK WITH 3 AND 4 CHAMPIONS
-*/
-
-int	main(int ac, char **av)
+typedef enum	e_errors
 {
-	t_vm	*vm;
+		ERROR_MALLOC,
+		INVALID_INPUT,
+		NO_CHAMPIONS,
+		FAIL_ON_READ,
+		NOMBRE_MAGIQUE,
+		SIZE_TROP_GRANDE,
+		MAUVAISE_OPTION,
+		TROP_DE_CHAMPS,
+		READ_PROCESUS
+}				t_errors;
 
-	if ((vm = ft_memalloc(sizeof(t_vm*))) == NULL)
-		ft_exit(vm, ERROR_MALLOC);
-	initialize(vm, ac, av);
-	run_corewar(vm);
-	return (0);
-}
+void				ft_exit(t_vm *vm, t_errors error);
+
+#endif

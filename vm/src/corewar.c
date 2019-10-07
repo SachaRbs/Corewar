@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/07 15:11:48 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/07 19:05:24 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
 {
 	int		val;
 
-	val = NULL;
+	val = 0;
 	while (size--)
 	{
 		val = vm->mem[*pc];
@@ -89,7 +89,13 @@ void	run_corewar(t_vm *vm)
 				if (proc->action <= NBR_OP)
 					get_arg(vm, proc, op_tab[proc->action]);
 			}
-			proc = proc->next;
+			if (proc->next)
+				proc = proc->next;
+			else
+			{
+				proc = vm->proc;
+				break;
+			}
 		}
 		vm->cycle++;
 	}

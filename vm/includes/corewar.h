@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/04 16:56:53 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/07 16:29:11 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ typedef struct		s_vm
 	t_proc			*proc;
 }             		t_vm;
 
-int     initialize(t_vm *vm, int ac, char **av);
-void	run_corewar(t_vm *vm);
-unsigned int get_instruction(t_vm *vm, int size, unsigned int *pc);
+int					initialize(t_vm *vm, int ac, char **av);
+void				run_corewar(t_vm *vm);
+unsigned int		get_instruction(t_vm *vm, int size, unsigned int *pc);
