@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 15:20:58 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/07 18:38:41 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/08 15:28:55 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 typedef enum	e_errors
 {
-		ERROR_MALLOC,
-		INVALID_INPUT,
-		NO_CHAMPIONS,
-		FAIL_ON_READ,
-		NOMBRE_MAGIQUE,
-		SIZE_TROP_GRANDE,
-		MAUVAISE_OPTION,
-		TROP_DE_CHAMPS,
-		READ_PROCESUS
+	ERROR_MALLOC,
+	INVALID_INPUT,
+	NO_CHAMPIONS,
+	FAIL_ON_READ,
+	NOMBRE_MAGIQUE,
+	SIZE_TROP_GRANDE,
+	MAUVAISE_OPTION,
+	TROP_DE_CHAMPS,
+	READ_PROCESUS
 }				t_errors;
 
-void				ft_exit(t_vm *vm, t_errors error);
+void			ft_exit(t_vm *vm, t_errors error);
 
 #endif
