@@ -29,15 +29,27 @@ typedef	struct	s_asm
 	int				fd;
 	char			*filename;
 	char			*file;
-	size_t			linecount;
 	char			*champ;
 	char			*comment;
-	int				f_label;
-	int				f_instr;
+	int				row;
+	int				col;
+	int				f_header;
+	char			*str;
 	t_op			*op_tab;
+	struct s_token	*tokens;
 	struct s_header	*header;
 	struct s_label	*labels;
 }				t_asm;
+
+typedef struct	s_inst
+{
+	int 			pos;
+	int 			dir_size;
+	int 			ocp;
+	unsigned int 	wr_size;
+	int 			oct;
+	unsigned int 	param[3];
+}				t_inst;
 
 typedef	struct s_label
 {
@@ -45,26 +57,30 @@ typedef	struct s_label
 	struct s_label	*next;
 }				t_label;
 
+int 		ft_readline(int fd, char **str, char **line);
 
 /*
 ** asm
 */
 
-void		get_champion(t_asm *p, char *str);
-void     	get_comment(t_asm *p, char *str);
+void 		get_token(t_asm *p, char **line);
+void		read_header(t_asm *p);
 
-/*
+int 		check_instruction(t_asm *p, char **line, int size);
+void		get_instruction(t_asm *p, char **line, int size);
+
+	/*
 ** label
 */
 
 void 		print_labels(t_label *head);
-t_label 	*add_label(t_asm *p, char **str);
+t_label 	*add_label(t_asm *p, char *str);
 
 /*
 ** init
 */
 
-	t_asm *init_struct(int fd);
+t_asm		*init_struct(int fd);
 
 /*
 ** utils
@@ -72,3 +88,4 @@ t_label 	*add_label(t_asm *p, char **str);
 
 int		ft_error(char *str);
 int 	is_whitespace(int c);
+void 	skip_whitespaces(t_asm *p, char **line);
