@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/19 15:25:35 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:09:23 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 #define ALT_COMMENT_CHAR  ';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
-#define SEPARATOR_CHAR			','
+#define SEPARATOR_CHAR		','
+
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -72,9 +73,9 @@ typedef char	t_arg_type;
 typedef struct		header_s
 {
   unsigned int		magic;
-  char				prog_name[PROG_NAME_LENGTH + 1];
+  char				    prog_name[PROG_NAME_LENGTH + 1];
   unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
+  char				    comment[COMMENT_LENGTH + 1];
 }					header_t;
 
 typedef struct      s_op

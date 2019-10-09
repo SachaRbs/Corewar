@@ -10,7 +10,6 @@
 /* ************************************************************************** */
 
 #include "includes/asm.h"
-// #include "asm.h"
 
 char	*check_filename(char *file)
 {
@@ -52,47 +51,44 @@ int		ft_readline(int fd, char **str, char **line)
 
 void	get_function(t_asm *p, char **line)
 {
-	int		i;
+	int i;
 
 	i = 0;
-	if (**line == '.')
+	skip_whitespaces(p, line);
+	while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':' &&
+		   (*line)[i] != '%')
+		i++;
+	printf(MAG"%s\n"RESET, *line + i);
+    printf(YEL "%s\n" RESET, *line);
+	if ((*line)[i] == ':')
 	{
-		get_champion(p, *line);
-		get_comment(p, *line);
-	}
-	else if (p->champ && p->comment)
+		add_label(p, *line);
+		*line += i + 1;
+        printf("%s\n", ((*line)));
+    	get_function(p, line);
+    }
+	else if ((*line)[i] == '%' || is_whitespace((*line)[i]))
 	{
-		while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':'
-		&& (*line)[i] != '%')
-			i++;
-		if ((*line)[i] == ':')
+        if (check_instruction(p, line, i))
 		{
-			p->f_label = 1;
-			printf("line = %s\n", *line);
-			add_label(p, line);
-			printf("line = %s\n", *line);
+			get_instruction(p, line, i);
 		}
-		else if ((*line)[i] == '%')
-		{
-
-		}
-	}
+    }
 }
 
-void	read_file(t_asm *p)
+void	read_main(t_asm *p)
 {
-	static char *str;
-	char		*buffer;
+	static char		*str;
+	char 			*buffer;
 
 	str = ft_strnew(1);
-	while ((ft_readline(p->fd, &str, &buffer) > 0))
+	while ((ft_readline(p->fd, &p->str, &buffer) > 0))
 	{
-		printf("[%s]\n", buffer);
+        // printf("%s\n", buffer);
 		get_function(p, &buffer);
-		p->linecount++;
+    	p->row++;
 	}
-	print_labels(p->labels);
-	close(p->fd);
+    print_labels(p->labels);
 }
 
 int		main(int argc, char **argv)
@@ -106,5 +102,6 @@ int		main(int argc, char **argv)
 		exit(1);
 	p = init_struct(fd);
 	p->filename = check_filename(argv[1]);
-	read_file(p);
+	read_header(p);
+	read_main(p);
 }

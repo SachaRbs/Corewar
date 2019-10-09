@@ -12,15 +12,6 @@
 
 #include "includes/asm.h"
 
-int		is_whitespace(int c)
-{
-	return (c == '\t' ||
-			c == '\v' ||
-			c == '\f' ||
-			c == '\r' ||
-			c == ' ');
-}
-
 void	get_champion(t_asm *p, char *str)
 {
     char    *end;
@@ -39,7 +30,7 @@ void	get_champion(t_asm *p, char *str)
             p->champ = ft_strsub(str, 0, end - str);
             if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
                 ft_error("CHAMPION NAME TOO LONG");
-            printf(GRN"[%s]\n"RESET, p->champ);
+            // printf(GRN"[%s]\n"RESET, p->champ);
     }
 }
 
@@ -59,8 +50,23 @@ void    get_comment(t_asm *p, char *str)
                 ft_error("INVALID CHAMPION COMMENT");
         }
         p->comment = ft_strsub(str, 0, end - str);
-        printf(GRN"[%s]\n\n"RESET, p->comment);
+        // printf(GRN"[%s]\n\n"RESET, p->comment);
         if (ft_strlen(p->comment) > COMMENT_LENGTH)
             ft_error("CHAMPION COMMENT TOO LONG");
+        p->f_header = 1;
     }
+}
+
+void    read_header(t_asm *p)
+{
+  static char     *str;
+  char            *buffer;
+
+  str = ft_strnew(1);
+  while ((ft_readline(p->fd, &p->str, &buffer) > 0) && !p->f_header)
+  {
+    get_champion(p, buffer);
+    get_comment(p, buffer);
+    p->row++;
+  }
 }

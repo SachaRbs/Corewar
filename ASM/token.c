@@ -25,19 +25,3 @@ t_token     *init_token(t_asm *p, t_type type)
     token->next = NULL;
     return (token);
 }
-
-void    get_token(t_asm *p, char **line)
-{
-    if ((*line)[p->col] == '.')
-        {
-            printf("OK\n");
-            if (!p->champ)
-                get_champion(p, *line);
-            printf("OK1\n");
-            if (p->champ && !p->comment)
-                get_comment(p, *line);
-        }
-	printf("OK3\n");
-    if ((*line)[p->col] == LABEL_CHAR)
-        add_label(p, line);
-}
