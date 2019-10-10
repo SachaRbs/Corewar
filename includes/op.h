@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/09/25 17:42:12 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/08 18:39:39 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@
 # define REG_SIZE				4
 # define DIR_SIZE				REG_SIZE
 
-
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
-
 
 # define MAX_ARGS_NUMBER		4
 # define MAX_PLAYERS			4
@@ -52,7 +50,7 @@
 # define MAX_CHECKS				10
 
 /*
-**
+***
 */
 
 typedef char					t_arg_type;
@@ -65,33 +63,32 @@ typedef char					t_arg_type;
 # define NBR_OP					16
 
 /*
-**
+***
 */
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-
 typedef struct					header_s
 {
-  unsigned int					magic;
-  char							prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int					prog_size;
-  char							comment[COMMENT_LENGTH + 1];
+	unsigned int				magic;
+	char						prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int				prog_size;
+	char						comment[COMMENT_LENGTH + 1];
 }								header_t;
 
-typedef struct      			s_op
+typedef struct					s_op
 {
-    char            			*name;
-    unsigned char   			nb_arg;
-    unsigned char   			args[MAX_ARGS_NUMBER];
-    unsigned char   			opcode;
-    unsigned int    			cycle;
-    char            			*desc;
-    unsigned char   			ocp;
-    unsigned char   			index;
-}                   			t_op;
+	char						*name;
+	unsigned char				nb_arg;
+	unsigned char				args[MAX_ARGS_NUMBER];
+	unsigned char				opcode;
+	unsigned int				cycle;
+	char						*desc;
+	unsigned char				ocp;
+	unsigned char				index;
+}								t_op;
 
 extern t_op						op_tab[NBR_OP + 1];
 
