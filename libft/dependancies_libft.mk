@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/04 16:38:49 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/10 17:18:41 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,13 +83,40 @@ SRC_LIBFT = \
 	ft_lstnew.c \
 	ft_lstiter.c \
 	ft_lstmap.c \
-	get_next_line.c
+	get_next_line.c \
+	ft_ctoa.c \
+	ft_nctoa.c \
+	ft_ftoa.c \
+	ft_itoa_printf.c \
+	ft_strchr_printf.c \
+	ft_strcmp_printf.c \
+	ft_strlen_printf.c \
+	ft_strtolower_printf.c \
+	ft_atoi_printf.c \
+	ft_max.c \
+	ft_min.c \
+	ft_power.c \
+	for_csppercent.c \
+	for_di.c \
+	for_f.c \
+	for_uoxx.c \
+	ft_argument_value.c \
+	ft_color.c \
+	ft_dupexit.c \
+	ft_filling.c \
+	ft_getting_argument.c \
+	ft_importants.c \
+	ft_strncpy_zero.c \
+	ft_printf_main.c
 
-INC_LIBFT					:= libft.h
+INC_LIBFT					:=	libft.h \
+								ft_printf.h
 
-DEPENDANCIES_LIBFT			:= Makefile ./dependancies_$(L_LIBFT_DIR).mk\
+DEPENDANCIES_LIBFT			:=	Makefile \
+								./dependancies_$(L_LIBFT_DIR).mk\
 								./dependancies_$(L_LIBFT_DIR)_object.mk\
 								../shared_val.mk
+
 INC_LIBFT_EXPORT			:= $(addprefix $(SHARE_INC_DIR)/,$(INC_LIBFT))
 SRC_LIBFT_EXPORT			:= $(addprefix $(SHARE_SRC_DIR)/,$(SRC_LIBFT))
 

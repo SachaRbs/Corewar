@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 14:02:17 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/16 18:17:25 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
+/*   Updated: 2019/10/10 17:22:11 by crfernan         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -19,7 +19,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "libft.h"
+# include <libc.h>
 # define BUFF_SIZE 100
 
 typedef struct	s_list
@@ -94,5 +94,26 @@ t_list			*ft_lstnew(void const *content, size_t content_size);
 int				get_next_line(const int fd, char **line);
 int				check_end(char *keep);
 size_t			ft_strclen(char *keep);
+
+/*
+***		FUNCTIONS ADDED FROM THE LIBRARY OF PRINTF
+*/
+char			*ft_ftoa(long double nbr, int precision);
+char			*ft_ctoa(char c);
+char			*ft_nctoa(char c, size_t n);
+
+char			*ft_itoa_printf(long long nbr);
+size_t			ft_strlen_printf(const char *str);
+char			*ft_strchr_printf(const char *ptr, int value);
+int				ft_strcmp_printf(const char *ptr1, const char *ptr2);
+char			*ft_strtolower_printf(char *s);
+int				ft_atoi_printf(const char *str);
+
+int				ft_power(int num, int pow);
+long long		ft_max(long long a, long long b);
+long long		ft_min(long long a, long long b);
+char			*ft_itoa_base(unsigned long long nbr, unsigned short base);
+
+int				ft_printf(const char *format, ...);
 
 #endif

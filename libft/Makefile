@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:37:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/09/25 16:45:39 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/09 19:38:27 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC_DIR := $(SHARE_SRC_DIR)
 INC_DIR := $(SHARE_INC_DIR)
 OBJ_DIR := $(SHARE_OBJ_DIR)
 SRC 	:= $(SRC_LIBFT)
+
 OBJ		:= $(patsubst %.c,%.o,$(SRC))
 DEPENDANCIES:= $(DEPENDANCIES_LIBFT)
 
@@ -41,7 +42,7 @@ $(OBJ_DIR):
 
 %.o:%.c $(DEPENDANCIES_LIBFT)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(OPTI_FLAGS) $(CFLAGS)  -o $(OBJ_DIR)/$@ -c $<
+	$(CC) $(OPTI_FLAGS) $(CFLAGS) -o $(OBJ_DIR)/$@ -c $<
 
 -include ./dependancies_$(L_LIBFT_DIR)_object.mk
 
