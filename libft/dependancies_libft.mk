@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/10 17:18:41 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/14 13:06:09 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ SRC_LIBFT = \
 	ft_lstiter.c \
 	ft_lstmap.c \
 	get_next_line.c \
+	ft_itoa_base.c \
 	ft_ctoa.c \
 	ft_nctoa.c \
 	ft_ftoa.c \
