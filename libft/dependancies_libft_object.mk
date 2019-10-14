@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft_object.mk                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:41:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/10 18:05:20 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/14 17:45:51 by sarobber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,8 @@ ft_lstnew.o: libft.h
 ft_lstiter.o: libft.h
 ft_lstmap.o: libft.h
 get_next_line.o: libft.h
+ft_itoa_base.o: libft.h
+ft_atoi_base.o: libft.h
 ft_ctoa.o: libft.h
 ft_nctoa.o: libft.h
 ft_ftoa.o: libft.h

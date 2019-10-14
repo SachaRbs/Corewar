@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/14 11:28:10 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:49:13 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,11 @@ long long		ft_min(long long a, long long b);
 char			*ft_itoa_base(unsigned long long nbr, unsigned short base);
 
 int				ft_printf(const char *format, ...);
+
+/*
+***		FUNCTIONS ADDED FOR COREWAR
+*/
+
+int				ft_atoi_base(const char *str, int size, int base);
 
 #endif

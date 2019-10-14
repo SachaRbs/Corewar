@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/14 14:25:46 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:22:08 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
 	int		val;
 
 	val = 0;
-	while (size--)
-	{
-		val = vm->mem[*pc];
-		*pc = (*pc ? *pc : MEM_SIZE) - 1;
-	}
+	if (*pc + size < MEM_SIZE)
+		ft_memcpy(&val, &(vm->mem[*pc]), size);
+	else
+		val = -1;
+	*pc += size;
 	return (val);
 }
 
 void	get_arg(t_vm *vm, t_proc *proc, t_op op)
 {
 	int				i;
-	int				size;
+	unsigned int	size;
 	unsigned int	code;
 
 	i = -1;
@@ -50,7 +50,7 @@ void	get_arg(t_vm *vm, t_proc *proc, t_op op)
 		else if ((code == IND_CODE && op.args[i] & T_IND)
 				|| (code == DIR_CODE && op.args[i] & T_DIR))
 			size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
-		// proc->arg[i] = get_instruction(vm, size, &proc->read);
+		proc->arg[i] = get_instruction(vm, size, &proc->read);
 	}
 }
 
@@ -98,7 +98,7 @@ void	run_corewar(t_vm *vm)
 			{
 				proc->read = proc->pc;
 				proc->action = get_instruction(vm, 1, &proc->read);
-				if (proc->action <= NBR_OP)
+				if (proc->action > 0 && proc->action <= NBR_OP)
 					get_arg(vm, proc, op_tab[proc->action]);
 			}
 			proc = proc->next;

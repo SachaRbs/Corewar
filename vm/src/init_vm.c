@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/14 16:43:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:31:02 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, NOMBRE_MAGIQUE);
 	if (reverser_32(h->prog_size) > CHAMP_MAX_SIZE)
 		ft_exit(vm, SIZE_TROP_GRANDE);
-	if (read(fd, prog, CHAMP_MAX_SIZE + 1) < 0)
+	if (read(fd, prog, INT_MAX) < 0) // check size of champ
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
@@ -157,6 +157,7 @@ void	print_memory(unsigned char *mem)
 	i = -1;
 	while (++i < MEM_SIZE)
 		printf("%x", mem[i]);
+	printf("\n");
 }
 
 int		initialize(t_vm *vm, int ac, char **av)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft.mk                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/14 13:06:09 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/14 17:45:54 by sarobber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRC_LIBFT = \
 	ft_lstmap.c \
 	get_next_line.c \
 	ft_itoa_base.c \
+	ft_atoi_base.c \
 	ft_ctoa.c \
 	ft_nctoa.c \
 	ft_ftoa.c \

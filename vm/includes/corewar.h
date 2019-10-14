@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/08 15:27:50 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:15:37 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_proc
 	int				crossed;
 	unsigned int	action;
 	unsigned int	arcode;
-	int				*arg[MAX_ARGS_NUMBER];
+	int				arg[MAX_ARGS_NUMBER];
 	int				reg[REG_NUMBER];
 	struct s_proc	*next;
 }					t_proc;
