@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 18:20:58 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:58 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:13:38 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_printf(const char *format, ...)
+int		count_len_str(const char *format, int j)
+{
+	while (format[j] != '%' && format[j] != '{' && format[j] != '\0')
+		j++;
+	return (j);
+}
+
+int		ft_printf(const char *format, ...)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -29,9 +36,8 @@ int				ft_printf(const char *format, ...)
 	{
 		i = j;
 		ft_reset_specifier(&specifier, 1);
-		while (format[j] != '%' && format[j] != '{' && format[j] != '\0')
-			j++;
-		result = ft_strnjoin_printf(result, ft_dupexit(format + i), g_res_len, j - i);
+		result = ft_strnjoin_printf(result, ft_dupexit(format + i),
+		g_res_len, (j = count_len_str(format, j)) - i);
 		g_res_len += j - i;
 		if (format[j] == '%' && get_specif(format + j + 1, &specifier, &j) == 0)
 			result = ft_get_argument(&ap, result, &specifier);

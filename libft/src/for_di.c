@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_di.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 18:20:55 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:55 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:21:10 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char		*ft_ft_wi_pr_for_di_2(char *string, t_specifier *specifier)
 	(ft_strchr(FLAGS, '-') != NULL || PRECISION >= 0))) && WIDTH > g_str_len)
 	{
 		if (ft_strchr(FLAGS, '-') == NULL)
-			string = ft_strnjoin_printf(ft_nctoaexit(' ', WIDTH - g_str_len), string,
-			WIDTH - g_str_len, g_str_len);
+			string = ft_strnjoin_printf(ft_nctoaexit(' ', WIDTH - g_str_len),
+			string, WIDTH - g_str_len, g_str_len);
 		else
-			string = ft_strnjoin_printf(string, ft_nctoaexit(' ', WIDTH - g_str_len),
-			g_str_len, WIDTH - g_str_len);
+			string = ft_strnjoin_printf(string, ft_nctoaexit(' ',
+			WIDTH - g_str_len), g_str_len, WIDTH - g_str_len);
 		g_str_len = WIDTH;
 	}
 	return (string);
@@ -36,8 +36,8 @@ char		*ft_wi_pr_for_di(char *string, t_specifier *specifier,
 	g_str_len = ft_strlen(string);
 	if (PRECISION > g_str_len)
 	{
-		string = ft_strnjoin_printf(ft_nctoaexit('0', PRECISION - g_str_len), string,
-		PRECISION - g_str_len, g_str_len);
+		string = ft_strnjoin_printf(ft_nctoaexit('0', PRECISION - g_str_len),
+		string, PRECISION - g_str_len, g_str_len);
 		g_str_len = PRECISION;
 	}
 	if (ft_strchr(FLAGS, '0') != NULL && PRECISION < 0

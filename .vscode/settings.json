@@ -2,6 +2,8 @@
     "files.associations": {
         "vm.h": "c",
         "corewar.h": "c",
-        "op.h": "c"
+        "op.h": "c",
+        "error.h": "c",
+        "libc.h": "c"
     }
 }

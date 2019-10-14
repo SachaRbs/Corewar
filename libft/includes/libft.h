@@ -6,10 +6,9 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/10 17:22:11 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:28:10 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef LIBFT_H
 # define LIBFT_H

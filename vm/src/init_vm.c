@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/07 18:41:47 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/09 15:27:02 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parsing(t_vm *vm, int ac, char **av)
 		else if (vm->pct < MAX_PLAYERS)
 		{
 			vm->names[vm->pct++] = av[i];
-			vm->pnum[vm->pct] = -1;
+			vm->pnum[vm->pct] = -1; //I dont understand this ?
 		}
 		else
 			ft_exit(vm, TROP_DE_CHAMPS);
@@ -135,7 +135,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	pushfront_proc(&vm->proc, current);
 	if ((fd = open(vm->names[pn], O_RDONLY)) == -1)
 		ft_exit(vm, FAIL_ON_READ);
-	current->carry = false;
+	current->carry = FALSE;
 	current->cycle = 0;
 	//pc = emplacement dans la memoire du curseur du processus
 	current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct);
@@ -153,7 +153,6 @@ void	print_memory(unsigned char *mem)
 	i = -1;
 	while (++i < MEM_SIZE)
 		printf("%x", mem[i]);
-	ft_putendl("\n--------------------RUN------------------");
 }
 
 int		initialize(t_vm *vm, int ac, char **av)
@@ -163,6 +162,9 @@ int		initialize(t_vm *vm, int ac, char **av)
 
 	i = -1;
 	ft_bzero(vm->play_free, MAX_PLAYERS + 1);
+	ft_bzero(vm->pnum, MAX_PLAYERS + 1);
+	ft_bzero(vm->sizes, MAX_PLAYERS);
+	ft_bzero(vm->names, MAX_PLAYERS);
 	ft_bzero(vm->mem, MEM_SIZE);
 	vm->dump = -1;
 	vm->pct = 0;

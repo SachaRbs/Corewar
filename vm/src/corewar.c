@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/07 19:05:24 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/09 17:45:32 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,26 @@ void	print_action(t_proc *proc)
 	printf("\n\n");
 }
 
+void	print_memory2(unsigned char *mem)
+{
+	int i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+		printf("%x", mem[i]);
+}
+
 void	run_corewar(t_vm *vm)
 {
 	t_proc	*proc;
 
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
+		// ft_putendl("\n-----------------------------------------");
+		// print_memory2(vm->mem);
+		// ft_putendl("\n-----------------------------------------");
 		proc = vm->proc;
-		while (proc->pnu)
+		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
@@ -89,13 +101,14 @@ void	run_corewar(t_vm *vm)
 				if (proc->action <= NBR_OP)
 					get_arg(vm, proc, op_tab[proc->action]);
 			}
-			if (proc->next)
-				proc = proc->next;
-			else
-			{
-				proc = vm->proc;
-				break;
-			}
+			proc = proc->next;
+			// if (proc->next)
+			// 	proc = proc->next;
+			// else
+			// {
+			// 	proc = vm->proc;
+			// 	break;
+			// }
 		}
 		vm->cycle++;
 	}

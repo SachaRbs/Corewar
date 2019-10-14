@@ -8,10 +8,10 @@
 		"name": "(lldb) Launch",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "/Users/sarobber/Documents/42/Corewar/VM/a.out",
-		"args": ["-n", "2", "sacha", "test"],
+		"program": "/Users/crfernan/P42/13_COREWAR/vm/corewar",
+		"args": ["-n", "1", "../ressources/vm_champs/champs/Gagnant.cor", "-n", "2", "../ressources/vm_champs/champs/Gagnant.cor", "-n", "3", "../ressources/vm_champs/champs/Gagnant.cor", "-n", "4", "../ressources/vm_champs/champs/Gagnant.cor"],
 		"stopAtEntry": true,
-		"cwd": "${workspaceFolder}",
+		"cwd": "${workspaceFolder}/vm",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "lldb"

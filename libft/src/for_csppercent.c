@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_csppercent.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 18:20:54 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:54 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:20:22 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ char		*none_c(void *po, t_specifier *specifier)
 	if (WIDTH > g_str_len)
 	{
 		if (ft_strchr(FLAGS, '-') == NULL)
-			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len), string,
-			WIDTH - g_str_len, g_str_len);
+			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len),
+			string, WIDTH - g_str_len, g_str_len);
 		else
-			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi, WIDTH - g_str_len),
-			g_str_len, WIDTH - g_str_len);
+			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi,
+			WIDTH - g_str_len), g_str_len, WIDTH - g_str_len);
 		g_str_len = WIDTH;
 	}
 	free(po);
@@ -48,11 +48,11 @@ char		*ft_wi_pr_for_s(char *string, t_specifier *specifier)
 	if (WIDTH > g_str_len)
 	{
 		if (ft_strchr(FLAGS, '-') == NULL)
-			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len), string,
-			WIDTH - g_str_len, g_str_len);
+			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len),
+			string, WIDTH - g_str_len, g_str_len);
 		else
-			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi, WIDTH - g_str_len),
-			g_str_len, WIDTH - g_str_len);
+			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi,
+			WIDTH - g_str_len), g_str_len, WIDTH - g_str_len);
 		g_str_len = WIDTH;
 	}
 	return (string);
@@ -85,10 +85,11 @@ char		*none_p(void *po, t_specifier *specifier)
 		exit(EXIT_FAILURE);
 	g_str_len = ft_strlen(string);
 	if (PRECISION > g_str_len)
-		string = ft_strnjoin_printf(ft_nctoaexit('0', PRECISION - g_str_len), string,
-		PRECISION - g_str_len, g_str_len);
+		string = ft_strnjoin_printf(ft_nctoaexit('0', PRECISION - g_str_len),
+		string, PRECISION - g_str_len, g_str_len);
 	g_str_len = ft_strlen(string);
-	string = ft_strtolower_printf(ft_strnjoin_printf(ft_dupexit("0x"), string, 2, g_str_len));
+	string = ft_strtolower_printf(ft_strnjoin_printf(ft_dupexit("0x"),
+	string, 2, g_str_len));
 	g_str_len += 2;
 	if (WIDTH > g_str_len)
 	{
@@ -96,8 +97,8 @@ char		*none_p(void *po, t_specifier *specifier)
 			string = ft_strnjoin_printf(ft_nctoaexit(' ', WIDTH - g_str_len),
 			string, WIDTH - g_str_len, g_str_len);
 		else
-			string = ft_strnjoin_printf(string, ft_nctoaexit(' ', WIDTH - g_str_len),
-			g_str_len, WIDTH - g_str_len);
+			string = ft_strnjoin_printf(string, ft_nctoaexit(' ',
+			WIDTH - g_str_len), g_str_len, WIDTH - g_str_len);
 		g_str_len = WIDTH;
 	}
 	return (string);
@@ -118,11 +119,11 @@ char		*none_percent(void *po, t_specifier *specifier)
 	if (WIDTH > g_str_len)
 	{
 		if (ft_strchr(FLAGS, '-') == NULL)
-			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len), string,
-			WIDTH - g_str_len, g_str_len);
+			string = ft_strnjoin_printf(ft_nctoaexit(wi_fi, WIDTH - g_str_len),
+			string, WIDTH - g_str_len, g_str_len);
 		else
-			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi, WIDTH - g_str_len),
-			g_str_len, WIDTH - g_str_len);
+			string = ft_strnjoin_printf(string, ft_nctoaexit(wi_fi,
+			WIDTH - g_str_len), g_str_len, WIDTH - g_str_len);
 		g_str_len = WIDTH;
 	}
 	free(po);

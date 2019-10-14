@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 18:20:55 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:55 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:23:55 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ char	*ft_wi_pr_for_f(char *string, t_specifier *specifier, char wi_fi)
 char	*none_f(void *po, t_specifier *specifier)
 {
 	char				*string;
-	int					i;
 	char				width_filler;
 	long double			*number;
 
 	number = po;
-	i = 0;
 	width_filler = ' ';
 	if (ft_strchr(FLAGS, '0') != NULL && PRECISION == -1)
 		width_filler = '0';
@@ -48,7 +46,8 @@ char	*none_f(void *po, t_specifier *specifier)
 	{
 		if (!(string = ft_ftoa(-(*number), PRECISION)))
 			exit(EXIT_FAILURE);
-		string = ft_strnjoin_printf(ft_ctoaexit('-'), string, 1, ft_strlen(string));
+		string = ft_strnjoin_printf(ft_ctoaexit('-'),
+		string, 1, ft_strlen(string));
 	}
 	else if (!(string = ft_ftoa(*number, PRECISION)))
 		exit(EXIT_FAILURE);
