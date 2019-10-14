@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:37:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/09 19:38:27 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/14 16:08:56 by sarobber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ $(OBJ_DIR):
 
 %.o:%.c $(DEPENDANCIES_LIBFT)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(OPTI_FLAGS) $(CFLAGS) -o $(OBJ_DIR)/$@ -c $<
+	$(CC) -g3 $(CFLAGS) -o $(OBJ_DIR)/$@ -c $<
+	# $(CC) $(OPTI_FLAGS) $(CFLAGS) -o $(OBJ_DIR)/$@ -c $<
 
 -include ./dependancies_$(L_LIBFT_DIR)_object.mk
 

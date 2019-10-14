@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 18:20:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/14 11:27:25 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:23:48 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	ft_bzero(void *s, size_t n)
 		((unsigned char *)s)[i] = (char)'\0';
 		i++;
 	}
+	// ft_memset(s, 0, n);
 }
