@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_vm.c                                          :+:      :+:    :+:   */
+/*   ft_add.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 12:15:41 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 18:23:12 by crfernan         ###   ########.fr       */
+/*   Created: 2019/10/15 19:51:37 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/15 20:29:40 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "operations.h"
 #include "error.h"
+#include "op.h"
 
-int	main(int ac, char **av)
+void	*ft_add(t_vm *vm, t_proc *proc)
 {
-	t_vm	*vm;
+	int i;
 
-	if ((vm = ft_memalloc(sizeof(t_vm*))) == NULL)
-		ft_exit(vm, ERROR_MALLOC);
-	initialize(vm, ac, av);
-	run_corewar(vm);
-	return (0);
+	i = 0;
+    (void)vm;
+	printf("PLAYER No : %d\n", proc->pnu);
+	printf("FUNCTION  : ft_add\n");
+	printf("action = %s\n", op_tab[proc->action].name);
+	while (i < 4)
+	{
+		printf("arg[%d] = %d\n", i, proc->arg[i]);
+		proc->arg[i] = 0;
+		i++;
+	}
+	printf("\n\n");
+    return (NULL);
 }

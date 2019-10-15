@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 17:58:18 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/15 19:08:10 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,17 @@ typedef struct		s_vm
 	t_proc			*proc;
 }					t_vm;
 
-int					initialize(t_vm *vm, int ac, char **av);
+void				initialize(t_vm *vm, int ac, char **av);
 void				run_corewar(t_vm *vm);
-unsigned int		get_instruction(t_vm *vm, int size, unsigned int *pc);
+void				check_proc(t_vm *vm, t_proc *current, int pn);
+
+/*
+***		UTILS
+*/
+
 int16_t				reverser_16(int16_t a);
 int32_t				reverser_32(int32_t a);
+unsigned int		big_endian(unsigned int num, int n);
+void				print_memory(unsigned char *mem);
 
 #endif
