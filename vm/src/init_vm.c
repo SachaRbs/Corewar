@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/14 17:31:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:38:55 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 {
 	int				i;
 	unsigned char	prog[CHAMP_MAX_SIZE];
-
 	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
 		ft_exit(vm, READ_PROCESUS);
 	// verifier
@@ -185,7 +184,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	ft_putendl("Introducing contestants...");
 	while (++i < vm->pct)
 	{
-		if ((proc = ft_memalloc(sizeof(t_proc*))) == NULL)
+		if ((proc = ft_memalloc(sizeof(t_proc))) == NULL)
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}

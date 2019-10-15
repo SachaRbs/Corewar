@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:53:45 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/08 15:32:45 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:35:01 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	close_program(t_vm *vm)
 {
 	if (vm)
 	{
-		free(vm);
+		// free(vm);
 		vm = NULL;
 	}
 	exit(-1);
