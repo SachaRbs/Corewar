@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 14:38:55 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:56:10 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,6 @@ void	parsing(t_vm *vm, int ac, char **av)
 		else
 			ft_exit(vm, TROP_DE_CHAMPS);
 	}
-}
-
-int16_t		reverser_16(int16_t a)
-{
-	return (((a & 0xFF00) >> 8) | ((a & 0x00FF) << 8));
-}
-
-int32_t		reverser_32(int32_t a)
-{
-	int32_t		tmp;
-
-	tmp = 0;
-	tmp = ((a & 0xFF000000) >> 24) | ((a & 0x00FF) << 24);
-	tmp |= ((a & 0x00FF0000) >> 8) | ((a & 0x0000FF00) << 8);
-	return (tmp);
 }
 
 /*
@@ -155,7 +140,7 @@ void	print_memory(unsigned char *mem)
 
 	i = -1;
 	while (++i < MEM_SIZE)
-		printf("%x", mem[i]);
+		printf("%02hhx ", mem[i]);
 	printf("\n");
 }
 
@@ -188,6 +173,6 @@ int		initialize(t_vm *vm, int ac, char **av)
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
-	print_memory(vm->mem);
+	// print_memory(vm->mem);
 	return (0);
 }
