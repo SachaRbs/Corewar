@@ -16,19 +16,9 @@
 
 void	*ft_add(t_vm *vm, t_proc *proc)
 {
-	int i;
-
-	i = 0;
-    (void)vm;
-	printf("PLAYER No : %d\n", proc->pnu);
-	printf("FUNCTION  : ft_add\n");
-	printf("action = %s\n", op_tab[proc->action].name);
-	while (i < 4)
-	{
-		printf("arg_v[%d] = %d\n", i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
-	}
-	printf("\n\n");
-    return (NULL);
+	proc->reg[proc->arg_v[2]] = proc->arg_v[0] + proc->arg_v[1];
+	if (proc->arg_v[2] == 0)
+		proc->carry = 1;
+	else
+		proc->carry = 0;
 }
