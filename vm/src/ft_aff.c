@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:54:46 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 13:21:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 18:56:41 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@
 
 void	*ft_aff(t_vm *vm, t_proc *proc)
 {
+	(void)vm;
 	ft_printf("Aff: %c\n", (char)proc->arg_v[0]);
+	return (NULL);
 }
