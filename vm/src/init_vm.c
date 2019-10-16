@@ -6,29 +6,15 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 13:21:40 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 15:06:34 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "error.h"
 
-void	pushfront_proc(t_proc **head, t_proc *new)
+void	parsing(t_vm *vm, int ac, char **av, int i)
 {
-	if (head && *head && new)
-	{
-		new->next = *head;
-		*head = new;
-	}
-	else
-		*head = new;
-}
-
-void	parsing(t_vm *vm, int ac, char **av)
-{
-	int		i;
-
-	i = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
@@ -56,100 +42,8 @@ void	parsing(t_vm *vm, int ac, char **av)
 	}
 }
 
-/*
-***	PARSE LE CHAMPION
-*/
-
-int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *vm)
+void	set_to_zero(t_vm *vm)
 {
-	header_t	*h;
-	int			rd;
-
-	(void)name;
-	if (!(h = ft_memalloc(sizeof(header_t))))
-		ft_exit(vm, ERROR_MALLOC);
-	if ((rd = read(fd, h, sizeof(header_t))) < 0)
-		ft_exit(vm, FAIL_ON_READ);
-	if (reverser_32(h->magic) != COREWAR_EXEC_MAGIC)
-		ft_exit(vm, NOMBRE_MAGIQUE);
-	if (reverser_32(h->prog_size) > CHAMP_MAX_SIZE)
-		ft_exit(vm, SIZE_TROP_GRANDE);
-	if (read(fd, prog, INT_MAX) < 0) // check size of champ
-		ft_exit(vm, FAIL_ON_READ);
-	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	return (reverser_32(h->prog_size));
-}
-
-int		find_playernum(t_vm *vm)
-{
-	int		i;
-	int		min;
-
-	i = 0;
-	min = 20; 
-	while (i++ < MAX_PLAYERS)
-		if (min > i && vm->play_free[i] == 0)
-			min = i;
-	vm->play_free[min] = 1;
-	return (min);
-}
-
-/*
-*** RENTRE LE CHAMPION DANS LA MEMOIRE
-*/
-
-void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
-{
-	int				i;
-	unsigned char	prog[CHAMP_MAX_SIZE];
-	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
-		ft_exit(vm, READ_PROCESUS);
-	// verifier
-	// i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);
-	// while (i--)
-	// 	vm->mem[current->pc - i] = i >= vm->sizes[pn] ? 0 : prog[i];
-	i = -1;
-	while (++i < vm->sizes[pn])
-		vm->mem[current->pc + i] = prog[i];
-	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[1] = -current->pnu;
-}
-
-void	check_proc(t_vm *vm, t_proc *current, int pn)
-{
-	int		fd;
-
-	pushfront_proc(&vm->proc, current);
-	if ((fd = open(vm->names[pn], O_RDONLY)) == -1)
-		ft_exit(vm, FAIL_ON_READ);
-	current->carry = FALSE;
-	current->cycle = 0;
-	// current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct);
-	current->pc = pn * (MEM_SIZE / vm->pct);
-	if (vm->pnum[pn] == -1)
-		current->pnu = find_playernum(vm);
-	else
-		current->pnu = vm->pnum[pn];
-	load_proc(vm, fd, current, pn);
-}
-
-void	print_memory(unsigned char *mem)
-{
-	int i;
-
-	i = -1;
-	while (++i < MEM_SIZE)
-		printf("%02hhx ", mem[i]);
-	printf("\n");
-}
-
-int		initialize(t_vm *vm, int ac, char **av)
-{
-	int		i;
-	t_proc	*proc;
-
-	i = -1;
 	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
@@ -160,8 +54,17 @@ int		initialize(t_vm *vm, int ac, char **av)
 	vm->cycle_to_die = CYCLE_TO_DIE;
 	vm->cycle = 0;
 	vm->check = 0;
+}
+
+void	initialize(t_vm *vm, int ac, char **av)
+{
+	int		i;
+	t_proc	*proc;
+
+	i = -1;
+	set_to_zero(vm);
 	if (ac > 1)
-		parsing(vm, ac, av);
+		parsing(vm, ac, av, 0);
 	else
 		ft_exit(vm, INVALID_INPUT);
 	if (!vm->pct)

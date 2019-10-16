@@ -6,7 +6,7 @@
 #    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/16 12:34:17 by sarobber         ###   ########.fr        #
+#    Updated: 2019/10/16 15:01:40 by sarobber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ NAME_COREWAR				:=	corewar
 
 SRC_COREWAR 				=	corewar.c \
 								init_vm.c \
+								init_proc.c \
 								main_vm.c \
 								utils.c \
 								error.c \
