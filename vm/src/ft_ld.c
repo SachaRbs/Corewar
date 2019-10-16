@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:57:10 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 15:14:49 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 18:08:54 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,4 @@ void	*ft_ld(t_vm *vm, t_proc *proc)
 		proc->carry = 0;
 	return (NULL);
 }
-	
-// void	*ft_ldi(t_vm *vm, t_proc *proc)
-// {
-	
-// } // 1 + 2 % idx
+
