@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 15:20:31 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:17:48 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
 	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[1] = -current->pnu;
+	current->reg[0] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
 }
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)

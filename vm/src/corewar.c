@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 15:22:39 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:18:43 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,20 @@ void	print_memory2(unsigned char *mem)
 	printf("\n");
 }
 
+void	arg_to_zero(t_proc *proc)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < MAX_ARGS_NUMBER)
+	{
+		proc->arg_a[i] = 0;
+		proc->arg_v[i] = 0;
+		proc->arg_t[i] = 0;
+		i++;
+	}
+}
+
 void	run_corewar(t_vm *vm)
 {
 	t_proc	*proc;
@@ -99,7 +113,16 @@ void	run_corewar(t_vm *vm)
 			{
 				operation->op[proc->action - 1](vm, proc);
 				// print_action(proc);
-				proc->pc = proc->read;
+				// if (proc->action != 9) //in zjmp the pc of proc is modified if carry == 0
+				// 	proc->pc = proc->read;
+				// else //THIS IS NOT RIGHT
+				// {
+				// 	if (proc->carry == 1)
+				// 		proc->carry = 0;
+				// 	else
+				// 		proc->pc = proc->read;
+				// }
+				arg_to_zero(proc);
 			}
 			else if (proc->cycle < vm->cycle)
 			{
@@ -107,6 +130,8 @@ void	run_corewar(t_vm *vm)
 				proc->action = get_instruction(vm, 1, &proc->read);
 				if (proc->action > 0 && proc->action <= NBR_OP)
 					get_arg(vm, proc, op_tab[proc->action]);
+				else
+					proc->pc++;
 			}
 			proc = proc->next;
 		}
