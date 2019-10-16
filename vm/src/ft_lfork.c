@@ -14,21 +14,31 @@
 #include "error.h"
 #include "op.h"
 
+void	l_pushfront_proc_tmp(t_proc **head, t_proc *new)
+{
+	if (head && *head && new)
+	{
+		new->next = *head;
+		*head = new;
+	}
+	else
+		*head = new;
+}
+
 void	*ft_lfork(t_vm *vm, t_proc *proc)
 {
+	t_proc *newproc;
 	int i;
 
-	i = 0;
-    (void)vm;
-	printf("PLAYER No : %d\n", proc->pnu);
-	printf("FUNCTION  : ft_lfork\n");
-	printf("action = %s\n", op_tab[proc->action].name);
-	while (i < 4)
-	{
-		printf("arg_v[%d] = %d\n", i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
-	}
-	printf("\n\n");
-    return (NULL);
+	i = -1;
+	if (newproc = ft_memalloc(sizeof(t_proc)) == NULL)
+		ft_exit(vm, ERROR_MALLOC);
+	*newproc = *proc;
+	l_pushfront_proc_tmp(&vm, newproc);
+	newproc->pc = proc->pc + proc->arg_v[0];
+	while (++i < REG_NUMBER)
+		newproc->reg[i] = proc->reg[i];
+	newproc->carry = proc->carry;
+	newproc->cycle_live = proc->cycle_live;
+	//"And something else, but more on that later."
 }

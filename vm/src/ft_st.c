@@ -16,19 +16,9 @@
 
 void	*ft_st(t_vm *vm, t_proc *proc)
 {
-	int i;
+	if (((proc->arcode >> 4) & 0b11) == IND_CODE)
+		vm->mem[proc->pc + proc->arg_v[1] % IDX_MOD] = proc->arg_v[0];  // TRONQUEZ PAR ID_MODE
+	else
+		proc->reg[proc->arg_v[1]] = proc->arg_v[0];
 
-	i = 0;
-    (void)vm;
-	printf("PLAYER No : %d\n", proc->pnu);
-	printf("FUNCTION  : ft_st\n");
-	printf("action = %s\n", op_tab[proc->action].name);
-	while (i < 4)
-	{
-		printf("arg_v[%d] = %d\n", i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
-	}
-	printf("\n\n");
-    return (NULL);
 }

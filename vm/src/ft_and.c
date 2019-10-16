@@ -16,19 +16,18 @@
 
 void	*ft_and(t_vm *vm, t_proc *proc)
 {
+	int num[2];
 	int i;
 
-	i = 0;
-    (void)vm;
-	printf("PLAYER No : %d\n", proc->pnu);
-	printf("FUNCTION  : ft_and\n");
-	printf("action = %s\n", op_tab[proc->action].name);
-	while (i < 4)
+	i = -1;
+	while(++i < 2)
 	{
-		printf("arg_v[%d] = %d\n", i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
+		if (proc->arg_t[i] = T_REG)
+			num[i] = proc->arg_v[i];
+		else if (proc->arg_t[i] = T_DIR)
+			;// ??
+		else if (proc->arg_t[i] = T_IND)
+			num[i] = proc->pc + (proc->arg_v[i] % IDX_MOD);
 	}
-	printf("\n\n");
-    return (NULL);
+	proc->reg[proc->arg_v[2]] = num[0] & num[1];
 }
