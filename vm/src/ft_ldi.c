@@ -6,13 +6,17 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:57:10 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 15:15:44 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:15:28 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "operations.h"
 #include "error.h"
 #include "op.h"
+
+/*
+***	THIS IS A COPY OF FT_LD.C NOT FT_LDI.C
+*/
 
 void	*ft_ldi(t_vm *vm, t_proc *proc)
 {
