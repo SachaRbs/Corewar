@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:32:01 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 15:05:43 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:21:02 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	*ft_sub(t_vm *vm, t_proc *proc)
 	printf("action = %s\n", op_tab[proc->action].name);
 	while (i < 4)
 	{
-		printf("arg[%d] = %d\n", i, proc->arg[i]);
-		proc->arg[i] = 0;
+		printf("arg_v[%d] = %d\n", i, proc->arg_v[i]);
+		proc->arg_v[i] = 0;
 		i++;
 	}
 	printf("\n\n");
