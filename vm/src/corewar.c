@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 15:03:46 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 15:21:10 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
 	return (big_endian(val, size));
 }
 
-void			get_arg(t_vm *vm, t_proc *proc, t_op op)
+void	get_arg(t_vm *vm, t_proc *proc, t_op op)
 {
 	int				i;
 	unsigned int	size;
@@ -51,8 +51,7 @@ void			get_arg(t_vm *vm, t_proc *proc, t_op op)
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
 		if (code == REG_CODE && op.args[i] & T_REG)
 			size = 1;
-		else if ((code == IND_CODE && op.args[i] & T_IND)
-		|| (code == DIR_CODE && op.args[i] & T_DIR))
+		else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 			size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 		proc->arg_a[i] = proc->read;
 		proc->arg_t[i] = code;
@@ -60,7 +59,7 @@ void			get_arg(t_vm *vm, t_proc *proc, t_op op)
 	}
 }
 
-void			print_action(t_proc *proc)
+void	print_action(t_proc *proc)
 {
 	int	i;
 
@@ -75,7 +74,17 @@ void			print_action(t_proc *proc)
 	printf("\n\n");
 }
 
-void			run_corewar(t_vm *vm)
+void	print_memory2(unsigned char *mem)
+{
+	int i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+		printf("%02hhx ", mem[i]);
+	printf("\n");
+}
+
+void	run_corewar(t_vm *vm)
 {
 	t_proc	*proc;
 	t_operations	*operation;
@@ -91,7 +100,6 @@ void			run_corewar(t_vm *vm)
 				operation->op[proc->action - 1](vm, proc);
 				// print_action(proc);
 				proc->pc = proc->read;
-				getchar();
 			}
 			else if (proc->cycle < vm->cycle)
 			{
