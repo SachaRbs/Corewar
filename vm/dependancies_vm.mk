@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_vm.mk                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/07 16:29:41 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/16 12:34:17 by sarobber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,28 @@ SRC_COREWAR 				=	corewar.c \
 								main_vm.c \
 								utils.c \
 								error.c \
-								op.c
+								op.c \
+								operations.c \
+								ft_add.c \
+								ft_aff.c \
+								ft_and.c \
+								ft_fork.c \
+								ft_ld.c \
+								ft_ldi.c \
+								ft_lfork.c \
+								ft_live.c \
+								ft_lld.c \
+								ft_lldi.c \
+								ft_or.c \
+								ft_st.c \
+								ft_sti.c \
+								ft_sub.c \
+								ft_xor.c \
+								ft_zjmp.c
 
 INC_COREWAR					:=	corewar.h \
-								error.h
+								error.h \
+								operations.h
 
 DEPENDANCIES_COREWAR_O		:=	Makefile \
 								./dependancies_$(L_COREWAR_DIR).mk \

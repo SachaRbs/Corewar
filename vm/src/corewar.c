@@ -6,11 +6,12 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 18:10:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:01:16 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+#include "operations.h"
 
 unsigned int		big_endian(unsigned int num, int n)
 {
@@ -52,8 +53,9 @@ void	get_arg(t_vm *vm, t_proc *proc, t_op op)
 			size = 1;
 		else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 			size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
-		proc->arg[i] = get_instruction(vm, size, &proc->read);
-
+		proc->arg_a[i] = proc->read;
+		proc->arg_t[i] = code;
+		proc->arg_v[i] = get_instruction(vm, size, &proc->read);
 	}
 }
 
@@ -65,8 +67,8 @@ void	print_action(t_proc *proc)
 	printf("PLAYER No %d :\n", proc->pnu);
 	printf("action = %s\n", op_tab[proc->action].name);
 	while (i < 4){
-		printf("arg[%d] = %d\n",i, proc->arg[i]);
-		proc->arg[i] = 0;
+		printf("arg_v[%d] = %d\n",i, proc->arg_v[i]);
+		proc->arg_v[i] = 0;
 		i++;
 	}
 	printf("\n\n");
@@ -85,7 +87,9 @@ void	print_memory2(unsigned char *mem)
 void	run_corewar(t_vm *vm)
 {
 	t_proc	*proc;
+	t_operations	*operation;
 
+	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
 		proc = vm->proc;
@@ -93,7 +97,8 @@ void	run_corewar(t_vm *vm)
 		{
 			if (vm->cycle == proc->cycle)
 			{
-				print_action(proc);
+				operation->op[proc->action - 1](vm, proc);
+				// print_action(proc);
 				proc->pc = proc->read;
 			}
 			else if (proc->cycle < vm->cycle)

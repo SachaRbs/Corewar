@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 17:56:10 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:21:40 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,6 @@ int		initialize(t_vm *vm, int ac, char **av)
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
-	// print_memory(vm->mem);
+	print_memory(vm->mem);
 	return (0);
 }

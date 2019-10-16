@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/15 17:58:18 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:18:19 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ typedef struct		s_proc
 	int				crossed;
 	unsigned int	action;
 	unsigned int	arcode;
-	int				arg[MAX_ARGS_NUMBER];
+	int				arg_v[MAX_ARGS_NUMBER];
+	int				arg_t[MAX_ARGS_NUMBER];
+	int				arg_a[MAX_ARGS_NUMBER];
 	int				reg[REG_NUMBER];
 	struct s_proc	*next;
 }					t_proc;
@@ -62,5 +64,6 @@ void				run_corewar(t_vm *vm);
 unsigned int		get_instruction(t_vm *vm, int size, unsigned int *pc);
 int16_t				reverser_16(int16_t a);
 int32_t				reverser_32(int32_t a);
+unsigned int		big_endian(unsigned int num, int n);
 
 #endif
