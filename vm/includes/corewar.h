@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 19:02:57 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:34:13 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ typedef struct		s_proc
 	int				pc;
 	unsigned int	read;
 	int				carry;
-	int				oc;
+	// int				oc;
 	int				cycle_live;
 	int				cycle;
-	int				crossed;
+	// int				crossed;
 	unsigned int	action;
 	unsigned int	arcode;
 	int				arg_v[MAX_ARGS_NUMBER];
@@ -63,6 +63,7 @@ int					initialize(t_vm *vm, int ac, char **av);
 void				run_corewar(t_vm *vm);
 // void				check_proc(t_vm *vm, t_proc *current, int pn);
 unsigned int		get_instruction(t_vm *vm, int size, unsigned int *pc);
+void				pushfront_proc(t_proc **head, t_proc *new);
 
 /*
 ***		UTILS

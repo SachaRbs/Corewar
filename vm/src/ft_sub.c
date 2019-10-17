@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:32:01 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 19:00:50 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:02:39 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@
 void	*ft_sub(t_vm *vm, t_proc *proc)
 {
 	(void)vm;
-	// proc->arg_v[2] = proc->arg_v[0] - proc->arg_v[1];
-	proc->reg[proc->arg_v[2]] = proc->arg_v[0] - proc->arg_v[1];
-	if (proc->arg_v[2] == 0)
-		proc->carry = 1;
-	else
-		proc->carry = 0;
+	proc->reg[proc->arg_v[2]] = proc->reg[proc->arg_v[0]] - proc->reg[proc->arg_v[1]];
+	proc->carry = proc->reg[proc->arg_v[2]] == 0 ? 1 : 0;
 	return (NULL);
 }

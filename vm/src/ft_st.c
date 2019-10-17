@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:31:17 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 19:00:25 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:50:56 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 
 void	*ft_st(t_vm *vm, t_proc *proc)
 {
-	if (((proc->arcode >> 4) & 0b11) == IND_CODE)
-		vm->mem[proc->pc + proc->arg_v[1] % IDX_MOD] = proc->arg_v[0];  // TRONQUEZ PAR ID_MODE
-	else
-		proc->reg[proc->arg_v[1]] = proc->arg_v[0];
+	vm->mem[proc->pc + (argument(vm, proc, 1) % IDX_MOD)] = proc->reg[proc->arg_v[0]];
 	return (NULL);
 }
