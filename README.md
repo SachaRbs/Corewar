@@ -6,3 +6,10 @@ Corewar is a very peculiar game. It’s about bringing “players” together ar
 
 
 with epham, crfernan and yoribeir
+
+## Usage
+Virtual Machine :
+```
+make && ./corewar file.cor
+```
+Assembler :
