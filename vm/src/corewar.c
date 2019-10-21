@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 18:04:05 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 18:18:04 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	// 	return(0);
 	while (++i < MAX_ARGS_NUMBER)
 	{
-		code = ((proc->arcode >> (6 - i * 2)) & 3); 
+		code = ((proc->arcode >> (6 - i * 2)) & 3);
 		if (i < op.nb_arg)
 		{
 			if (code == REG_CODE && op.args[i] & T_REG)
@@ -96,24 +96,30 @@ void	print_action(t_proc *proc)
 	printf("\n\n");
 }
 
-void	print_memory2(unsigned char *mem, t_proc *proc)
+void	print_memory2(unsigned char *mem, t_proc *proc, int d)
 {
 	int i;
 
 	i = -1;
+	ft_printf("\e[1;1H\e[2J");
 	while (++i < MEM_SIZE)
 	{
-		if (i == proc->pc)
+		if (i % 64 == 0)
+		{
+			if (i == 0)
+				printf("0x%04x : ", i);
+			else
+				printf("\n0x%04x : ", i);
+		}
+		if (i == proc->pc && d == 0)
 		{
 			printf("\e[36m%02hhx ", mem[i]);
-			// printf("%02hhx ", mem[i]);
 			printf("\e[0m");
 		}
-		else if (i > proc->pc && i < (int)proc->read)
+		else if (i > proc->pc && i < (int)proc->read && d == 0)
 		{
 			printf("\e[32m%02hhx ", mem[i]);
 			printf("\e[0m");
-			// printf("%02hhx ", mem[i]);
 		}
 		else
 			printf("%02hhx ", mem[i]);
@@ -143,13 +149,16 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
+		// printf("%d == %d", vm->dump, vm->cycle);
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
+				// get_arg
 				operation->op[proc->action - 1](vm, proc);
-				print_memory2(vm->mem, proc);
+				if (vm->dump == -1)
+					print_memory2(vm->mem, proc, 0);
 				getchar();
 				proc->pc = proc->read;
 				arg_to_zero(proc);
@@ -165,5 +174,7 @@ void	run_corewar(t_vm *vm)
 			proc = proc->next;
 		}
 	}
+	if (vm->cycle == vm->dump)
+		print_memory2(vm->mem, vm->proc, 1);
 }
 // when we move the pc higher than MEMN_MAX just put it to 0

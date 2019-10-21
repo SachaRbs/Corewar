@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/16 19:02:10 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 15:26:48 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,34 @@ int		argument(t_vm *vm, t_proc *proc, int arg)
 		return(proc->reg[proc->arg_v[arg]]);
 	if (proc->arg_t[arg] == DIR_CODE)
 		return(proc->arg_v[arg]);
-	return(big_endian(vm->mem[proc->arg_a[arg]
-		+ (proc->arg_v[arg] % IDX_MOD)], 4));
+	return(big_endian(vm->mem[(proc->pc + (proc->arg_v[arg] % IDX_MOD)) % MEM_SIZE], 4));
 }
+
+void	writing_mem(t_vm *vm, int pc, int bytes, int value)
+{
+	int i;
+	int sign;
+	int div;
+
+	sign = 1;
+	if (value < 0)
+	{
+		sign = -1;
+		value *= -1;
+	}
+	i = -1;
+	while(++i < bytes)
+	{
+		// div = 16^(bytes - 1 - i);
+		div = ft_power(16, (bytes - 1 - i));
+		if (sign == 1)
+			vm->mem[pc + i] = (int)(value / div);
+		else if (div > 1)
+			vm->mem[pc + i] = 255 - (int)(value / div);
+		else
+			vm->mem[pc + i] = (255 - (int)(value / div) + 1); // +1 for negative number
+		
+	}
+}
+
+	// vm->mem[pc + i] = (int)(value / (16^(bytes - 1 - i)));

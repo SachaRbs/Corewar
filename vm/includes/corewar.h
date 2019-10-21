@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 15:34:13 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 15:08:08 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct		s_proc
 	int				arg_v[MAX_ARGS_NUMBER];
 	int				arg_t[MAX_ARGS_NUMBER];
 	int				arg_a[MAX_ARGS_NUMBER];
-	int				reg[REG_NUMBER];
+	int				reg[REG_NUMBER + 1];
 	struct s_proc	*next;
 }					t_proc;
 
@@ -73,5 +73,6 @@ int16_t				reverser_16(int16_t a);
 int32_t				reverser_32(int32_t a);
 unsigned int		big_endian(unsigned int num, int n);
 int					argument(t_vm *vm, t_proc *proc, int arg);
+void				writing_mem(t_vm *vm, int pc, int bytes, int value);
 
 #endif

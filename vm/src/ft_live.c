@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:55:09 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/17 15:40:36 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 13:45:58 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	*ft_live(t_vm *vm, t_proc *proc)
 	current = vm->proc;
 	while (current)
 	{
-		if (current->reg[0] == proc->arg_v[0])
+		if (current->reg[1] == proc->arg_v[0])
 			break;
 		current = current->next;
 	}
 	if (current != NULL)
 	{
-		vm->live = current->reg[0];
+		vm->live = current->reg[1];
 		// proc->cycle_live = vm->cycle; //NOT SURE ABOUT THIS
 		proc->cycle_live = 0;
 	}

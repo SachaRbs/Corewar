@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:29:25 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/17 15:34:03 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 18:17:07 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	*ft_fork(t_vm *vm, t_proc *proc)
 	while (++i < REG_NUMBER)
 		newproc->reg[i] = proc->reg[i];
 	newproc->carry = proc->carry;
+	newproc->cycle = proc->cycle;
 	newproc->cycle_live = proc->cycle_live;
-	newproc->pc = proc->arg_a[0] % IDX_MOD;
+	newproc->pc = (proc->pc + (proc->arg_v[0] % IDX_MOD)) % MEM_SIZE;
 	newproc->pnu = proc->pnu;
 	pushfront_proc(&vm->proc, newproc);
 	// pushfront_proc(&vm->first_proc, newproc);

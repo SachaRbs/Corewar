@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 15:39:31 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/21 13:45:36 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	parsing(t_vm *vm, int ac, char **av)
 					ft_exit(vm, INVALID_INPUT);
 				vm->play_free[vm->pnum[vm->pct]] = 1;
 			}
-			else if (av[i][1] == 'd')
+			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
 				vm->dump = ft_atoi(av[i]);
 			else
 				ft_exit(vm, MAUVAISE_OPTION);
@@ -113,7 +113,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
 	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[0] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
+	current->reg[1] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
 }
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)
