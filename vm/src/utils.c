@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/22 18:08:34 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:36:17 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 	while(i < bytes)
 	{
 		div = ft_power(16, (bytes - 1 - i));
-		hex = 10 * (value / div);
+		hex = 16 * (value / div);
 		i++;
 		value %= div;
 		div = ft_power(16, (bytes - 1 - i));

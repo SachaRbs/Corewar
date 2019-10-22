@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/22 17:02:02 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:46:24 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
 
 	val = 0;
 	if (*pc + size < MEM_SIZE)
-		ft_memcpy(&val, &(vm->mem[*pc]), size);
+		ft_memcpy(&val, &(vm->mem[*pc % MEM_SIZE]), size);
 	else
 		val = -1;
 	*pc += size;
@@ -160,8 +160,8 @@ void	run_corewar(t_vm *vm)
 				{
 					printf("cycle = %d\n", vm->cycle);
 					print_action2(proc);
-					print_memory2(vm->mem, proc, 0);
-					getchar();
+					// print_memory2(vm->mem, proc, 0);
+					// getchar();
 				}
 				proc->pc = proc->read;
 				arg_to_zero(proc);
