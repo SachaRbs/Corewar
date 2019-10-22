@@ -6,12 +6,13 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/21 18:18:04 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/22 17:02:02 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "operations.h"
+#include "op.h"
 
 unsigned int		big_endian(unsigned int num, int n)
 {
@@ -37,16 +38,6 @@ unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
 	return (big_endian(val, size));
 }
 
-// int		check_arcode(int action, int arcode)
-// {
-// 	int code;
-	
-// 	while (++i < op.nb_arg)
-// 	{
-// 		code = ((proc->arcode >> (6 - i * 2)) & 3);
-// 	}
-// }
-
 int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 {
 	int				i;
@@ -56,8 +47,6 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	i = -1;
 	proc->cycle += op.cycle;
 	proc->arcode = op.ocp ? get_instruction(vm, 1, &proc->read) : DIR_CODE << 6;
-	// if (check_arcode(proc->action, proc->arcode))
-	// 	return(0);
 	while (++i < MAX_ARGS_NUMBER)
 	{
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
@@ -76,9 +65,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 		else if (code != 0)
 			return (0);
 	}
-	// if ( code == 0)
 		return (1);
-	// return (0);
 }
 
 void	print_action(t_proc *proc)
@@ -87,7 +74,7 @@ void	print_action(t_proc *proc)
 
 	i = 0;
 	printf("PLAYER No %d :\n", proc->pnu);
-	printf("action = %s\n", op_tab[proc->action].name);
+	printf("action = %s\n", g_op_tab[proc->action].name);
 	while (i < 4){
 		printf("arg_v[%d] = %d\n",i, proc->arg_v[i]);
 		proc->arg_v[i] = 0;
@@ -101,7 +88,8 @@ void	print_memory2(unsigned char *mem, t_proc *proc, int d)
 	int i;
 
 	i = -1;
-	ft_printf("\e[1;1H\e[2J");
+	// sleep(1);
+	// ft_printf("\e[1;1H\e[2J");
 	while (++i < MEM_SIZE)
 	{
 		if (i % 64 == 0)
@@ -127,6 +115,18 @@ void	print_memory2(unsigned char *mem, t_proc *proc, int d)
 	printf("\n");
 }
 
+void	print_action2(t_proc *proc)
+{
+	int i;
+
+	i = -1;
+	printf("Proc = %d || Action = %s || Arg[] = ", proc->procnum, g_op_tab[proc->action].name);
+	while (++i < g_op_tab[proc->action].nb_arg)
+		printf("%d ", proc->arg_v[i]);
+	printf("\n");
+}
+
+
 void	arg_to_zero(t_proc *proc)
 {
 	size_t	i;
@@ -149,7 +149,6 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		// printf("%d == %d", vm->dump, vm->cycle);
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
@@ -158,8 +157,12 @@ void	run_corewar(t_vm *vm)
 				// get_arg
 				operation->op[proc->action - 1](vm, proc);
 				if (vm->dump == -1)
+				{
+					printf("cycle = %d\n", vm->cycle);
+					print_action2(proc);
 					print_memory2(vm->mem, proc, 0);
-				getchar();
+					getchar();
+				}
 				proc->pc = proc->read;
 				arg_to_zero(proc);
 			}
@@ -168,7 +171,7 @@ void	run_corewar(t_vm *vm)
 				proc->read = proc->pc;
 				proc->action = get_instruction(vm, 1, &proc->read);
 				if (!(proc->action > 0 && proc->action <= NBR_OP
-				&& get_arg(vm, proc, op_tab[proc->action])))
+				&& get_arg(vm, proc, g_op_tab[proc->action])))
 					proc->pc++;
 			}
 			proc = proc->next;
@@ -177,4 +180,3 @@ void	run_corewar(t_vm *vm)
 	if (vm->cycle == vm->dump)
 		print_memory2(vm->mem, vm->proc, 1);
 }
-// when we move the pc higher than MEMN_MAX just put it to 0

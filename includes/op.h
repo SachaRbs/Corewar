@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/21 13:44:48 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/22 12:50:10 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,5 @@ typedef struct					s_op
 	unsigned char				ocp;
 	unsigned char				index;
 }								t_op;
-
-extern t_op						op_tab[NBR_OP + 1];
 
 #endif

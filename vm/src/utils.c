@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/21 15:26:48 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:08:34 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,39 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 	int i;
 	int sign;
 	int div;
+	int hex;
 
 	sign = 1;
+	bytes *= 2;
 	if (value < 0)
 	{
 		sign = -1;
 		value *= -1;
 	}
-	i = -1;
-	while(++i < bytes)
+	i = 0;
+	while(i < bytes)
 	{
-		// div = 16^(bytes - 1 - i);
 		div = ft_power(16, (bytes - 1 - i));
-		if (sign == 1)
-			vm->mem[pc + i] = (int)(value / div);
-		else if (div > 1)
-			vm->mem[pc + i] = 255 - (int)(value / div);
-		else
-			vm->mem[pc + i] = (255 - (int)(value / div) + 1); // +1 for negative number
-		
+		hex = 10 * (value / div);
+		i++;
+		value %= div;
+		div = ft_power(16, (bytes - 1 - i));
+		hex += (value / div);
+		i++;
+		vm->mem[pc + (i - 1) / 2] = hex;
+		value %= div;
 	}
 }
 
-	// vm->mem[pc + i] = (int)(value / (16^(bytes - 1 - i)));
+
+	// while(++i < bytes)
+	// {
+	// 	div = ft_power(16, (bytes - 1 - i));
+	// 	if (sign == 1)
+	// 		vm->mem[pc + i] = (int)(value / div);
+	// 	else if (div > 1)
+	// 		vm->mem[pc + i] = 255 - (int)(value / div);
+	// 	else
+	// 		vm->mem[pc + i] = (255 - (int)(value / div) + 1);
+	// 	// value %= div;
+	// }
