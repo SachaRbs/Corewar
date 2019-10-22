@@ -12,31 +12,6 @@
 
 #include "includes/asm.h"
 
-char	*itoa_base_ulong(uintmax_t n, int base, char *s_base)
-{
-	uintmax_t			nb;
-	unsigned int		i;
-	char				*str;
-	int					len;
-
-	nb = n;
-	len = ft_nblen(n, base);
-	if (!(str = ft_strnew(len)))
-		return (0);
-	if (!nb)
-		str[0] = '0';
-	str[len + 1] = '\0';
-	i = 0;
-	while (nb)
-	{
-		str[i] = s_base[nb % base];
-		nb /= base;
-		i++;
-	}
-	return (str);
-}
-
-
 void	get_champion(t_asm *p, char *str)
 {
     char    *end;
@@ -50,8 +25,8 @@ void	get_champion(t_asm *p, char *str)
         if (*str == '"')
         {
             str++;
-            if (!(end = ft_strchr(str, '"')))
-                ft_error("INVALID CHAMPION NAME");
+ 			if (!(end = ft_strchr(str, '"')))
+				ft_error("INVALID CHAMPION NAME");
         }
         p->champ = ft_strsub(str, 0, end - str);
         if (ft_strlen(p->champ) > PROG_NAME_LENGTH)

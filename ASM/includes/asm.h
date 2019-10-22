@@ -41,6 +41,7 @@ typedef	struct	s_asm
 	struct s_label	*labels;
 }				t_asm;
 
+
 typedef struct	s_inst
 {
 	int 			pos;
@@ -89,3 +90,4 @@ t_asm		*init_struct(int fd);
 int		ft_error(char *str);
 int 	is_whitespace(int c);
 void 	skip_whitespaces(char **line);
+char	*itoa_base_ulong(uintmax_t n, int base, char *s_base);

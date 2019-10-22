@@ -15,7 +15,7 @@ INCLUDES = includes
 LIBS = libft
 LIB = ft
 FLAGS = -Wall -Werror -Wextra
-SRCS = asm.c utils.c init.c header.c label.c instructions.c
+SRCS = asm.c utils.c init.c header.c label.c instructions.c write.c
 # SRCSREP = srcs
 OBJS = $(SRCS:.c=.o)
 
