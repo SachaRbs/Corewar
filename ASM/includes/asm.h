@@ -69,7 +69,7 @@ void		read_header(t_asm *p);
 int 		check_instruction(t_asm *p, char **line, int size);
 void		get_instruction(t_asm *p, char **line, int size);
 
-	/*
+/*
 ** label
 */
 
@@ -88,4 +88,4 @@ t_asm		*init_struct(int fd);
 
 int		ft_error(char *str);
 int 	is_whitespace(int c);
-void 	skip_whitespaces(t_asm *p, char **line);
+void 	skip_whitespaces(char **line);

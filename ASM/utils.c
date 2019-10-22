@@ -28,7 +28,7 @@ int		is_whitespace(int c)
 			c == ' ');
 }
 
-void	skip_whitespaces(t_asm *p, char **line)
+void	skip_whitespaces(char **line)
 {
 	while (is_whitespace(**line))
 		(*line)++;

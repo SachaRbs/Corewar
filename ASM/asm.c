@@ -15,7 +15,11 @@ char	*check_filename(char *file)
 {
 	char	*filename;
 	char	*dot;
+	char	*tmp;
 
+	tmp = file;
+	if ((tmp = ft_strrchr(tmp, '/')))
+		file = tmp + 1;
 	if (!(dot = ft_strchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
@@ -33,7 +37,7 @@ int		ft_readline(int fd, char **str, char **line)
 	ssize_t sz;
 
 	while (!ft_strchr(*str, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
-		if (!(*str = ft_strnjoin_free(*str, buffer, sz)))
+		if (!(*str = ft_strnjoin(*str, buffer, sz)))
 			return (-1);
 	sz = 0;
 	while ((*str)[sz] && (*str)[sz] != '\n')
@@ -45,7 +49,7 @@ int		ft_readline(int fd, char **str, char **line)
 	ptr = *str;
 	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
-	free((void *)ptr);
+	free(ptr);
 	return (sz > 0 ? sz : 0);
 }
 
@@ -54,24 +58,21 @@ void	get_function(t_asm *p, char **line)
 	int i;
 
 	i = 0;
-	skip_whitespaces(p, line);
+	skip_whitespaces(line);
 	while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':' &&
 		   (*line)[i] != '%')
 		i++;
-	printf(MAG"%s\n"RESET, *line + i);
-    printf(YEL "%s\n" RESET, *line);
 	if ((*line)[i] == ':')
 	{
 		add_label(p, *line);
 		*line += i + 1;
-        printf("%s\n", ((*line)));
     	get_function(p, line);
     }
 	else if ((*line)[i] == '%' || is_whitespace((*line)[i]))
 	{
         if (check_instruction(p, line, i))
 		{
-			get_instruction(p, line, i);
+			// get_instruction(p, line, i);
 		}
     }
 }
@@ -84,7 +85,6 @@ void	read_main(t_asm *p)
 	str = ft_strnew(1);
 	while ((ft_readline(p->fd, &p->str, &buffer) > 0))
 	{
-        // printf("%s\n", buffer);
 		get_function(p, &buffer);
     	p->row++;
 	}
@@ -102,6 +102,7 @@ int		main(int argc, char **argv)
 		exit(1);
 	p = init_struct(fd);
 	p->filename = check_filename(argv[1]);
+	printf("%s\n", p->filename);
 	read_header(p);
 	read_main(p);
 }

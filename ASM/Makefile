@@ -14,8 +14,8 @@ NAME = asm
 INCLUDES = includes
 LIBS = libft
 LIB = ft
-# FLAGS = -Wall -Werror -Wextra
-SRCS = asm.c utils.c init.c header.c label.c instructions.c token.c
+FLAGS = -Wall -Werror -Wextra
+SRCS = asm.c utils.c init.c header.c label.c instructions.c
 # SRCSREP = srcs
 OBJS = $(SRCS:.c=.o)
 
@@ -25,7 +25,7 @@ all: $(NAME)
 	gcc $(FLAGS) -I$(INCLUDES) -c $^
 
 $(NAME): $(OBJS)
-	make -C libft
+	@make -C libft
 	gcc $(FLAGS) -I$(INCLUDES) $^ -L$(LIBS) -l$(LIB) -o $@
 
 clean:
