@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/23 18:08:41 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/23 18:39:11 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	print_action2(t_proc *proc, t_vm *vm)
 	while (++i < g_op_tab[proc->action].nb_arg)
 		printf("%d ", proc->arg_v[i]);
 	if (proc->action == 11)
-		printf("\n\t-> addres = %d", (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)) % MEM_SIZE);
+		printf("\n\t-> addres = %d || reg[%d] = %d", (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)) % MEM_SIZE, 15, proc->reg[15]);
 	if (proc->action == 10)
 	{
 		printf("\n\t-> address = %d, reg[%d] = %d || arg0 = %d || arg1 = %d",
@@ -162,7 +162,7 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		// printf("It is now cycle %d\n", vm->cycle);
+		printf("It is now cycle %d\n", vm->cycle);
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
@@ -170,10 +170,10 @@ void	run_corewar(t_vm *vm)
 			{
 				get_arg(vm, proc, g_op_tab[proc->action]);
 				operation->op[proc->action - 1](vm, proc);
-				// print_action2(proc, vm);
+				print_action2(proc, vm);
 				if (vm->dump == -1)
 				{
-					// print_memory2(vm->mem, proc, 0);
+					print_memory2(vm->mem, proc, 0);
 					// getchar();
 				}
 				proc->pc = proc->read;
