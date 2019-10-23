@@ -9,7 +9,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "/Users/sarobber/Documents/42/Corewar/vm/corewar",
-		"args": ["-d", "8000", "../ressources/vm_champs/champs/Gagnant.cor"],
+		"args": ["-d", "4000", "../ressources/vm_champs/champs/Gagnant.cor"],
 		"stopAtEntry": true,
 		"cwd": "${workspaceFolder}/vm",
 		"environment": [],

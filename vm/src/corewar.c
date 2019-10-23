@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/22 18:46:24 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/23 18:08:41 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	unsigned int	code;
 
 	i = -1;
-	proc->cycle += op.cycle;
+	// proc->cycle += op.cycle;
 	proc->arcode = op.ocp ? get_instruction(vm, 1, &proc->read) : DIR_CODE << 6;
 	while (++i < MAX_ARGS_NUMBER)
 	{
@@ -115,14 +115,27 @@ void	print_memory2(unsigned char *mem, t_proc *proc, int d)
 	printf("\n");
 }
 
-void	print_action2(t_proc *proc)
+void	print_action2(t_proc *proc, t_vm *vm)
 {
 	int i;
 
 	i = -1;
-	printf("Proc = %d || Action = %s || Arg[] = ", proc->procnum, g_op_tab[proc->action].name);
+	printf("Proc = %d || Action = %s || PC = %d {0x%04x} || Read = %d {0x%04x} || Arg[] = ", proc->procnum, g_op_tab[proc->action].name, proc->pc, proc->pc, proc->read, proc->read);
 	while (++i < g_op_tab[proc->action].nb_arg)
 		printf("%d ", proc->arg_v[i]);
+	if (proc->action == 11)
+		printf("\n\t-> addres = %d", (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)) % MEM_SIZE);
+	if (proc->action == 10)
+	{
+		printf("\n\t-> address = %d, reg[%d] = %d || arg0 = %d || arg1 = %d",
+		(proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD)) % MEM_SIZE, 15, proc->reg[15], proc->arg_v[0], proc->arg_v[1]);
+	}
+	if (proc->action == 9)
+	{
+		if (proc->carry == 0)
+			printf("FAIL");
+	}
+
 	printf("\n");
 }
 
@@ -149,17 +162,17 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
+		// printf("It is now cycle %d\n", vm->cycle);
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
-				// get_arg
+				get_arg(vm, proc, g_op_tab[proc->action]);
 				operation->op[proc->action - 1](vm, proc);
+				// print_action2(proc, vm);
 				if (vm->dump == -1)
 				{
-					printf("cycle = %d\n", vm->cycle);
-					print_action2(proc);
 					// print_memory2(vm->mem, proc, 0);
 					// getchar();
 				}
@@ -170,8 +183,9 @@ void	run_corewar(t_vm *vm)
 			{
 				proc->read = proc->pc;
 				proc->action = get_instruction(vm, 1, &proc->read);
-				if (!(proc->action > 0 && proc->action <= NBR_OP
-				&& get_arg(vm, proc, g_op_tab[proc->action])))
+				if (proc->action > 0 && proc->action <= NBR_OP)
+					proc->cycle += g_op_tab[proc->action].cycle;
+				else
 					proc->pc++;
 			}
 			proc = proc->next;
