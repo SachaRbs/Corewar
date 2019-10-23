@@ -50,6 +50,8 @@ int		ft_readline(int fd, char **str, char **line)
 	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
 	free(ptr);
+	printf("read %zu ", sz);
+	printf(GRN"[%s]\n"RESET, *line);
 	return (sz > 0 ? sz : 0);
 }
 
@@ -102,7 +104,7 @@ int		main(int argc, char **argv)
 		exit(1);
 	p = init_struct(fd);
 	p->filename = check_filename(argv[1]);
-	printf("%s\n", p->filename);
-	read_header(p);
-	read_main(p);
+	parse(p);
+	// read_header(p);
+	// read_main(p);
 }

@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/04 16:09:23 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:06:35 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 #define COMMENT_CHAR			'#'
-#define ALT_COMMENT_CHAR  ';'
+#define ALT_COMMENT_CHAR		';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
-#define SEPARATOR_CHAR		','
+#define SEPARATOR_CHAR			','
 
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"

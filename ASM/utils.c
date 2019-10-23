@@ -33,3 +33,10 @@ void	skip_whitespaces(char **line)
 	while (is_whitespace(**line))
 		(*line)++;
 }
+
+void	skip_comment(char **line)
+{
+	if (**line == COMMENT_CHAR)
+		while (**line)
+			(*line)++;
+}

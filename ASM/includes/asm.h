@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ASM_H
+# define ASM_H
+
 #include "op.h"
 #include "../libft/includes/libft.h"
-
 #include <stdio.h>
 
 #define RED "\x1B[31m"
@@ -24,7 +26,41 @@
 #define WHT "\x1B[37m"
 #define RESET "\x1B[0m"
 
-typedef	struct	s_asm
+typedef	enum		e_type
+{
+	LABEL,
+	DIRECT,
+	INDIRECT,
+	REGISTER,
+	COMMAND,
+}					t_type;
+
+typedef	struct		s_token
+{
+	char			*content;
+	t_type			type;
+	int				x;
+	int				y;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct		s_inst
+{
+	int 			pos;
+	int 			dir_size;
+	int 			ocp;
+	unsigned int 	wr_size;
+	int 			oct;
+	unsigned int 	param[3];
+}					t_inst;
+
+typedef	struct 		s_label
+{
+	char			*name;
+	struct s_label	*next;
+}					t_label;
+
+typedef	struct		s_asm
 {
 	int				fd;
 	char			*filename;
@@ -39,55 +75,51 @@ typedef	struct	s_asm
 	struct s_token	*tokens;
 	struct s_header	*header;
 	struct s_label	*labels;
-}				t_asm;
+}					t_asm;
 
-
-typedef struct	s_inst
-{
-	int 			pos;
-	int 			dir_size;
-	int 			ocp;
-	unsigned int 	wr_size;
-	int 			oct;
-	unsigned int 	param[3];
-}				t_inst;
-
-typedef	struct s_label
-{
-	char			*name;
-	struct s_label	*next;
-}				t_label;
-
-int 		ft_readline(int fd, char **str, char **line);
+int 				ft_readline(int fd, char **str, char **line);
 
 /*
 ** asm
 */
 
-void 		get_token(t_asm *p, char **line);
-void		read_header(t_asm *p);
+void 				get_token(t_asm *p, char **line);
+void				read_header(t_asm *p);
+int 				check_instruction(t_asm *p, char **line, int size);
+void				get_instruction(t_asm *p, char **line, int size);
 
-int 		check_instruction(t_asm *p, char **line, int size);
-void		get_instruction(t_asm *p, char **line, int size);
+/*
+** parser
+*/
+
+void				parse(t_asm *p);
 
 /*
 ** label
 */
 
-void 		print_labels(t_label *head);
-t_label 	*add_label(t_asm *p, char *str);
+void 				print_labels(t_label *head);
+t_label 			*add_label(t_asm *p, char *str);
 
 /*
 ** init
 */
 
-t_asm		*init_struct(int fd);
+t_asm				*init_struct(int fd);
+
+/*
+** error
+*/
+
+int					ft_error(char *str);
 
 /*
 ** utils
 */
 
-int		ft_error(char *str);
-int 	is_whitespace(int c);
-void 	skip_whitespaces(char **line);
-char	*itoa_base_ulong(uintmax_t n, int base, char *s_base);
+int 				is_whitespace(int c);
+void 				skip_whitespaces(char **line);
+void				skip_comment(char **line);
+char				*itoa_base_ulong(uintmax_t n, int base, char *s_base);
+
+#endif
