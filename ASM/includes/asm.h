@@ -39,7 +39,8 @@ typedef	struct		s_asm
 	char			*str;
 	int				byte_pos;
 	t_op			*op_tab;
-	struct s_pos	*pos;
+	int				row;
+	int				col;
 	struct s_token	*tokens;
 	struct s_header	*header;
 	struct s_label	*labels;
@@ -49,7 +50,7 @@ typedef	struct		s_asm
 ***		DIFFERENT TYPES OF TOKEN
 */
 
-typedef enum		s_type
+typedef enum		e_type
 {
 	COMMAND,
 	OP,
@@ -65,8 +66,9 @@ typedef enum		s_type
 ***		DIFFERENT TYPES OF OPERATIONS
 */
 
-typedef enum		s_oper
+typedef enum		e_oper
 {
+	NONE,
 	LIVE,
 	LD,
 	ST,
@@ -86,26 +88,17 @@ typedef enum		s_oper
 }					t_oper;
 
 /*
-***		POSITION STRUCTURE
-*/
-
-typedef struct 		s_pos
-{
-	int		row;
-	int		col;
-}					t_pos;
-
-
-/*
 ***		TOKEN INCLUDES BYTE SIZE AND POSITION
 */
 
 typedef struct		s_token
 {
 	char			*str;
-	t_type			*type;
+	t_type			type;
 	int				byte_pos;
 	int				byte_sz;
+	int				row;
+	int				col;
 	struct s_token	*next;
 }					t_token;
 
@@ -115,7 +108,6 @@ typedef struct		s_token
 
 typedef struct		s_inst
 {
-	struct s_pos	pos;
 	int 			dir_size;
 	int 			ocp;
 	unsigned int 	wr_size;
@@ -130,7 +122,8 @@ typedef struct		s_inst
 typedef	struct 		s_label
 {
 	char			*name;
-	struct s_pos	pos;
+	int				row;
+	int				col;
 	struct s_label	*next;
 }					t_label;
 
@@ -138,19 +131,17 @@ typedef	struct 		s_label
 int 				ft_readline(int fd, char **str, char **line);
 
 /*
-**		ASM
-*/
-
-void 				get_token(t_asm *p, char **line);
-void				read_header(t_asm *p);
-int 				check_instruction(t_asm *p, char **line, int size);
-void				get_instruction(t_asm *p, char **line, int size);
-
-/*
 ** parser
 */
 
 void				parse(t_asm *p);
+
+/*
+** token
+*/
+
+t_token     		*init_token(t_asm *p, t_type type);
+void				add_token(t_token **head, t_token *newnode);
 
 /*
 ** label
@@ -164,29 +155,20 @@ t_label 			*add_label(t_asm *p, char *str);
 */
 
 t_asm				*init_struct(int fd);
-<<<<<<< HEAD
-=======
 
 /*
 ** error
 */
 
 int					ft_error(char *str);
->>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
 
 /*
 ** utils
 */
 
-<<<<<<< HEAD
-int					ft_error(char *str);
-int 				is_whitespace(int c);
-void 				skip_whitespaces(t_asm *p, char **line);
-=======
 int 				is_whitespace(int c);
 void 				skip_whitespaces(char **line);
 void				skip_comment(char **line);
 char				*itoa_base_ulong(uintmax_t n, int base, char *s_base);
 
 #endif
->>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
