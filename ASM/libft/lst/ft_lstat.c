@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_lstat.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/12 15:38:07 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/12 15:39:45 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+t_list	*ft_lstat(t_list *lst, unsigned int nbr)
 {
-    t_token *token;
+	unsigned int i;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	if (!lst)
+		return (0);
+	i = 0;
+	while (lst)
+	{
+		if (i == nbr)
+			return (lst);
+		i++;
+		lst = lst->next;
+	}
+	return (0);
 }

@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/09 18:20:34 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/09 19:06:32 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-    t_token *token;
+	t_list	*node;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	if (!(node = malloc(sizeof(t_list))))
+		return (0);
+	if (!content)
+	{
+		node->content = 0;
+		node->content_size = 0;
+	}
+	else
+	{
+		node->content = malloc(sizeof(content) * content_size);
+		ft_memcpy(node->content, content, content_size);
+		node->content_size = content_size;
+	}
+	node->next = NULL;
+	return (node);
 }

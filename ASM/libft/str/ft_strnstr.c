@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/08 11:32:53 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/12 17:03:02 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+char	*ft_strnstr(char const *s1, char const *s2, size_t n)
 {
-    t_token *token;
+	size_t s2_size;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	s2_size = ft_strlen(s2);
+	if (!*s2)
+		return ((char *)s1);
+	while (n && *s1)
+	{
+		if (n < s2_size)
+			return (NULL);
+		if (*s1 == *s2)
+		{
+			if (ft_strncmp(s1, s2, s2_size) == 0)
+				return ((char *)s1);
+		}
+		s1++;
+		n--;
+	}
+	return (NULL);
 }

@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/10/22 19:38:34 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+char	*itoa_base_ulong(uintmax_t n, int base, char *s_base)
 {
-    t_token *token;
-
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	uintmax_t			nb;
+	unsigned int		i;
+	char				*str;
+	int					len;
+	
+	nb = n;
+	len = ft_nblen(n, base);
+	if (!(str = ft_strnew(len)))
+		return (0);
+	if (!nb)
+		str[0] = '0';
+	str[len + 1] = '\0';
+	i = 0;
+	while (nb)
+	{
+		str[i] = s_base[nb % base];
+		nb /= base;
+		i++;
+	}
+	return (str);
 }
+ 

@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/10/16 13:58:06 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/10/16 13:58:21 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+char	*ft_strnjoin(char *s1, char *s2, int n)
 {
-    t_token *token;
+	int		line1;
+	int		line2;
+	char	*ret;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	line1 = 0;
+	line2 = 0;
+	if (!(ret = ft_strnew(ft_strlen(s1) + n + 1)))
+		return (NULL);
+	while (s1[line1])
+	{
+		ret[line1] = s1[line1];
+		line1++;
+	}
+	while (s2[line2] && line2 < n)
+		ret[line1++] = s2[line2++];
+	ret[line1] = 0;
+	return (ret);
 }

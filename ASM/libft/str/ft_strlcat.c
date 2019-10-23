@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/07 18:49:40 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/12 16:13:57 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-    t_token *token;
+	int				i;
+	unsigned int	srclen;
+	unsigned int	destlen;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	srclen = ft_strlen(src);
+	destlen = ft_strlen(dest);
+	i = 0;
+	if (size < destlen)
+		return (srclen + size);
+	while (destlen + i < size - 1 && src[i])
+	{
+		dest[i + destlen] = src[i];
+		i++;
+	}
+	dest[i + destlen] = '\0';
+	return (destlen + srclen);
 }

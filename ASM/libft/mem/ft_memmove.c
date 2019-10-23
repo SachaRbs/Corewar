@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/07 17:42:51 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/14 18:04:41 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-    t_token *token;
+	unsigned char	*pdst;
+	unsigned char	*psrc;
+	size_t			i;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	pdst = (unsigned char *)dst;
+	psrc = (unsigned char *)src;
+	i = 0;
+	if (psrc < pdst)
+	{
+		while (len--)
+			pdst[len] = psrc[len];
+	}
+	else
+	{
+		while (i < len)
+		{
+			pdst[i] = psrc[i];
+			i++;
+		}
+	}
+	return (dst);
 }

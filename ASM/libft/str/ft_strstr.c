@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/08 11:31:50 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/19 18:42:34 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+char	*ft_strstr(const char *str, const char *find)
 {
-    t_token *token;
+	int		i;
+	int		y;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	if (!(find[0]))
+		return ((char *)str);
+	i = 0;
+	while (str[i])
+	{
+		y = 0;
+		while (find[y] == str[i + y] && find[y])
+		{
+			if (find[y + 1] == '\0')
+				return ((char *)str + i);
+			y++;
+		}
+		i++;
+	}
+	return (0);
 }

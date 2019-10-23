@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/10/23 14:53:03 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+void	parse_token(t_asm *p, char **line)
 {
-    t_token *token;
+	
+}
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+void	parse(t_asm *p)
+{
+	static char		*str;
+	char 			*line;
+
+	str = ft_strnew(1);
+	while ((ft_readline(p->fd, &p->str, &line) > 0))
+	{
+		p->col = 0;
+		skip_whitespaces(&line);
+		skip_comment(&line);
+		if (line[p->col])
+			parse_token(p, &line);
+    	p->row++;
+	}
 }

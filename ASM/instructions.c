@@ -38,7 +38,7 @@ int		check_instruction(t_asm *p, char **line, int size)
     }
     else
     {
-        printf("INSTRUCTION: %s NOT VALID\n", *line);
+        printf("INSTRUCTION: [%s] NOT VALID\n", *line);
         return (0);
     }
 }
@@ -64,24 +64,24 @@ int     handle_instruction(t_asm *p, char **line, t_inst *instruction)
 
 	arg = p->op_tab[instruction->pos].nb_arg;
     tab = ft_strsplit(*line, SEPARATOR_CHAR);
+	return (0);
 }
 
-void    get_instruction(t_asm *p, char **line, int size)
-{
-    char    *name;
-    t_inst  instruction;
+// void    get_instruction(t_asm *p, char **line, int size)
+// {
+//     char    *name;
+//     t_inst  instruction;
 
-    name = ft_strndup(*line, size);
-	init_instruction(p, &instruction, 0);
-    if ((instruction.pos = is_instruction(p, name)) < 0)
-        {
-            printf("no instruction index\n");
-            return ;
-        }
-    init_instruction(p, &instruction, 1);
-    *line += size;
-    printf(BLU"%s [%d]\n"RESET, name, instruction.pos);
-    skip_whitespaces(p, line);
-    printf(BLU "%s\n" RESET, *line);
-
-}
+//     name = ft_strndup(*line, size);
+// 	init_instruction(p, &instruction, 0);
+//     if ((instruction.pos = is_instruction(p, name)) < 0)
+//         {
+//             printf("no instruction index\n");
+//             return ;
+//         }
+//     init_instruction(p, &instruction, 1);
+//     *line += size;
+//     printf(BLU"%s [%d]\n"RESET, name, instruction.pos);
+//     skip_whitespaces(p, line);
+//     printf(BLU "%s\n" RESET, *line);
+// }

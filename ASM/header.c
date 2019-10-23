@@ -16,21 +16,22 @@ void	get_champion(t_asm *p, char *str)
 {
     char    *end;
 
+	end = NULL;
     if (!ft_strncmp(str, NAME_CMD_STRING, 5) && !p->champ)
     {
-            str += 5;
-            while (is_whitespace(*str) && *str)
-                str++;
-            if (*str == '"')
-            {
-                str++;
-                if (!(end = ft_strchr(str, '"')))
-                    ft_error("INVALID CHAMPION NAME");
-            }
-            p->champ = ft_strsub(str, 0, end - str);
-            if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
-                ft_error("CHAMPION NAME TOO LONG");
-            // printf(GRN"[%s]\n"RESET, p->champ);
+        str += 5;
+        while (is_whitespace(*str) && *str)
+            str++;
+        if (*str == '"')
+        {
+            str++;
+ 			if (!(end = ft_strchr(str, '"')))
+				ft_error("INVALID CHAMPION NAME");
+        }
+        p->champ = ft_strsub(str, 0, end - str);
+        if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
+            ft_error("CHAMPION NAME TOO LONG");
+        printf(GRN"%s\n"RESET, p->champ);
     }
 }
 
@@ -38,6 +39,7 @@ void    get_comment(t_asm *p, char *str)
 {
     char    *end;
 
+	end = NULL;
     if (!ft_strncmp(str, COMMENT_CMD_STRING, 8) && !p->comment)
     {
         str += 8;
@@ -50,10 +52,9 @@ void    get_comment(t_asm *p, char *str)
                 ft_error("INVALID CHAMPION COMMENT");
         }
         p->comment = ft_strsub(str, 0, end - str);
-        // printf(GRN"[%s]\n\n"RESET, p->comment);
+        printf(GRN"%s\n"RESET, p->comment);
         if (ft_strlen(p->comment) > COMMENT_LENGTH)
             ft_error("CHAMPION COMMENT TOO LONG");
-        p->f_header = 1;
     }
 }
 
@@ -67,6 +68,9 @@ void    read_header(t_asm *p)
   {
     get_champion(p, buffer);
     get_comment(p, buffer);
+	if (p->champ && p->comment)
+		p->f_header = 1;
     p->row++;
   }
+  printf("\n");
 }

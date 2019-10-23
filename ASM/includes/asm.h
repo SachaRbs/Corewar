@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
-#include "../../libft/includes/libft.h"
+#ifndef ASM_H
+# define ASM_H
 
+#include "op.h"
+#include "../libft/includes/libft.h"
 #include <stdio.h>
 
 #define RED "\x1B[31m"
@@ -63,7 +65,7 @@ typedef enum		s_type
 ***		DIFFERENT TYPES OF OPERATIONS
 */
 
-typedef enum		s_op
+typedef enum		s_oper
 {
 	LIVE,
 	LD,
@@ -81,7 +83,7 @@ typedef enum		s_op
 	LLDI,
 	LFORK,
 	AFF
-}
+}					t_oper;
 
 /*
 ***		POSITION STRUCTURE
@@ -132,6 +134,7 @@ typedef	struct 		s_label
 	struct s_label	*next;
 }					t_label;
 
+
 int 				ft_readline(int fd, char **str, char **line);
 
 /*
@@ -140,12 +143,17 @@ int 				ft_readline(int fd, char **str, char **line);
 
 void 				get_token(t_asm *p, char **line);
 void				read_header(t_asm *p);
-
 int 				check_instruction(t_asm *p, char **line, int size);
 void				get_instruction(t_asm *p, char **line, int size);
 
 /*
-** 		LABEL FUNCTIONS
+** parser
+*/
+
+void				parse(t_asm *p);
+
+/*
+** label
 */
 
 void 				print_labels(t_label *head);
@@ -156,11 +164,29 @@ t_label 			*add_label(t_asm *p, char *str);
 */
 
 t_asm				*init_struct(int fd);
+<<<<<<< HEAD
+=======
+
+/*
+** error
+*/
+
+int					ft_error(char *str);
+>>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
 
 /*
 ** utils
 */
 
+<<<<<<< HEAD
 int					ft_error(char *str);
 int 				is_whitespace(int c);
 void 				skip_whitespaces(t_asm *p, char **line);
+=======
+int 				is_whitespace(int c);
+void 				skip_whitespaces(char **line);
+void				skip_comment(char **line);
+char				*itoa_base_ulong(uintmax_t n, int base, char *s_base);
+
+#endif
+>>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c

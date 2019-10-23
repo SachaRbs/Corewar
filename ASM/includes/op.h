@@ -6,7 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/10/23 15:23:28 by epham            ###   ########.fr       */
+=======
+/*   Updated: 2019/10/23 14:06:35 by yoribeir         ###   ########.fr       */
+>>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +36,17 @@
 #define IDX_MOD							(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
+<<<<<<< HEAD
 #define COMMENT_CHAR				'#'
 #define ALT_COMMENT_CHAR		';'
 #define LABEL_CHAR					':'
 #define DIRECT_CHAR					'%'
+=======
+#define COMMENT_CHAR			'#'
+#define ALT_COMMENT_CHAR		';'
+#define LABEL_CHAR				':'
+#define DIRECT_CHAR				'%'
+>>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
 #define SEPARATOR_CHAR			','
 
 

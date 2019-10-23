@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 14:12:56 by yoribeir         ###   ########.fr       */
+/*   Created: 2018/11/07 18:10:05 by yoribeir          #+#    #+#             */
+/*   Updated: 2018/11/09 17:36:40 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "libft.h"
 
-t_token     *init_token(t_asm *p, t_type type)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-    t_token *token;
+	const unsigned char *s1ptr;
+	const unsigned char *s2ptr;
 
-	(void)p;
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->content = NULL;
-    token->type = type;
-    token->y = 0;
-    token->x = 0;
-    token->next = NULL;
-    return (token);
+	if (!n)
+		return (0);
+	s1ptr = s1;
+	s2ptr = s2;
+	while (--n && *s1ptr == *s2ptr)
+	{
+		s1ptr++;
+		s2ptr++;
+	}
+	return (*s1ptr - *s2ptr);
 }
