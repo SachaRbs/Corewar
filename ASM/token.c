@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/23 17:24:32 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:55:06 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void		add_token(t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	if (head)
+	printf("ADD TOKEN\n");
+	if (!(*head))
 	{
-		if (!(*head))
-			*head = new;
-		else
-		{
-			tmp = *head;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
+		*head = new;
+	}
+	else
+	{
+		tmp = *head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
 }
 
@@ -49,9 +49,11 @@ void		print_token(t_token *head)
 	t_token		*curr;
 
 	curr = head;
-	while (head)
+	printf(YEL"TOKENS:\n");
+	while (curr)
 	{
-		printf("TOKEN %s %d\n", curr->str, curr->type);
+		printf("%15s [%s]\n", curr->str, typestab[curr->type]);
 		curr = curr->next;
 	}
+	printf(RESET"\n");
 }

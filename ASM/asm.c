@@ -50,8 +50,8 @@ int		ft_readline(int fd, char **str, char **line)
 	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
 	free(ptr);
-	printf("read %zu ", sz);
-	printf(GRN"[%s]\n"RESET, *line);
+	// printf("read %zu ", sz);
+	// printf(GRN"[%s]\n"RESET, *line);
 	return (sz > 0 ? sz : 0);
 }
 

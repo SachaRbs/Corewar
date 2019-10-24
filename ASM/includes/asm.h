@@ -42,7 +42,6 @@ typedef	struct		s_asm
 	int				row;
 	int				col;
 	struct s_token	*tokens;
-	struct s_header	*header;
 	struct s_label	*labels;
 }					t_asm;
 
@@ -61,6 +60,22 @@ typedef enum		e_type
 	SEPARATOR,
 	NEWLINE
 }					t_type;
+
+/*
+***		TYPES AS STRINGS FOR DEBUGGING
+*/
+
+static const char *typestab[8] =
+{
+	"COMMAND",
+	"OP",
+	"LABEL",
+	"REGISTER",
+	"INDEX",
+	"DIRECT",
+	"SEPARATOR",
+	"NEWLINE"
+};
 
 /*
 ***		DIFFERENT TYPES OF OPERATIONS
@@ -142,6 +157,13 @@ void				parse(t_asm *p);
 
 t_token     		*init_token(t_asm *p, t_type type);
 void				add_token(t_token **head, t_token *newnode);
+void				print_token(t_token *head);
+
+/*
+** header
+*/
+
+void				parse_header(t_asm *p, t_token *newnode, char *line);
 
 /*
 ** label
