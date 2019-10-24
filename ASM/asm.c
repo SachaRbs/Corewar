@@ -42,7 +42,7 @@ int		ft_readline(int fd, char **str, char **line)
 	sz = 0;
 	while ((*str)[sz] && (*str)[sz] != '\n')
 		++sz;
-	if ((*line = ft_strndup(*str, sz)) == NULL)
+	if ((*line = ft_strndup(*str, sz + 1)) == NULL)
 		return (-1);
 	if ((*str)[sz] == '\n')
 		++sz;
@@ -51,46 +51,8 @@ int		ft_readline(int fd, char **str, char **line)
 		return (-1);
 	free(ptr);
 	printf("read %zu ", sz);
-	printf(GRN"[%s]\n"RESET, *line);
+	printf(GRN"[%s]"RESET, *line);
 	return (sz > 0 ? sz : 0);
-}
-
-void	get_function(t_asm *p, char **line)
-{
-	int i;
-
-	i = 0;
-	skip_whitespaces(line);
-	while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':' &&
-		   (*line)[i] != '%')
-		i++;
-	if ((*line)[i] == ':')
-	{
-		add_label(p, *line);
-		*line += i + 1;
-    	get_function(p, line);
-    }
-	else if ((*line)[i] == '%' || is_whitespace((*line)[i]))
-	{
-        if (check_instruction(p, line, i))
-		{
-			// get_instruction(p, line, i);
-		}
-    }
-}
-
-void	read_main(t_asm *p)
-{
-	static char		*str;
-	char 			*buffer;
-
-	str = ft_strnew(1);
-	while ((ft_readline(p->fd, &p->str, &buffer) > 0))
-	{
-		get_function(p, &buffer);
-    	p->row++;
-	}
-    print_labels(p->labels);
 }
 
 int		main(int argc, char **argv)
@@ -105,6 +67,4 @@ int		main(int argc, char **argv)
 	p = init_struct(fd);
 	p->filename = check_filename(argv[1]);
 	parse(p);
-	// read_header(p);
-	// read_main(p);
 }

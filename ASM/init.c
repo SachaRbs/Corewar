@@ -19,18 +19,17 @@ t_asm	*init_struct(int fd)
 	if (!(p = malloc(sizeof(t_asm))))
 		exit(1);
 	p->fd = fd;
+	p->filename = NULL;
 	p->file = ft_strnew(0);
-	p->champ = 0;
-	p->comment = 0;
+	p->champ = NULL;
+	p->comment = NULL;
 	p->f_header = 0;
 	p->str = ft_strnew(1);
-        p->byte_pos = 0;
+	p->byte_pos = 0;
 	p->row = 0;
 	p->col = 0;
 	p->syntax_state = 0;
-	p->op_tab = g_op_tab;
+	p->tokens = NULL;
 	p->labels = NULL;
-	if (!(p->header = malloc(sizeof(header_t))))
-		exit(1);
 	return (p);
 }

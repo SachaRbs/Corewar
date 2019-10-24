@@ -52,9 +52,7 @@ typedef	struct		s_asm
 	int				row;
 	int				col;
 	int				syntax_state;
-	t_op			*op_tab;
 	struct s_token	*tokens;
-	struct s_header	*header;
 	struct s_label	*labels;
 }					t_asm;
 
@@ -76,6 +74,25 @@ typedef enum		e_type
 	SEPARATOR,
 	NEWLINE
 }					t_type;
+
+/*
+***		TYPES AS STRINGS FOR DEBUGGING
+*/
+
+static const char *typestab[11] =
+{
+	"COMMAND_NAME",
+	"COMMAND_COMMENT",
+	"OP",
+	"LABEL",
+	"REGISTER",
+	"INDEX",
+	"IND_LABEL",
+	"DIRECT",
+	"DIRECT_LABEL",
+	"SEPARATOR",
+	"NEWLINE"
+};
 
 /*
 ***		TOKEN INCLUDES BYTE SIZE AND POSITION
@@ -123,19 +140,24 @@ typedef	struct 		s_label
 int 				ft_readline(int fd, char **str, char **line);
 
 /*
-**		ASM
-*/
-
-void 				get_token(t_asm *p, char **line);
-void				read_header(t_asm *p);
-int 				check_instruction(t_asm *p, char **line, int size);
-void				get_instruction(t_asm *p, char **line, int size);
-
-/*
 ** parser
 */
 
 void				parse(t_asm *p);
+
+/*
+** token
+*/
+
+t_token     		*init_token(t_asm *p, t_type type);
+void				add_token(t_token **head, t_token *newnode);
+void				print_token(t_token *head);
+
+/*
+** header
+*/
+
+void				parse_header(t_asm *p, t_token *newnode, char *line);
 
 /*
 ** label

@@ -12,65 +12,53 @@
 
 #include "includes/asm.h"
 
-void	get_champion(t_asm *p, char *str)
+void	parse_champion(t_asm *p, char *line, char *end)
 {
-    char    *end;
-
-	end = NULL;
-    if (!ft_strncmp(str, NAME_CMD_STRING, 5) && !p->champ)
+	line += 5;
+    while (is_whitespace(*line) && *line)
+        line++;
+    if (*line == '"')
     {
-        str += 5;
-        while (is_whitespace(*str) && *str)
-            str++;
-        if (*str == '"')
-        {
-            str++;
- 			if (!(end = ft_strchr(str, '"')))
-				ft_error("INVALID CHAMPION NAME");
-        }
-        p->champ = ft_strsub(str, 0, end - str);
-        if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
-            ft_error("CHAMPION NAME TOO LONG");
-        printf(GRN"%s\n"RESET, p->champ);
+        line++;
+ 		if (!(end = ft_strchr(line, '"')))
+			ft_error("INVALID CHAMPION NAME");
     }
+    p->champ = ft_strsub(line, 0, end - line);
+    if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
+        ft_error("CHAMPION NAME TOO LONG");
+    printf(GRN"%s\n"RESET, p->champ);
 }
 
-void    get_comment(t_asm *p, char *str)
+void	parse_comment(t_asm *p, char *line, char *end)
 {
-    char    *end;
-
-	end = NULL;
-    if (!ft_strncmp(str, COMMENT_CMD_STRING, 8) && !p->comment)
+	line += 8;
+    while (is_whitespace(*line) && *line)
+        line++;
+    if (*line == '"')
     {
-        str += 8;
-        while (is_whitespace(*str) && *str)
-            str++;
-        if (*str == '"')
-        {
-            str++;
-            if (!(end = ft_strchr(str, '"')))
-                ft_error("INVALID CHAMPION COMMENT");
-        }
-        p->comment = ft_strsub(str, 0, end - str);
-        printf(GRN"%s\n"RESET, p->comment);
-        if (ft_strlen(p->comment) > COMMENT_LENGTH)
-            ft_error("CHAMPION COMMENT TOO LONG");
+        line++;
+ 		if (!(end = ft_strchr(line, '"')))
+			ft_error("INVALID CHAMPION COMMENT");
     }
+    p->comment = ft_strsub(line, 0, end - line);
+    if (ft_strlen(p->comment) > COMMENT_LENGTH)
+        ft_error("CHAMPION COMMENT TOO LONG");
+    printf(GRN"%s\n"RESET, p->comment);
 }
 
-void    read_header(t_asm *p)
+void	parse_header(t_asm *p, t_token *new, char *line)
 {
-  static char     *str;
-  char            *buffer;
+	char	*end;
 
-  str = ft_strnew(1);
-  while ((ft_readline(p->fd, &p->str, &buffer) > 0) && !p->f_header)
-  {
-    get_champion(p, buffer);
-    get_comment(p, buffer);
-	if (p->champ && p->comment)
-		p->f_header = 1;
-    p->row++;
-  }
-  printf("\n");
+	end = NULL;
+	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
+	{
+		new->type = COMMAND_NAME;
+		parse_champion(p, line, end);
+	}
+	if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
+	{
+		new->type = COMMAND_COMMENT;
+		parse_comment(p, line, end);
+	}
 }
