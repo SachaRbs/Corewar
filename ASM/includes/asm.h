@@ -32,8 +32,8 @@
 ***		GLOBAL VARIABLES
 */
 
-extern int		g_syntactic_tab[40][12];
-extern t_op		g_op_tab[17];
+extern int			g_syntactic_tab[40][12];
+extern t_op			g_op_tab[17];
 
 /*
 ***		ENVIRONMENT STRUCTURE
@@ -52,7 +52,7 @@ typedef	struct		s_asm
 	int				row;
 	int				col;
 	int				syntax_state;
-	t_op			*op_tab;
+	t_op			g_op_tab;
 	struct s_token	*tokens;
 	struct s_label	*labels;
 }					t_asm;
@@ -103,6 +103,8 @@ typedef struct		s_token
 {
 	char			*str;
 	enum e_type		type;
+	int				op_index;
+	int				dir_sz;
 	int				row;
 	int				col;
 	int				byte_pos;

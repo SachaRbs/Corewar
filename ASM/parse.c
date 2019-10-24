@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/24 16:54:50 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:43:04 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	parse_token(t_asm *p, char **line)
 		add_token(&p->tokens, init_token(p, NEWLINE));
 	}
 	else if ((*line)[p->col] == '.')
-		parse_symbol(p, init_token(p, COMMAND), line);
+		parse_symbol(p, init_token(p, COMMAND_NAME), line);
 	else if ((*line)[p->col] == LABEL_CHAR)
-		parse_symbol(p, init_token(p, COMMAND), line);
+		parse_symbol(p, init_token(p, COMMAND_NAME), line);
 }
 
 void	parse(t_asm *p)

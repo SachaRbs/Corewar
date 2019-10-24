@@ -53,12 +53,12 @@ void	parse_header(t_asm *p, t_token *new, char *line)
 	end = NULL;
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
-		new->type = COMMAND;
+		new->type = COMMAND_NAME;
 		parse_champion(p, line, end);
 	}
 	if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
 	{
-		new->type = COMMAND;
+		new->type = COMMAND_COMMENT;
 		parse_comment(p, line, end);
 	}
 }
