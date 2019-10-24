@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/23 18:39:11 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:51:04 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ unsigned int		big_endian(unsigned int num, int n)
 	return (-1);
 }
 
-unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
+void	wrong_ocp(t_proc *proc, t_op op)
 {
-	int		val;
+	int code;
+	int i;
 
-	val = 0;
-	if (*pc + size < MEM_SIZE)
-		ft_memcpy(&val, &(vm->mem[*pc % MEM_SIZE]), size);
-	else
-		val = -1;
-	*pc += size;
-	return (big_endian(val, size));
+	i = -1;
+	while (++i < op.nb_arg)
+	{
+		code = ((proc->arcode >> (6 - i * 2)) & 3);
+		if (code == REG_CODE)
+			proc->read += REG_SIZE;
+		else if (code == IND_CODE || code == DIR_CODE)
+			proc->read += (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
+	}
 }
 
 int		get_arg(t_vm *vm, t_proc *proc, t_op op)
@@ -45,8 +48,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	unsigned int	code;
 
 	i = -1;
-	// proc->cycle += op.cycle;
-	proc->arcode = op.ocp ? get_instruction(vm, 1, &proc->read) : DIR_CODE << 6;
+	proc->arcode = op.ocp ? read_mem(vm, proc->read, 1, 1, proc) : DIR_CODE << 6;
 	while (++i < MAX_ARGS_NUMBER)
 	{
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
@@ -57,10 +59,13 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 			else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 				size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 			else
+			{
+				wrong_ocp(proc, op);
 				return (0);
+			}
 			proc->arg_a[i] = proc->read;
 			proc->arg_t[i] = code;
-			proc->arg_v[i] = get_instruction(vm, size, &proc->read);
+			proc->arg_v[i] = read_mem(vm, proc->read, size, 1, proc);
 		}
 		else if (code != 0)
 			return (0);
@@ -162,18 +167,22 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		printf("It is now cycle %d\n", vm->cycle);
+		// printf("It is now cycle %d\n", vm->cycle);
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
+			// if (vm->cycle == 4895)
+				// printf("Hello sacha");
 			if (vm->cycle == proc->cycle)
 			{
-				get_arg(vm, proc, g_op_tab[proc->action]);
-				operation->op[proc->action - 1](vm, proc);
-				print_action2(proc, vm);
+				if (get_arg(vm, proc, g_op_tab[proc->action]))
+					operation->op[proc->action - 1](vm, proc);
+				// else
+					// printf("FAIL : ");
+				// print_action2(proc, vm);
 				if (vm->dump == -1)
 				{
-					print_memory2(vm->mem, proc, 0);
+					// print_memory2(vm->mem, proc, 0);
 					// getchar();
 				}
 				proc->pc = proc->read;
@@ -182,11 +191,14 @@ void	run_corewar(t_vm *vm)
 			else if (proc->cycle < vm->cycle)
 			{
 				proc->read = proc->pc;
-				proc->action = get_instruction(vm, 1, &proc->read);
+				proc->action = read_mem(vm, proc->pc, 1, 1, proc);
 				if (proc->action > 0 && proc->action <= NBR_OP)
 					proc->cycle += g_op_tab[proc->action].cycle;
 				else
+				{
 					proc->pc++;
+					proc->cycle++; //THIS IS SOMETHING THAT CRISTINA DECIDED TO INVENT
+				}
 			}
 			proc = proc->next;
 		}

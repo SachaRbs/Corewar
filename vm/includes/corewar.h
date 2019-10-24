@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/23 15:36:15 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:39:02 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct		s_vm
 int					initialize(t_vm *vm, int ac, char **av);
 void				run_corewar(t_vm *vm);
 // void				check_proc(t_vm *vm, t_proc *current, int pn);
-unsigned int		get_instruction(t_vm *vm, int size, unsigned int *pc);
 void				pushfront_proc(t_proc **head, t_proc *new);
 
 /*
@@ -77,7 +76,7 @@ int32_t				reverser_32(int32_t a);
 unsigned int		big_endian(unsigned int num, int n);
 int					argument(t_vm *vm, t_proc *proc, int arg);
 void				writing_mem(t_vm *vm, int pc, int bytes, int value);
-int					read_mem(t_vm *vm, int address, int bytes);
+int					read_mem(t_vm *vm, int address, int size, int get, t_proc *proc);
 
 
 #endif

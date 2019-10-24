@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/23 15:34:53 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:47:03 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 	int sign;
 	int div;
 	int hex;
+	int address;
 
 	sign = 1;
 	bytes *= 2;
@@ -63,43 +64,133 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 		div = ft_power(16, (bytes - 1 - i));
 		hex += (value / div);
 		i++;
+		address = pc + (i - 1) / 2;
+		if (address >= MEM_SIZE)
+			address = MEM_SIZE - address;
 		if (sign == 1)
-			vm->mem[pc + (i - 1) / 2] = hex;
+			vm->mem[address] = hex;
 		else if (div > 1)
-			vm->mem[pc + (i - 1) / 2] = 255 - hex;
+			vm->mem[address] = 255 - hex;
 		else
-			vm->mem[pc + (i - 1) / 2] = 256 - hex;
+			vm->mem[address] = 256 - hex;
 		value %= div;
 	}
 }
 
-int	read_mem(t_vm *vm, int address, int bytes)
-{
-	int value;
-	int multi;
-	int temp1;
-	int temp2;
-	int i;
-	int j;
-	int neg;
 
-	i = 0;
-	j = 0;
-	value = 0;
-	bytes *= 2;
-	neg = vm->mem[address] > 239 ? -1 : 1;
-	while (i < bytes)
-	{
-		temp1 = neg == -1 ? 15 - (vm->mem[address + j] / 16) : (vm->mem[address + j]) / 16;
-		temp2 = neg == -1 ? 15 - (vm->mem[address + j] % 16) : vm->mem[address + j] % 16;
-		multi = temp1 * ft_power(16, (bytes) - 1 - i);
-		value += multi;
-		i++;
-		multi = temp2 * ft_power(16, (bytes) - 1 - i);
-		value += multi;
-		i++;
-		j++;
-	}
-	value += neg == -1 ? 1 : 0;
-	return(neg * value);
+int		mod_address(int add)
+{
+	while (add >= MEM_SIZE)
+		add -= MEM_SIZE;
+	while (add < 0)
+		add += MEM_SIZE;
+	return(add);
 }
+
+void	*ft_memcpy_mod(void *restrict dst, const void *restrict src, int add, int size)
+{
+	int				i;
+	unsigned char	*dst1;
+	unsigned char	*src1;
+
+	dst1 = (unsigned char *)dst;
+	src1 = (unsigned char *)src;
+	i = -1;
+	while (++i < size)
+		dst1[i] = src1[mod_address(add + i)];
+	return (dst);
+}
+
+int	read_mem(t_vm *vm, int address, int size, int get, t_proc *proc)
+{
+	int		val;
+
+	val = 0;
+	ft_memcpy_mod(&val, vm->mem, address, size);
+	if (get)
+		proc->read += size;
+	return (big_endian(val, size));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
+// {
+// 	int		val;
+// 	int		address;
+
+// 	val = 0;
+// 	if (*pc + size >= MEM_SIZE)
+// 		address = 
+// 	ft_memcpy(&val, &(vm->mem[*pc % MEM_SIZE]), size);
+// 	else
+// 		val = -1;
+// 	*pc += size;
+// 	return (big_endian(val, size));
+// }
+
+
+// int	read_mem(t_vm *vm, int address, int bytes)
+// {
+// 	int value;
+// 	int multi;
+// 	int temp1;
+// 	int temp2;
+// 	int i;
+// 	int j;
+// 	int neg;
+
+// 	i = 0;
+// 	j = 0;
+// 	value = 0;
+// 	bytes *= 2;
+// 	neg = vm->mem[address] > 239 ? -1 : 1;
+// 	while (i < bytes)
+// 	{
+// 		temp1 = neg == -1 ? 15 - (vm->mem[address + j] / 16) : (vm->mem[address + j]) / 16;
+// 		temp2 = neg == -1 ? 15 - (vm->mem[address + j] % 16) : vm->mem[address + j] % 16;
+// 		multi = temp1 * ft_power(16, (bytes) - 1 - i);
+// 		value += multi;
+// 		i++;
+// 		multi = temp2 * ft_power(16, (bytes) - 1 - i);
+// 		value += multi;
+// 		i++;
+// 		j++;
+// 	}
+// 	value += neg == -1 ? 1 : 0;
+// 	return(neg * value);
+// }
+
