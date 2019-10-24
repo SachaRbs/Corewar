@@ -54,9 +54,10 @@ t_asm	*init_struct(int fd)
 	p->f_header = 0;
 	p->str = ft_strnew(1);
 	p->byte_pos = 0;
-	p->op_tab = opp_tab;
     p->row = 0;
     p->col = 0;
+	p->syntax_state = 0;
+	p->op_tab = opp_tab;
 	p->tokens = NULL;
 	p->labels = NULL;
 	return (p);

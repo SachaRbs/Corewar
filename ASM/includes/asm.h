@@ -28,6 +28,17 @@
 
 #define SPACE " \f\r\t\v"
 
+/*
+***		GLOBAL VARIABLES
+*/
+
+extern int		g_syntactic_tab[40][12];
+extern t_op		g_op_tab[17];
+
+/*
+***		ENVIRONMENT STRUCTURE
+*/
+
 typedef	struct		s_asm
 {
 	int				fd;
@@ -38,9 +49,10 @@ typedef	struct		s_asm
 	int				f_header;
 	char			*str;
 	int				byte_pos;
-	t_op			*op_tab;
 	int				row;
 	int				col;
+	int				syntax_state;
+	t_op			*op_tab;
 	struct s_token	*tokens;
 	struct s_label	*labels;
 }					t_asm;
@@ -51,12 +63,15 @@ typedef	struct		s_asm
 
 typedef enum		e_type
 {
-	COMMAND,
+	COMMAND_NAME,
+	COMMAND_COMMENT,
 	OP,
 	LABEL,
 	REGISTER,
 	INDEX,
+	IND_LABEL,
 	DIRECT,
+	DIRECT_LABEL,
 	SEPARATOR,
 	NEWLINE
 }					t_type;
@@ -65,42 +80,20 @@ typedef enum		e_type
 ***		TYPES AS STRINGS FOR DEBUGGING
 */
 
-static const char *typestab[8] =
+static const char *typestab[11] =
 {
-	"COMMAND",
+	"COMMAND_NAME",
+	"COMMAND_COMMENT",
 	"OP",
 	"LABEL",
 	"REGISTER",
 	"INDEX",
+	"IND_LABEL",
 	"DIRECT",
+	"DIRECT_LABEL",
 	"SEPARATOR",
 	"NEWLINE"
 };
-
-/*
-***		DIFFERENT TYPES OF OPERATIONS
-*/
-
-typedef enum		e_oper
-{
-	NONE,
-	LIVE,
-	LD,
-	ST,
-	ADD,
-	SUB,
-	AND,
-	OR,
-	XOR,
-	ZJMP,
-	LDI,
-	STI,
-	FORK,
-	LLD,
-	LLDI,
-	LFORK,
-	AFF
-}					t_oper;
 
 /*
 ***		TOKEN INCLUDES BYTE SIZE AND POSITION
@@ -109,11 +102,12 @@ typedef enum		e_oper
 typedef struct		s_token
 {
 	char			*str;
-	t_type			type;
-	int				byte_pos;
-	int				byte_sz;
+	enum e_type		type;
 	int				row;
 	int				col;
+	int				byte_pos;
+	int				byte_sz;
+	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
 
@@ -141,7 +135,6 @@ typedef	struct 		s_label
 	int				col;
 	struct s_label	*next;
 }					t_label;
-
 
 int 				ft_readline(int fd, char **str, char **line);
 

@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/23 16:27:03 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:20:28 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
 
 
 #define MAX_ARGS_NUMBER			4
-#define MAX_PLAYERS					4
-#define MEM_SIZE						(4*1024)
-#define IDX_MOD							(MEM_SIZE / 8)
+#define MAX_PLAYERS				4
+#define MEM_SIZE				(4*1024)
+#define IDX_MOD					(MEM_SIZE / 8)
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 #define COMMENT_CHAR			'#'
@@ -42,13 +42,13 @@
 #define LABEL_CHARS				  "abcdefghijklmnopqrstuvwxyz_0123456789"
 
 #define NAME_CMD_STRING			".name"
-#define COMMENT_CMD_STRING	".comment"
+#define COMMENT_CMD_STRING		".comment"
 
 #define REG_NUMBER					16
 
 #define CYCLE_TO_DIE				1536
 #define CYCLE_DELTA					50
-#define NBR_LIVE						21
+#define NBR_LIVE					21
 #define MAX_CHECKS					10
 
 /*
@@ -73,9 +73,9 @@ typedef char	t_arg_type;
 typedef struct		header_s
 {
 	unsigned int		magic;
-	char				    prog_name[PROG_NAME_LENGTH + 1];
+	char				prog_name[PROG_NAME_LENGTH + 1];
 	unsigned int		prog_size;
-	char				    comment[COMMENT_LENGTH + 1];
+	char				comment[COMMENT_LENGTH + 1];
 }					header_t;
 
 typedef struct      s_op
