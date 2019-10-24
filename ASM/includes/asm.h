@@ -86,6 +86,7 @@ typedef struct		s_token
 	char			*str;
 	enum e_type		type;
 	int				op_index;
+	int				dir_sz;
 	int				row;
 	int				col;
 	int				byte_pos;
