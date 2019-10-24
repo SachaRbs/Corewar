@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/24 15:31:31 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/24 16:55:31 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,31 @@ void	get_op(t_asm *env, t_token *token)
 		env->syntax_state = 29;
 	else if (!ft_strcmp(token->str, "ldi") || !ft_strcmp(token->str, "lldi"))
 		env->syntax_state = 34;
+	else
+		return (-1);
 }
 
-int		check_token(t_asm *env, t_token *head)
+void	get_bytepos(t_asm *env, t_token *token)
+{
+	
+}
+
+int		check_token(t_asm *env)
 {
 	t_token *token;
 
-	token = head;
+	token = env->tokens;
 	while (token
 	&& (env->syntax_state != -1 || env->syntax_state != 40))
 	{
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 10)
 			get_op(env, token);
+		get_bytepos(env, token);
 		token = token->next;
 	}
+	if (env->syntax_state == 40)
+		return (1);
+	else
+		return (0);
 }

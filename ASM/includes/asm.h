@@ -28,6 +28,17 @@
 
 #define SPACE " \f\r\t\v"
 
+/*
+***		GLOBAL VARIABLES
+*/
+
+extern int		g_syntactic_tab[40][12];
+extern t_op		g_op_tab[17];
+
+/*
+***		ENVIRONMENT STRUCTURE
+*/
+
 typedef	struct		s_asm
 {
 	int				fd;
@@ -47,11 +58,6 @@ typedef	struct		s_asm
 	struct s_label	*labels;
 }					t_asm;
 
-/*
-***		SYNTACTIC TABLE
-*/
-
-extern int		g_syntactic_tab[40][12];
 /*
 ***		DIFFERENT TYPES OF TOKEN
 */
@@ -83,6 +89,7 @@ typedef struct		s_token
 	int				col;
 	int				byte_pos;
 	int				byte_sz;
+	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
 
