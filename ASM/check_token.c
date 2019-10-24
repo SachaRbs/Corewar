@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/24 16:55:31 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/24 17:55:39 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,29 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
 
-void	get_op(t_asm *env, t_token *token)
-{
-	if (!ft_strcmp(token->str, "aff"))
-		env->syntax_state = 11;
-	else if (!ft_strcmp(token->str, "live") || !ft_strcmp(token->str, "zjmp")
-	|| !ft_strcmp(token->str, "fork") || !ft_strcmp(token->str, "lfork"))
-		env->syntax_state = 12;
-	else if (!ft_strcmp(token->str, "st"))
-		env->syntax_state = 13;
-	else if (!ft_strcmp(token->str, "ld") || !ft_strcmp(token->str, "lld"))
-		env->syntax_state = 16;
-	else if (!ft_strcmp(token->str, "add") || !ft_strcmp(token->str, "sub"))
-		env->syntax_state = 19;
-	else if (!ft_strcmp(token->str, "sti"))
-		env->syntax_state = 24;
-	else if (!ft_strcmp(token->str, "and") || !ft_strcmp(token->str, "or")
-	|| !ft_strcmp(token->str, "xor"))
-		env->syntax_state = 29;
-	else if (!ft_strcmp(token->str, "ldi") || !ft_strcmp(token->str, "lldi"))
-		env->syntax_state = 34;
-	else
-		return (-1);
-}
+// void	get_op(t_asm *env, t_token *token)
+// {
+	// if (!ft_strcmp(token->str, "aff"))
+	// 	env->syntax_state = 11;
+	// else if (!ft_strcmp(token->str, "live") || !ft_strcmp(token->str, "zjmp")
+	// || !ft_strcmp(token->str, "fork") || !ft_strcmp(token->str, "lfork"))
+	// 	env->syntax_state = 12;
+	// else if (!ft_strcmp(token->str, "st"))
+	// 	env->syntax_state = 13;
+	// else if (!ft_strcmp(token->str, "ld") || !ft_strcmp(token->str, "lld"))
+	// 	env->syntax_state = 16;
+	// else if (!ft_strcmp(token->str, "add") || !ft_strcmp(token->str, "sub"))
+	// 	env->syntax_state = 19;
+	// else if (!ft_strcmp(token->str, "sti"))
+	// 	env->syntax_state = 24;
+	// else if (!ft_strcmp(token->str, "and") || !ft_strcmp(token->str, "or")
+	// || !ft_strcmp(token->str, "xor"))
+	// 	env->syntax_state = 29;
+	// else if (!ft_strcmp(token->str, "ldi") || !ft_strcmp(token->str, "lldi"))
+	// 	env->syntax_state = 34;
+	// else
+	// 	return (-1);
+// }
 
 void	get_bytepos(t_asm *env, t_token *token)
 {
@@ -95,7 +95,7 @@ int		check_token(t_asm *env)
 	{
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 10)
-			get_op(env, token);
+			env->syntax_state = token->op_index;
 		get_bytepos(env, token);
 		token = token->next;
 	}
