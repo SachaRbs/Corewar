@@ -50,10 +50,11 @@ t_asm	*init_struct(int fd)
 	p->file = ft_strnew(0);
 	p->champ = 0;
 	p->comment = 0;
-    p->row = 0;
-    p->col = 0;
-    p->f_header = 0;
-    p->str = ft_strnew(1);
+	p->row = 0;
+	p->col = 0;
+	p->f_header = 0;
+	p->syntax_state = 0;
+	p->str = ft_strnew(1);
 	p->op_tab = opp_tab;
 	p->labels = NULL;
 	if (!(p->header = malloc(sizeof(header_t))))

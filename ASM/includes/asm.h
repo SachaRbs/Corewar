@@ -38,63 +38,38 @@ typedef	struct		s_asm
 	int				f_header;
 	char			*str;
 	int				byte_pos;
+	int				row;
+	int				col;
+	int				syntax_state;
 	t_op			*op_tab;
-	struct s_pos	*pos;
 	struct s_token	*tokens;
 	struct s_header	*header;
 	struct s_label	*labels;
 }					t_asm;
 
 /*
+***		SYNTACTIC TABLE
+*/
+
+extern int		g_syntactic_tab[40][12];
+/*
 ***		DIFFERENT TYPES OF TOKEN
 */
 
-typedef enum		s_type
+typedef enum		e_type
 {
-	COMMAND,
+	COMMAND_NAME,
+	COMMAND_COMMENT,
 	OP,
 	LABEL,
 	REGISTER,
 	INDEX,
+	IND_LABEL,
 	DIRECT,
+	DIRECT_LABEL,
 	SEPARATOR,
 	NEWLINE
 }					t_type;
-
-/*
-***		DIFFERENT TYPES OF OPERATIONS
-*/
-
-typedef enum		s_oper
-{
-	LIVE,
-	LD,
-	ST,
-	ADD,
-	SUB,
-	AND,
-	OR,
-	XOR,
-	ZJMP,
-	LDI,
-	STI,
-	FORK,
-	LLD,
-	LLDI,
-	LFORK,
-	AFF
-}					t_oper;
-
-/*
-***		POSITION STRUCTURE
-*/
-
-typedef struct 		s_pos
-{
-	int		row;
-	int		col;
-}					t_pos;
-
 
 /*
 ***		TOKEN INCLUDES BYTE SIZE AND POSITION
@@ -103,7 +78,9 @@ typedef struct 		s_pos
 typedef struct		s_token
 {
 	char			*str;
-	t_type			*type;
+	enum e_type		type;
+	int				row;
+	int				col;
 	int				byte_pos;
 	int				byte_sz;
 	struct s_token	*next;
@@ -115,7 +92,6 @@ typedef struct		s_token
 
 typedef struct		s_inst
 {
-	struct s_pos	pos;
 	int 			dir_size;
 	int 			ocp;
 	unsigned int 	wr_size;
@@ -130,10 +106,10 @@ typedef struct		s_inst
 typedef	struct 		s_label
 {
 	char			*name;
-	struct s_pos	pos;
+	int				row;
+	int				col;
 	struct s_label	*next;
 }					t_label;
-
 
 int 				ft_readline(int fd, char **str, char **line);
 
@@ -164,29 +140,20 @@ t_label 			*add_label(t_asm *p, char *str);
 */
 
 t_asm				*init_struct(int fd);
-<<<<<<< HEAD
-=======
 
 /*
 ** error
 */
 
 int					ft_error(char *str);
->>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
 
 /*
 ** utils
 */
 
-<<<<<<< HEAD
-int					ft_error(char *str);
-int 				is_whitespace(int c);
-void 				skip_whitespaces(t_asm *p, char **line);
-=======
 int 				is_whitespace(int c);
 void 				skip_whitespaces(char **line);
 void				skip_comment(char **line);
 char				*itoa_base_ulong(uintmax_t n, int base, char *s_base);
 
 #endif
->>>>>>> 16dae822e3a2d5fe7a7881cfb9193a9a34f2c33c
