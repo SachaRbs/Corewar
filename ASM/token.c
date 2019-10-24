@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/24 17:50:07 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:15:20 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		add_token(t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	printf("ADD TOKEN\n");
+	// printf("ADD TOKEN\n");
 	if (!(*head))
 	{
 		*head = new;
