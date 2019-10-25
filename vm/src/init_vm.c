@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/22 12:09:13 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 10:51:19 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,6 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	else
 		current->pnu = vm->pnum[pn];
 	load_proc(vm, fd, current, pn);
-}
-
-void	print_memory(unsigned char *mem)
-{
-	int i;
-
-	i = -1;
-	while (++i < MEM_SIZE)
-		printf("%02hhx ", mem[i]);
-	printf("\n");
 }
 
 int		initialize(t_vm *vm, int ac, char **av)

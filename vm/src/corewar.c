@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/24 17:51:04 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 16:36:40 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ unsigned int		big_endian(unsigned int num, int n)
 	return (-1);
 }
 
-void	wrong_ocp(t_proc *proc, t_op op)
+int		wrong_ocp(t_proc *proc, t_op op)
 {
 	int code;
 	int i;
@@ -39,6 +39,7 @@ void	wrong_ocp(t_proc *proc, t_op op)
 		else if (code == IND_CODE || code == DIR_CODE)
 			proc->read += (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 	}
+	return (0);
 }
 
 int		get_arg(t_vm *vm, t_proc *proc, t_op op)
@@ -59,10 +60,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 			else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 				size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 			else
-			{
-				wrong_ocp(proc, op);
-				return (0);
-			}
+				return (wrong_ocp(proc, op));
 			proc->arg_a[i] = proc->read;
 			proc->arg_t[i] = code;
 			proc->arg_v[i] = read_mem(vm, proc->read, size, 1, proc);
@@ -70,30 +68,14 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 		else if (code != 0)
 			return (0);
 	}
-		return (1);
+	return (1);
 }
 
-void	print_action(t_proc *proc)
-{
-	int	i;
-
-	i = 0;
-	printf("PLAYER No %d :\n", proc->pnu);
-	printf("action = %s\n", g_op_tab[proc->action].name);
-	while (i < 4){
-		printf("arg_v[%d] = %d\n",i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
-	}
-	printf("\n\n");
-}
-
-void	print_memory2(unsigned char *mem, t_proc *proc, int d)
+void	print_memory(unsigned char *mem, t_proc *proc, int d)
 {
 	int i;
 
 	i = -1;
-	// sleep(1);
 	// ft_printf("\e[1;1H\e[2J");
 	while (++i < MEM_SIZE)
 	{
@@ -120,30 +102,59 @@ void	print_memory2(unsigned char *mem, t_proc *proc, int d)
 	printf("\n");
 }
 
-void	print_action2(t_proc *proc, t_vm *vm)
+void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 {
-	int i;
+	unsigned int i;
 
-	i = -1;
-	printf("Proc = %d || Action = %s || PC = %d {0x%04x} || Read = %d {0x%04x} || Arg[] = ", proc->procnum, g_op_tab[proc->action].name, proc->pc, proc->pc, proc->read, proc->read);
-	while (++i < g_op_tab[proc->action].nb_arg)
-		printf("%d ", proc->arg_v[i]);
-	if (proc->action == 11)
-		printf("\n\t-> addres = %d || reg[%d] = %d", (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)) % MEM_SIZE, 15, proc->reg[15]);
-	if (proc->action == 10)
+	i = 0;
+	if (action_failed)
 	{
-		printf("\n\t-> address = %d, reg[%d] = %d || arg0 = %d || arg1 = %d",
-		(proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD)) % MEM_SIZE, 15, proc->reg[15], proc->arg_v[0], proc->arg_v[1]);
+		if (proc->procnum < 10)
+			printf("P    %d | %s", proc->procnum, g_op_tab[proc->action].name);
+		else
+			printf("P   %d | %s", proc->procnum, g_op_tab[proc->action].name);
+		while (i < g_op_tab[proc->action].nb_arg)
+		{
+			if (proc->action == 11 && i != 0)
+				printf(" %d", argument(vm, proc, i));		
+			else if (proc->arg_t[i] == DIR_CODE)
+				printf(" %d", proc->arg_v[i]);
+			else if (proc->arg_t[i] == IND_CODE)
+				printf(" %d", proc->arg_v[i]);
+			else if (proc->arg_t[i] == REG_CODE)
+				printf(" r%d", proc->arg_v[i]);
+			i++;
+		}
+		if (proc->action == 11)
+		{
+			printf("\n       | -> store to %d + %d = %d (with pc and mod %d)",
+			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
+			proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD));
+		}
+		if (proc->action == 9 && proc->carry)
+			printf(" OK\n");
+		if (proc->action == 9 && !proc->carry)
+			printf(" FAILED");
+		if (proc->action == 10)
+			printf("\n       | -> load from %d + %d = %d (with pc and mod %d)", argument(vm, proc, 0), argument(vm, proc, 1),
+			argument(vm, proc, 0) + argument(vm, proc, 1), proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
+		if (proc->action == 12)
+			printf(" (%d)", proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
 	}
-	if (proc->action == 9)
+	if (proc->action != 9 || (proc->action == 9 && !proc->carry))
 	{
-		if (proc->carry == 0)
-			printf("FAIL");
+		if (action_failed)
+			printf("\n");
+		i = proc->pc;
+		printf("ADV %d (0x%04x -> 0x%04x) ", proc->read - proc->pc, proc->pc, proc->read);
+		while (i < proc->read)
+		{
+			printf("%02hhx ", vm->mem[i]);
+			i++;
+		}
+		printf("\n");
 	}
-
-	printf("\n");
 }
-
 
 void	arg_to_zero(t_proc *proc)
 {
@@ -161,30 +172,28 @@ void	arg_to_zero(t_proc *proc)
 
 void	run_corewar(t_vm *vm)
 {
-	t_proc	*proc;
+	t_proc			*proc;
 	t_operations	*operation;
+	int				operation_failed;
 
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		// printf("It is now cycle %d\n", vm->cycle);
+		printf("It is now cycle %d\n", vm->cycle);
+		if (vm->cycle == 3072)
+			printf("Cycle to die is now 1486\n");
+		if (vm->cycle == 4558)
+			printf("Cycle to die is now 1436\n");
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
-			// if (vm->cycle == 4895)
-				// printf("Hello sacha");
 			if (vm->cycle == proc->cycle)
 			{
-				if (get_arg(vm, proc, g_op_tab[proc->action]))
+				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
 					operation->op[proc->action - 1](vm, proc);
-				// else
-					// printf("FAIL : ");
-				// print_action2(proc, vm);
-				if (vm->dump == -1)
-				{
-					// print_memory2(vm->mem, proc, 0);
-					// getchar();
-				}
+				print_action(proc, vm, operation_failed);
+				// if (vm->dump == -1)
+				// 	print_memory(vm->mem, proc, 0);
 				proc->pc = proc->read;
 				arg_to_zero(proc);
 			}
@@ -204,5 +213,5 @@ void	run_corewar(t_vm *vm)
 		}
 	}
 	if (vm->cycle == vm->dump)
-		print_memory2(vm->mem, vm->proc, 1);
+		print_memory(vm->mem, vm->proc, 1);
 }
