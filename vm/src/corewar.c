@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 16:36:40 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:36:38 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,11 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 		while (i < g_op_tab[proc->action].nb_arg)
 		{
 			if (proc->action == 11 && i != 0)
-				printf(" %d", argument(vm, proc, i));		
+				printf(" %d", argument(vm, proc, i));
+			else if (proc->action == 6 && i == 0)
+				printf(" -%d", proc->arg_v[i]);
+			else if (proc->action == 8 && i == 0)
+				printf(" %d", argument(vm, proc, i));
 			else if (proc->arg_t[i] == DIR_CODE)
 				printf(" %d", proc->arg_v[i]);
 			else if (proc->arg_t[i] == IND_CODE)
@@ -179,11 +183,13 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		printf("It is now cycle %d\n", vm->cycle);
-		if (vm->cycle == 3072)
-			printf("Cycle to die is now 1486\n");
-		if (vm->cycle == 4558)
-			printf("Cycle to die is now 1436\n");
+		// printf("It is now cycle %d\n", vm->cycle);
+		if (vm->nbr_live > NBR_LIVE)
+		{
+			vm->nbr_live = 0;
+			vm->cycle_to_die -= CYCLE_DELTA;
+			printf("Cycle to die is now %d\n", vm->cycle_to_die);
+		}
 		proc = vm->proc;
 		while (proc && proc->pnu)
 		{
@@ -191,9 +197,9 @@ void	run_corewar(t_vm *vm)
 			{
 				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
 					operation->op[proc->action - 1](vm, proc);
-				print_action(proc, vm, operation_failed);
+				// print_action(proc, vm, operation_failed);
 				// if (vm->dump == -1)
-				// 	print_memory(vm->mem, proc, 0);
+					// print_memory(vm->mem, proc, 0);
 				proc->pc = proc->read;
 				arg_to_zero(proc);
 			}
@@ -212,6 +218,6 @@ void	run_corewar(t_vm *vm)
 			proc = proc->next;
 		}
 	}
-	if (vm->cycle == vm->dump)
-		print_memory(vm->mem, vm->proc, 1);
+	// if (vm->cycle == vm->dump)
+		// print_memory(vm->mem, vm->proc, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:55:09 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/23 18:08:03 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:33:17 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	*ft_live(t_vm *vm, t_proc *proc)
 	if (current != NULL)
 	{
 		vm->live = current->reg[1];
+		vm->nbr_live += 1;
 		// proc->cycle_live = vm->cycle; //NOT SURE ABOUT THIS
 		// printf("A process shows that player %d (%s) is alive\n", current->reg[1], "PLAYER NAME");
 		proc->cycle_live = 0;

@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 11:56:44 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:31:47 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_vm
 	int				live;
 	int				cycle;
 	int				cycle_to_die;
+	int				nbr_live;
 	int				check;
 	int				next_check;
 	t_proc			*proc;

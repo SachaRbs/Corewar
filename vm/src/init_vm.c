@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 10:51:19 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/25 19:31:42 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	vm->cycle_to_die = CYCLE_TO_DIE;
 	vm->cycle = 0;
 	vm->check = 0;
+	vm->nbr_live = 0;
 	if (ac > 1)
 		parsing(vm, ac, av);
 	else
