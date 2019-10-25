@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/24 19:15:20 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/25 18:30:45 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ t_token     *init_token(t_asm *p, t_type type)
         ft_error("TOKEN MALLOC");
     token->str = NULL;
     token->type = type;
+	if (token->type == SEPARATOR)				// A DELETE CEST POUR LE PRINT
+		token->str = ft_strdup(",");
+	if (token->type == NEWLINE)					// A DELETE CEST POUR LE PRINT
+		token->str = ft_strdup("\\n");
 	token->op_index = -1;
 	token->dir_sz = 0;
     token->row = p->row;
@@ -33,7 +37,7 @@ void		add_token(t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	// printf("ADD TOKEN\n");
+	printf(YEL"ADD TOKEN [%s]\n"RESET, typestab[new->type]);
 	if (!(*head))
 	{
 		*head = new;
@@ -51,7 +55,7 @@ void		print_token(t_token *head)
 	t_token		*curr;
 
 	curr = head;
-	printf(YEL"TOKENS:\n");
+	printf(YEL"\n\nTOKENS:\n");
 	while (curr)
 	{
 		printf("%15s [%s]\n", curr->str, typestab[curr->type]);

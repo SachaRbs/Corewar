@@ -29,7 +29,6 @@ void	parse_champion(t_asm *p, char *line)
     p->champ = ft_strsub(line + start, 0, p->col - start);
     if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
         ft_error("CHAMPION NAME TOO LONG");
-    printf(GRN"%s\n"RESET, p->champ);
 }
 
 void	parse_comment(t_asm *p, char *line)
@@ -49,27 +48,28 @@ void	parse_comment(t_asm *p, char *line)
     p->comment = ft_strsub(line + start, 0, p->col - start);
     if (ft_strlen(p->comment) > COMMENT_LENGTH)
         ft_error("CHAMPION COMMENT TOO LONG");
-    printf(GRN"%s\n"RESET, p->comment);
 }
 
 void	parse_header(t_asm *p, t_token *new, char *line)
 {
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
+		if (p->champ && new->type == COMMAND_NAME)
+			ft_error("HEADER ALREADY EXISTS");
 		new->type = COMMAND_NAME;
 		parse_champion(p, line);
 		if (line[p->col] == '"')
 			p->col++;
-		if (line[p->col] == '\n' && ++p->col)
-			add_token(&p->tokens, init_token(p, NEWLINE));
 	}
-	if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
+	else if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
 	{
+		if (p->comment && new->type == COMMAND_COMMENT)
+			ft_error("HEADER ALREADY EXISTS");
 		new->type = COMMAND_COMMENT;
 		parse_comment(p, line);
 		if (line[p->col] == '"')
 			p->col++;
-		if (line[p->col] == '\n' && ++p->col)
-			add_token(&p->tokens, init_token(p, NEWLINE));
 	}
+	else
+		ft_error("BAD COMMAND");
 }

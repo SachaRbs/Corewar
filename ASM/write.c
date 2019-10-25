@@ -6,33 +6,26 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/22 19:38:34 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:19:31 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-char	*itoa_base_ulong(uintmax_t n, int base, char *s_base)
+char		*ft_itoa_bse(unsigned int n, int base, int len)
 {
-	uintmax_t			nb;
-	unsigned int		i;
-	char				*str;
-	int					len;
-	
-	nb = n;
-	len = ft_nblen(n, base);
+	char	*str;
+	char	*sbase;
+
+	sbase = "0123456789abcdef";
 	if (!(str = ft_strnew(len)))
-		return (0);
-	if (!nb)
-		str[0] = '0';
-	str[len + 1] = '\0';
-	i = 0;
-	while (nb)
+		return (NULL);
+	len--;
+	while (len >= 0)
 	{
-		str[i] = s_base[nb % base];
-		nb /= base;
-		i++;
+		str[len] = sbase[n % sbase];
+		n /= sbase;
+		len--;
 	}
 	return (str);
 }
- 
