@@ -6,7 +6,7 @@
 /*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/11 10:39:50 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/26 17:39:01 by sacha       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/26 19:17:16 by sacha       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -251,5 +251,5 @@ void	run_corewar(t_vm *vm)
 	if (vm->cycle == vm->dump)
 		print_memory(vm->mem, vm->proc, 1);
 	else
-		printf("The Player %d WIN!!\n", vm->last_alive);
+		printf("Contestant %d, \"%s\", has won !\n", vm->last_alive, vm->contestants[vm->last_alive]); 
 }

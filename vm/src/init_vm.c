@@ -6,7 +6,7 @@
 /*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/26 17:11:01 by sacha       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/26 19:13:58 by sacha       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,6 +78,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
+	vm->contestants[current->pnu] = h->prog_name;
 	return (reverser_32(h->prog_size));
 }
 

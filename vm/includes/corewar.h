@@ -6,7 +6,7 @@
 /*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 12:13:44 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/26 16:58:37 by sacha       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/26 19:13:38 by sacha       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,7 @@ typedef struct		s_vm
 	int				pnum[MAX_PLAYERS + 1]; // +1 ou pas ?
 	char			*names[MAX_PLAYERS];
 	long			sizes[MAX_PLAYERS];
+	char			*contestants[MAX_PLAYERS + 1];
 	int				cycle_to_die;
 	int				next_check;
 	int				last_alive;
