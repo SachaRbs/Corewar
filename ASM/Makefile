@@ -14,8 +14,8 @@ NAME = asm
 INCLUDES = includes
 LIBS = libft
 LIB = ft
-FLAGS = -Wall -Werror -Wextra
-SRCS = asm.c utils.c init.c header.c label.c instructions.c parse.c token.c write.c
+# FLAGS = -Wall -Werror -Wextra
+SRCS = asm.c utils.c init.c header.c label.c parse.c token.c
 # SRCSREP = srcs
 OBJS = $(SRCS:.c=.o)
 

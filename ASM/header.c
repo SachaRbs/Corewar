@@ -12,53 +12,64 @@
 
 #include "includes/asm.h"
 
-void	parse_champion(t_asm *p, char *line, char *end)
+void	parse_champion(t_asm *p, char *line)
 {
-	line += 5;
-    while (is_whitespace(*line) && *line)
-        line++;
-    if (*line == '"')
+	size_t		start;
+
+    while (is_whitespace(line[p->col]) && line[p->col])
+        p->col++;
+    if (line[p->col] == '"')
     {
-        line++;
- 		if (!(end = ft_strchr(line, '"')))
-			ft_error("INVALID CHAMPION NAME");
+        p->col++;
+		start = p->col;
+		// NEEDS TO READ LINE UNTIL NEXT QUOTE
+		while (line[p->col] != '"')
+			p->col++;
     }
-    p->champ = ft_strsub(line, 0, end - line);
+    p->champ = ft_strsub(line + start, 0, p->col - start);
     if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
         ft_error("CHAMPION NAME TOO LONG");
-    printf(GRN"%s\n"RESET, p->champ);
 }
 
-void	parse_comment(t_asm *p, char *line, char *end)
+void	parse_comment(t_asm *p, char *line)
 {
-	line += 8;
-    while (is_whitespace(*line) && *line)
-        line++;
-    if (*line == '"')
+	size_t		start;
+
+    while (is_whitespace(line[p->col]) && line[p->col])
+        p->col++;
+    if (line[p->col] == '"')
     {
-        line++;
- 		if (!(end = ft_strchr(line, '"')))
-			ft_error("INVALID CHAMPION COMMENT");
+        p->col++;
+		start = p->col;
+		// NEEDS TO READ LINE UNTIL NEXT QUOTE
+		while (line[p->col] && line[p->col] != '"')
+			p->col++;
     }
-    p->comment = ft_strsub(line, 0, end - line);
+    p->comment = ft_strsub(line + start, 0, p->col - start);
     if (ft_strlen(p->comment) > COMMENT_LENGTH)
         ft_error("CHAMPION COMMENT TOO LONG");
-    printf(GRN"%s\n"RESET, p->comment);
 }
 
 void	parse_header(t_asm *p, t_token *new, char *line)
 {
-	char	*end;
-
-	end = NULL;
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
+		if (p->champ && new->type == COMMAND_NAME)
+			ft_error("HEADER ALREADY EXISTS");
 		new->type = COMMAND_NAME;
-		parse_champion(p, line, end);
+		parse_champion(p, line);
+		if (line[p->col] == '"')
+			p->col++;
 	}
-	if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
+	else if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
 	{
+		if (p->comment && new->type == COMMAND_COMMENT)
+			ft_error("HEADER ALREADY EXISTS");
 		new->type = COMMAND_COMMENT;
-		parse_comment(p, line, end);
+		parse_comment(p, line);
+		if (line[p->col] == '"')
+			p->col++;
 	}
+	else
+		ft_error("BAD COMMAND");
 }

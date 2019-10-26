@@ -144,6 +144,7 @@ int 				ft_readline(int fd, char **str, char **line);
 */
 
 void				parse(t_asm *p);
+void				parse_symbol(t_asm *p, t_token *new, char **line, int start);
 
 /*
 ** token
@@ -182,9 +183,10 @@ int					ft_error(char *str);
 ** utils
 */
 
+int					is_reg(char *line);
 int 				is_whitespace(int c);
-void 				skip_whitespaces(char **line);
-void				skip_comment(char **line);
-char				*itoa_base_ulong(uintmax_t n, int base, char *s_base);
+int					is_divider(int c);
+void				skip_whitespaces(t_asm *p, char *line);
+void				skip_comment(t_asm *p, char *line);
 
 #endif
