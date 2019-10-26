@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 19:36:38 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   corewar.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/11 10:39:50 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/26 17:39:01 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "operations.h"
 #include "op.h"
@@ -174,6 +174,39 @@ void	arg_to_zero(t_proc *proc)
 	}
 }
 
+void	check_live(t_vm *vm)
+{
+	t_proc *proc;
+	t_proc *tmp;
+
+
+	tmp = NULL;
+	proc = vm->proc;
+	if ((vm->nbr_live > NBR_LIVE || ++vm->check > MAX_CHECKS) && (vm->check = 1))
+	{
+		vm->cycle_to_die -= CYCLE_DELTA;
+		printf("Cycle to die is now %d\n", vm->cycle_to_die);
+	}
+	while (proc)
+	{
+		if (!proc->live)
+		{
+			if (tmp)
+				tmp->next = proc->next;
+			else
+				vm->proc = vm->proc->next;
+			free(proc);
+			proc = tmp ? tmp->next : vm->proc;
+		}
+		else if ((tmp = proc))
+		{
+			proc->live = 0;
+			proc = proc->next;
+		}
+	}
+	vm->next_check = vm->cycle_to_die;
+}
+
 void	run_corewar(t_vm *vm)
 {
 	t_proc			*proc;
@@ -183,14 +216,11 @@ void	run_corewar(t_vm *vm)
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
 	{
-		// printf("It is now cycle %d\n", vm->cycle);
-		if (vm->nbr_live > NBR_LIVE)
-		{
-			vm->nbr_live = 0;
-			vm->cycle_to_die -= CYCLE_DELTA;
-			printf("Cycle to die is now %d\n", vm->cycle_to_die);
-		}
-		proc = vm->proc;
+		printf("It is now cycle %d\n", vm->cycle);
+		if (--vm->next_check <= 0)
+			check_live(vm);
+		if (!(proc = vm->proc) || !proc->next)
+			break;
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
@@ -218,6 +248,8 @@ void	run_corewar(t_vm *vm)
 			proc = proc->next;
 		}
 	}
-	// if (vm->cycle == vm->dump)
-		// print_memory(vm->mem, vm->proc, 1);
+	if (vm->cycle == vm->dump)
+		print_memory(vm->mem, vm->proc, 1);
+	else
+		printf("The Player %d WIN!!\n", vm->last_alive);
 }

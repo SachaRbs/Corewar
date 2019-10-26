@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 19:31:47 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   corewar.h                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/05 12:13:44 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/26 16:58:37 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #ifndef COREWAR_H
 # define COREWAR_H
 
@@ -32,6 +32,7 @@ typedef struct		s_proc
 	int				carry;
 	// int				oc;
 	int				cycle_live;
+	int				live;
 	int				cycle;
 	// int				crossed;
 	unsigned int	action;
@@ -50,14 +51,14 @@ typedef struct		s_vm
 	int				pnum[MAX_PLAYERS + 1]; // +1 ou pas ?
 	char			*names[MAX_PLAYERS];
 	long			sizes[MAX_PLAYERS];
-	int				pct;
-	int				dump;
-	int				live;
-	int				cycle;
 	int				cycle_to_die;
+	int				next_check;
+	int				last_alive;
 	int				nbr_live;
 	int				check;
-	int				next_check;
+	int				pct;
+	int				dump;
+	int				cycle;
 	t_proc			*proc;
 }					t_vm;
 

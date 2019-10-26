@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_vm.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/25 19:31:42 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   init_vm.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/26 17:11:01 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "error.h"
 
@@ -135,6 +135,22 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	load_proc(vm, fd, current, pn);
 }
 
+int		find_player_alive(t_vm *vm)
+{
+	int max;
+	t_proc *current;
+
+	current = vm->proc;
+	max = -1;
+	while(current)
+	{
+		if (current->pnu > max)
+			max = current->pnu;
+		current = current->next;
+	}
+	return(max);
+}
+
 int		initialize(t_vm *vm, int ac, char **av)
 {
 	int		i;
@@ -149,6 +165,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
+	vm->next_check = vm->cycle_to_die;
 	vm->cycle = 0;
 	vm->check = 0;
 	vm->nbr_live = 0;
@@ -165,6 +182,6 @@ int		initialize(t_vm *vm, int ac, char **av)
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
-	// print_memory(vm->mem);
+	vm->last_alive = find_player_alive(vm);
 	return (0);
 }
