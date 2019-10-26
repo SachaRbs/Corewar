@@ -54,18 +54,18 @@ void	parse_header(t_asm *p, t_token *new, char *line)
 {
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
-		if (p->champ && new->type == COMMAND_NAME)
+		if (p->champ && new->type == NAME)
 			ft_error("HEADER ALREADY EXISTS");
-		new->type = COMMAND_NAME;
+		new->type = NAME;
 		parse_champion(p, line);
 		if (line[p->col] == '"')
 			p->col++;
 	}
 	else if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
 	{
-		if (p->comment && new->type == COMMAND_COMMENT)
+		if (p->comment && new->type == COMMENT)
 			ft_error("HEADER ALREADY EXISTS");
-		new->type = COMMAND_COMMENT;
+		new->type = COMMENT;
 		parse_comment(p, line);
 		if (line[p->col] == '"')
 			p->col++;

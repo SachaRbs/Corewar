@@ -10,14 +10,23 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = asm
-INCLUDES = includes
-LIBS = libft
-LIB = ft
+NAME		=	asm
+INCLUDES	=	includes
+LIBS		=	libft
+LIB			=	ft
 # FLAGS = -Wall -Werror -Wextra
-SRCS = asm.c utils.c init.c header.c label.c parse.c token.c
+SRCS		=	asm.c			\
+				utils.c			\
+				init.c			\
+				instructions.c	\
+				header.c		\
+				label.c			\
+				parse.c			\
+				token.c			\
+				op.c			\
+				check_token.c
 # SRCSREP = srcs
-OBJS = $(SRCS:.c=.o)
+OBJS		=	$(SRCS:.c=.o)
 
 all: $(NAME)
 

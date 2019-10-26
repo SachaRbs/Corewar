@@ -62,8 +62,8 @@ typedef	struct		s_asm
 
 typedef enum		e_type
 {
-	COMMAND_NAME,
-	COMMAND_COMMENT,
+	NAME,
+	COMMENT,
 	OP,
 	LABEL,
 	REGISTER,
@@ -81,8 +81,8 @@ typedef enum		e_type
 
 static const char *typestab[11] =
 {
-	"COMMAND_NAME",
-	"COMMAND_COMMENT",
+	"NAME",
+	"COMMENT",
 	"OP",
 	"LABEL",
 	"REGISTER",
@@ -168,6 +168,12 @@ void 				print_labels(t_label *head);
 t_label 			*add_label(t_asm *p, char *str);
 
 /*
+***	instructions
+*/
+
+int					is_instruction(char *line);
+
+/*
 ** init
 */
 
@@ -188,5 +194,11 @@ int 				is_whitespace(int c);
 int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
 void				skip_comment(t_asm *p, char *line);
+
+/*
+***		check tokens
+*/
+
+int					check_token(t_asm *env);
 
 #endif

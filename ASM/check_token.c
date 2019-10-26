@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/24 18:01:36 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/26 17:29:53 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,24 @@ int		g_syntactic_tab[40][12] =
 	// 	return (-1);
 // }
 
-void	get_bytepos(t_asm *env, t_token *token)
-{
+// void	get_bytepos(t_asm *env, t_token *token)
+// {
 	
+// }
+
+void	aff_token(t_asm *env, t_token *token)
+{
+	if (token->type == OP || token->type == LABEL)
+		printf("\n============== NEW INSTRUCTIONS ==============\n");
+	printf(" ________________________\n");
+	printf("|%10s %-12d |\n", "State", env->syntax_state);
+	printf("|%10s %-12s |\n", "Type", typestab[token->type]);
+	printf("|%10s %-12s |\n", "Value", token->str);
+	printf("|%10s %-12d |\n", "Row", token->row);
+	printf("|%10s %-12d |\n", "Col", token->col);
+	printf("|%10s %-12d |\n", "Op ind", token->op_index);
+	printf("|%10s %-12d |\n", "Dir sz", token->dir_sz);
+	printf("|________________________|\n");
 }
 
 int		check_token(t_asm *env)
@@ -91,16 +106,25 @@ int		check_token(t_asm *env)
 
 	token = env->tokens;
 	while (token
-	&& (env->syntax_state != -1 || env->syntax_state != 40))
+	&& (env->syntax_state != -1 && env->syntax_state != 40))
 	{
+		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 10)
-			env->syntax_state = token->op_index;
-		get_bytepos(env, token);
+			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
+		// get_bytepos(env, token);
 		token = token->next;
 	}
+	if (!token)
+		env->syntax_state = g_syntactic_tab[env->syntax_state][11];
 	if (env->syntax_state == 40)
+	{
+		printf("VALID TOKENS\n");
 		return (1);
+	}
 	else
+	{
+		printf("INVALID TOKENS at line %d col %d\n", token->row, token->col);
 		return (0);
+	}
 }
