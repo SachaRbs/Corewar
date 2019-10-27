@@ -1,3 +1,5 @@
+# ERROR NO COMMENT
+
 .name	"LDE LDE LDE"
 	ld %0,r6
 	sti r1,%:suitb,%1

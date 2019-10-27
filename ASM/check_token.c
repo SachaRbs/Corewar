@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anradixt <anradix@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/26 17:29:53 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/27 18:16:52 by anradixt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, 26, -1, -1},
 	{-1, -1, -1, -1, 27, 27, 27, 27, 27, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, 28, -1, -1},
-	{-1, -1, -1, -1, -1, 39, 39, 39, 39, -1, -1, -1},
+	{-1, -1, -1, -1, 39, -1, -1, 39, 39, -1, -1, -1},
 	{-1, -1, -1, -1, 30, 30, 30, 30, 30, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1},
 	{-1, -1, -1, -1, 32, 32, 32, 32, 32, -1, -1, -1},
@@ -50,7 +50,7 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
 	{-1, -1, -1, -1, 35, 35, 35, 35, 35, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, 36, -1, -1},
-	{-1, -1, -1, -1, -1, 37, 37, 37, 37, -1, -1, -1},
+	{-1, -1, -1, -1, 37, -1, -1, 37, 37, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, 38, -1, -1},
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
@@ -111,7 +111,10 @@ int		check_token(t_asm *env)
 		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 10)
+		{
+			printf("token [%s] going to state %d which correspond to operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
+		}
 		// get_bytepos(env, token);
 		token = token->next;
 	}
@@ -125,6 +128,7 @@ int		check_token(t_asm *env)
 	else
 	{
 		printf("INVALID TOKENS at line %d col %d\n", token->row, token->col);
+		aff_token(env, token);
 		return (0);
 	}
 }

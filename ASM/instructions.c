@@ -12,11 +12,25 @@
 
 #include "includes/asm.h"
 
+int		ft_isspace(char c)
+{
+	printf("CHAR : [%c]\n", c);
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\f')
+	{
+		printf("isspace returns 0 for char [%c]\n", c);
+		return (0);
+	}
+	printf("isspace returns -1 for char [%c]\n", c);
+	return (-1);
+}
+
 int		indstrstr(const char *str, const char *find)
 {
 	int		i;
 	int		y;
+	int		ret;
 
+	ret = -1;
 	if (!(find[0]))
 		return (-1);
 	i = 0;
@@ -26,7 +40,25 @@ int		indstrstr(const char *str, const char *find)
 		while (find[y] == str[i + y] && find[y])
 		{
 			if (find[y + 1] == '\0')
-				return (i);
+			{
+				printf("found %s\n", find);
+				if (i != 0)
+					printf("str[i - 1] : [%c]\n", str[i - 1]);	
+				printf("str[i + y + 1] [%c]\n", str[i + y + 1]);				
+				if ((i != 0 && printf("STR I - 1 : [%c]\n", str[i - 1]) && ft_isspace(str[i - 1]) == -1 
+				&& (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%')))
+				|| (i == 0 && (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%'))))
+				{
+					if (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%'))
+						printf("not valid : char [%c]\n", str[i + y + 1]);
+					ret = -1;
+					i = i + y;
+					y = -1;
+				}
+				else
+					return (i);
+				
+			}
 			y++;
 		}
 		i++;

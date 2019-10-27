@@ -1,3 +1,5 @@
+# ERROR .EXTEND
+
 .name "Death"
 .comment "Fork"
 .extend
