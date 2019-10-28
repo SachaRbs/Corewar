@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:37:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/14 16:08:56 by sarobber         ###   ########.fr        #
+#    Updated: 2019/10/28 17:00:39 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,3 +61,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.SILENT:

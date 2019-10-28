@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_assembler.mk                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/04 18:14:25 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/28 16:41:05 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,12 +24,19 @@ L_ASSEMBLER_DIR				:=	assembler
 
 NAME_ASSEMBLER				:=	asm
 
-SRC_ASSEMBLER 				=	asm.c \
-								header.c \
+SRC_ASSEMBLER 				=	\
+								asm.c \
+								check_token.c \
+								error_token.c \
 								init.c \
-								instructions.c \
-								label.c \
-								utils.c
+								op.c \
+								parse.c \
+								parse_header.c \
+								parse_instructions.c \
+								parse_label.c \
+								token.c \
+								utils.c \
+								write.c
 
 INC_ASSEMBLER					:=	asm.h
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 12:51:56 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/04 18:23:44 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/28 17:00:06 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,3 +63,4 @@ debug:
 	$(MAKE) debug -C $(L_ASSEMBLER_DIR) $(A_NAME) --no-print-directory
 
 re: fclean all
+.SILENT:

@@ -3,4 +3,5 @@
 
 xor :label,r1,r2
 
-label: aff r2
+loop:
+label: xor :label,r1,r2

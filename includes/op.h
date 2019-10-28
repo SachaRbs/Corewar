@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/08 18:39:39 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/24 18:03:23 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,78 +18,79 @@
 #ifndef OP_H
 # define OP_H
 
-# define IND_SIZE				2
-# define REG_SIZE				4
-# define DIR_SIZE				REG_SIZE
+#define IND_SIZE			2
+#define REG_SIZE			4
+#define DIR_SIZE			REG_SIZE
 
-# define REG_CODE				1
-# define DIR_CODE				2
-# define IND_CODE				3
+# define REG_CODE			1
+# define DIR_CODE			2
+# define IND_CODE			3
 
-# define MAX_ARGS_NUMBER		4
-# define MAX_PLAYERS			4
-# define MEM_SIZE				(4*1024)
-# define IDX_MOD				(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+#define MAX_ARGS_NUMBER		4
+#define MAX_PLAYERS			4
+#define MEM_SIZE			(4*1024)
+#define IDX_MOD				(MEM_SIZE / 8)
+#define CHAMP_MAX_SIZE		(MEM_SIZE / 6)
 
-# define COMMENT_CHAR			'#'
-# define LABEL_CHAR				':'
-# define DIRECT_CHAR			'%'
-# define SEPARATOR_CHAR			','
+#define COMMENT_CHAR		'#'
+#define ALT_COMMENT_CHAR	';'
+#define LABEL_CHAR			':'
+#define DIRECT_CHAR			'%'
+#define SEPARATOR_CHAR		','
 
-# define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
+#define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
 
-# define NAME_CMD_STRING		".name"
-# define COMMENT_CMD_STRING		".comment"
+#define NAME_CMD_STRING		".name"
+#define COMMENT_CMD_STRING	".comment"
 
-# define REG_NUMBER				16
+#define REG_NUMBER			16
 
-# define CYCLE_TO_DIE			1536
-# define CYCLE_DELTA			50
-# define NBR_LIVE				21
-# define MAX_CHECKS				10
-
-/*
-***
-*/
-
-typedef char					t_arg_type;
-
-# define T_REG					1
-# define T_DIR					2
-# define T_IND					4
-# define T_LAB					8
-
-# define NBR_OP					16
+#define CYCLE_TO_DIE		1536
+#define CYCLE_DELTA			50
+#define NBR_LIVE			21
+#define MAX_CHECKS			10
 
 /*
-***
+**
 */
 
-# define PROG_NAME_LENGTH		(128)
-# define COMMENT_LENGTH			(2048)
-# define COREWAR_EXEC_MAGIC		0xea83f3
+typedef char				t_arg_type;
 
-typedef struct					header_s
+#define T_REG				1
+#define T_DIR				2
+#define T_IND				4
+#define T_LAB				8
+
+/*
+**
+*/
+
+# define PROG_NAME_LENGTH	(128)
+# define COMMENT_LENGTH		(2048)
+# define COREWAR_EXEC_MAGIC	0xea83f3
+
+typedef struct				header_s
 {
-	unsigned int				magic;
-	char						prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int				prog_size;
-	char						comment[COMMENT_LENGTH + 1];
-}								header_t;
+	unsigned int			magic;
+	char					prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int			prog_size;
+	char					comment[COMMENT_LENGTH + 1];
+}							header_t;
 
-typedef struct					s_op
+typedef struct				s_op
 {
-	char						*name;
-	unsigned char				nb_arg;
-	unsigned char				args[MAX_ARGS_NUMBER];
-	unsigned char				opcode;
-	unsigned int				cycle;
-	char						*desc;
-	unsigned char				ocp;
-	unsigned char				index;
-}								t_op;
+	char					*name;
+	unsigned char			nb_arg;
+	unsigned char			args[MAX_ARGS_NUMBER];
+	unsigned char			opcode;
+	unsigned int			cycle;
+	char					*desc;
+	unsigned char			ocp;
+	unsigned char			index;
+	int						syntactic_index;
+	int						dir_sz;
+}							t_op;
 
-extern t_op						op_tab[NBR_OP + 1];
+extern t_op					g_op_tab[17];
 
 #endif

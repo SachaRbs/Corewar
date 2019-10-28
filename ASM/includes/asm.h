@@ -54,6 +54,8 @@ typedef	struct		s_asm
 	int				syntax_state;
 	struct s_token	*tokens;
 	struct s_label	*labels;
+	struct s_label	*tok_lab;
+	struct s_label	*mentions;
 }					t_asm;
 
 /*

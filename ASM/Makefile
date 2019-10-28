@@ -15,6 +15,7 @@ INCLUDES	=	includes
 LIBS		=	libft
 LIB			=	ft
 # FLAGS = -Wall -Werror -Wextra
+<<<<<<< HEAD
 SRCS		=	asm.c			\
 				utils.c			\
 				init.c			\
@@ -25,6 +26,19 @@ SRCS		=	asm.c			\
 				parse_instructions.c \
 				parse_header.c \
 				parse_label.c \
+=======
+SRCS		=	asm.c					\
+				utils.c					\
+				init.c					\
+				parse_instructions.c	\
+				parse_header.c			\
+				parse_label.c			\
+				parse.c					\
+				token.c					\
+				op.c					\
+				check_token.c			\
+				error_token.c
+>>>>>>> fb41fec954d9d5b1b3d496978a6f50e7d5f8c1d8
 # SRCSREP = srcs
 OBJS		=	$(SRCS:.c=.o)
 

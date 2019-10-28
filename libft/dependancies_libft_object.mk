@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft_object.mk                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:41:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/14 17:45:51 by sarobber         ###   ########.fr        #
+#    Updated: 2019/10/28 16:51:29 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,3 +96,7 @@ ft_getting_argument.o: ft_printf.h
 ft_importants.o: ft_printf.h
 ft_strncpy_zero.o: ft_printf.h
 ft_printf_main.o: ft_printf.h
+
+ft_strnjoin.o: libft.h
+ft_strndup.o: libft.h
+ft_islower.o: libft.h

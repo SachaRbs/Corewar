@@ -9,13 +9,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "../includes/asm.h"
 
 char	*check_filename(char *file)
 {
 	char	*filename;
 	char	*dot;
+	char	*tmp;
 
+	tmp = file;
+	if ((tmp = ft_strrchr(tmp, '/')))
+		file = tmp + 1;
 	if (!(dot = ft_strchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
@@ -33,65 +37,20 @@ int		ft_readline(int fd, char **str, char **line)
 	ssize_t sz;
 
 	while (!ft_strchr(*str, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
-		if (!(*str = ft_strnjoin_free(*str, buffer, sz)))
+		if (!(*str = ft_strnjoin(*str, buffer, sz)))
 			return (-1);
 	sz = 0;
 	while ((*str)[sz] && (*str)[sz] != '\n')
 		++sz;
-	if ((*line = ft_strndup(*str, sz)) == NULL)
+	if ((*line = ft_strndup(*str, sz + 1)) == NULL)
 		return (-1);
 	if ((*str)[sz] == '\n')
 		++sz;
 	ptr = *str;
 	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
-	free((void *)ptr);
+	free(ptr);
 	return (sz > 0 ? sz : 0);
-}
-
-void	get_function(t_asm *p, char **line)
-{
-	int		i;
-
-	i = 0;
-	if (**line == '.')
-	{
-		get_champion(p, *line);
-		get_comment(p, *line);
-	}
-	else if (p->champ && p->comment)
-	{
-		while ((*line)[i] && !is_whitespace((*line)[i]) && (*line)[i] != ':'
-		&& (*line)[i] != '%')
-			i++;
-		if ((*line)[i] == ':')
-		{
-			p->f_label = 1;
-			printf("line = %s\n", *line);
-			add_label(p, line);
-			printf("line = %s\n", *line);
-		}
-		else if ((*line)[i] == '%')
-		{
-
-		}
-	}
-}
-
-void	read_file(t_asm *p)
-{
-	static char *str;
-	char		*buffer;
-
-	str = ft_strnew(1);
-	while ((ft_readline(p->fd, &str, &buffer) > 0))
-	{
-		printf("[%s]\n", buffer);
-		get_function(p, &buffer);
-		p->linecount++;
-	}
-	print_labels(p->labels);
-	close(p->fd);
 }
 
 int		main(int argc, char **argv)
@@ -104,6 +63,7 @@ int		main(int argc, char **argv)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		exit(1);
 	p = init_struct(fd);
+	p->file = argv[1];
 	p->filename = check_filename(argv[1]);
-	read_file(p);
+	parse(p);
 }
