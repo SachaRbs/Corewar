@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/28 16:57:43 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/28 18:04:43 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,29 @@ void	print_label_lists(t_asm *env)
 	t_label *head_labels;
 	t_label *head_mentions;
 
-	head_labels = env->labels;
+	head_labels = env->tok_lab;
 	head_mentions = env->mentions;
 	printf("LABELS :\n");
 	while (head_labels)
 	{
-		printf(" [%s]", head_labels->name);
+		printf(" [%s %d:%d]", head_labels->name, head_labels->row, head_labels->col + 1);
 		head_labels = head_labels->next;
 	}
 	printf("\n\nMENTIONS :\n");
 	while (head_mentions)
 	{
-		printf(" [%s]", head_mentions->name);
+		printf(" [%s %d:%d]", head_mentions->name, head_mentions->row, head_mentions->col + 1);
 		head_mentions = head_mentions->next;
 	}
 	printf("\n");
 }
 
-void	save_label(t_asm *env, t_token *token, int i)
+void	save_label(/*t_asm *env*/t_label **to, t_token *token/*, int i*/)
 {
 	t_label *head;
 	t_label *new;
 
-	head = i == 1 ? env->tok_lab : env->mentions;
+	head = *to;
 	printf("SAVING LABEL %s\n", token->str);
 	if (!head)
 		printf("FIRST LABEL TO BE SAVED\n");
@@ -108,15 +108,15 @@ void	save_label(t_asm *env, t_token *token, int i)
 	new->col = token->col;
 	new->row = token->row;
 	new->next = NULL;
-	if (!(head))
-		head = new;
+	if (!(*to))
+		*to = new;
 	else
 	{
-		while (head->next)
-			head = head->next;
-		head->next = new;
+		while ((*to)->next)
+			*to = (*to)->next;
+		(*to)->next = new;
+		*to = head;
 	}
-	print_label_lists(env);
 }
 
 int		check_token(t_asm *env)
@@ -131,13 +131,13 @@ int		check_token(t_asm *env)
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state != -1 && token->type == LABEL)
 		{
-			save_label(env, token, 1);
+			save_label(&env->tok_lab, token/*, 1*/);
 			if (!env->tok_lab)
 				printf("APPEND LABEL FAILED\n");
 		}
 		else if (env->syntax_state != -1 && (token->type == IND_LABEL || token->type == DIRECT_LABEL))
 		{
-			save_label(env, token, 2);
+			save_label(&env->mentions, token/*, 2*/);
 			if (!env->mentions)
 				printf("APPEND MENTION FAILED\n");
 		}
