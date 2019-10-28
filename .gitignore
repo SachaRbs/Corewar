@@ -1,8 +1,5 @@
-output
-output.c
-todo
 # Object files
-*.o
+**/*.o
 # Libraries
 *.a
 **/*.a
