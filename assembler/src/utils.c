@@ -1,13 +1,12 @@
 /* ************************************************************************** */
-
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 15:06:54 by anonymous         #+#    #+#             */
-/*   Updated: 2019/09/10 16:00:50 by anonymous        ###   ########.fr       */
+/*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/10/28 17:24:50 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +15,12 @@
 int		ft_error(char *str)
 {
 	ft_putendl_fd(str, 2);
+	exit(1);
+}
+
+int		ft_lexerror(t_asm *p)
+{
+	printf("Lexical error at [%d:%d]\n", p->row, p->col + 1);
 	exit(1);
 }
 
@@ -47,7 +52,8 @@ int		is_divider(int c)
 {
 	return (is_whitespace(c) ||
 		c == ',' ||
-		c == '\n');
+		c == '\n' ||
+		c == '"');
 }
 
 void	skip_whitespaces(t_asm *p, char *line)

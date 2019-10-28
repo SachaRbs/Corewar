@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 16:42:41 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/28 17:25:52 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
+
+#define STR (*line + p->col)
 
 void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 {
@@ -25,7 +27,6 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 	if ((p->col > size) && (is_divider((*line)[p->col]) || new->type == DIRECT))
 	{
 		new->str = ft_strsub(*line, start, p->col - start);
-		// printf("%s\n", new->str);
 		add_token(&p->tokens, new);
 	}
 	else if (new->type != DIRECT)
@@ -34,7 +35,7 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 		parse_symbol(p, new, line, start);
 	}
 	else
-		ft_error("ERROR");
+		ft_lexerror(p);
 
 }
 
@@ -42,11 +43,12 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 {
 	int		size;
 
-	printf(RED"[%s]\n"RESET, *line + p->col);
+	printf(RED"[%s]\n"RESET, STR);
 	size = p->col;
 	while (ft_strchr(LABEL_CHARS, (*line)[p->col]))
 		p->col++;
-	if ((*line)[p->col] == LABEL_CHAR)
+	// printf("%s\n", STR);
+	if ((*line)[p->col] == LABEL_CHAR && (p->col > size) && p->col++)
 	{
 		new->str = ft_strsub(*line, size, p->col - size);
 		new->type = LABEL;
@@ -66,6 +68,11 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 		}
 		add_token(&p->tokens, new);
 	}
+	else
+	{
+		printf(MAG"%s\n"RESET, STR);
+		ft_lexerror(p);
+	}
 }
 
 void	parse_token(t_asm *p, char **line)
@@ -76,14 +83,17 @@ void	parse_token(t_asm *p, char **line)
 		add_token(&p->tokens, init_token(p, NEWLINE));
 	else if ((*line)[p->col] == '.')
 		parse_symbol(p, init_token(p, NAME), line, p->col++);
-	else if ((*line)[p->col] == LABEL_CHAR)
-		parse_symbol(p, init_token(p, IND_LABEL), line, p->col++);
 	else if ((*line)[p->col] == DIRECT_CHAR && ++p->col)
 	{
 		if ((*line)[p->col] == LABEL_CHAR && ++p->col)
 			parse_symbol(p, init_token(p, DIRECT_LABEL), line, p->col);
 		else
 			parse_digits(p, init_token(p, DIRECT), line, p->col);
+	}
+	else if ((*line)[p->col] == LABEL_CHAR)
+	{
+		printf("LABEL CHAR\n");
+		parse_symbol(p, init_token(p, IND_LABEL), line, p->col++);
 	}
 	else
 		parse_digits(p, init_token(p, INDEX), line, p->col);
@@ -101,6 +111,7 @@ void	parse(t_asm *p)
 		p->col = 0;
 		while(line[p->col])
 		{
+			printf("%s\n", line + p->col);
 			skip_whitespaces(p, line);
 			skip_comment(p, line);
 			if (line[p->col])
@@ -110,6 +121,6 @@ void	parse(t_asm *p)
 	}
 	if (!p->tokens)
 		printf("NULL\n");
-	// print_token(p->tokens);
-	check_token(p);
+	print_token(p->tokens);
+	// check_token(p);
 }
