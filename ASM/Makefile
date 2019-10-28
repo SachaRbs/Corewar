@@ -18,13 +18,13 @@ LIB			=	ft
 SRCS		=	asm.c			\
 				utils.c			\
 				init.c			\
-				instructions.c	\
-				header.c		\
-				label.c			\
 				parse.c			\
 				token.c			\
 				op.c			\
-				check_token.c
+				check_token.c \
+				parse_instructions.c \
+				parse_header.c \
+				parse_label.c \
 # SRCSREP = srcs
 OBJS		=	$(SRCS:.c=.o)
 

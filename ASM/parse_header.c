@@ -52,6 +52,7 @@ void	parse_comment(t_asm *p, char *line)
 
 void	parse_header(t_asm *p, t_token *new, char *line)
 {
+	// printf("%s\n", new->str);
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
 		if (p->champ && new->type == NAME)
