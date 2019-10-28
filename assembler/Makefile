@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:23:17 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/04 18:14:23 by crfernan         ###   ########.fr        #
+#    Updated: 2019/10/28 17:00:59 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,3 +67,5 @@ debug: OPTI_FLAGS := $(SHARE_DEBUG)
 debug: re clean
 
 re: fclean all
+
+.SILENT:

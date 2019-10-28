@@ -10,29 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
+#include "../includes/asm.h"
 
-t_label     *init_label(char **str)
+t_label     *init_label(char *str)
 {
     t_label     *new;
-	char		*tmp;
+	int			i;
 
-	tmp = *str;
-    while (**str != LABEL_CHAR)
-        (*str)++;
-	if (tmp == *str)
-        ft_error("LABEL SIZE INVALID");
+	i = 0;
+    while (str[i] != LABEL_CHAR && str[i])
+        i++;
+	// if (!i)
+    //     ft_error("LABEL SIZE INVALID");
 	if (!(new = malloc(sizeof(t_label))))
         return (NULL);
-    if (!(new->name = ft_strndup(tmp, *str - tmp)))
+    if (!(new->name = ft_strndup(str, i)))
         return (NULL);
-	(*str)++;											// skip ":"
-	printf(GRN"[%s]\n"RESET, new->name);
+    printf(GRN "%s\n" RESET, new->name);
     new->next = NULL;
     return (new);
 }
 
-t_label     *add_label(t_asm *p, char **str)
+t_label     *add_label(t_asm *p, char *str)
 {
     t_label     *new;
     t_label     *tmp;

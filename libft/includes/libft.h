@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/14 17:49:13 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/28 16:50:56 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,11 @@ int				ft_printf(const char *format, ...);
 
 int				ft_atoi_base(const char *str, int size, int base);
 
+/*
+***		FUNCTIONS FROM THE LIB OF YOANN
+*/
+
+char			*ft_strnjoin(char *s1, char *s2, int n);
+char			*ft_strndup(char const *src, int n);
+int				ft_islower(int c);
 #endif

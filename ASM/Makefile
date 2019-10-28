@@ -15,16 +15,17 @@ INCLUDES	=	includes
 LIBS		=	libft
 LIB			=	ft
 # FLAGS = -Wall -Werror -Wextra
-SRCS		=	asm.c			\
-				utils.c			\
-				init.c			\
-				instructions.c	\
-				header.c		\
-				label.c			\
-				parse.c			\
-				token.c			\
-				op.c			\
-				check_token.c
+SRCS		=	asm.c					\
+				utils.c					\
+				init.c					\
+				parse_instructions.c	\
+				parse_header.c			\
+				parse_label.c			\
+				parse.c					\
+				token.c					\
+				op.c					\
+				check_token.c			\
+				error_token.c
 # SRCSREP = srcs
 OBJS		=	$(SRCS:.c=.o)
 
