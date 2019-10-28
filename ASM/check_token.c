@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anradixt <anradix@student.42.fr>           +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/27 18:16:52 by anradixt         ###   ########.fr       */
+/*   Updated: 2019/10/28 12:18:11 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,6 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
 
-// void	get_op(t_asm *env, t_token *token)
-// {
-	// if (!ft_strcmp(token->str, "aff"))
-	// 	env->syntax_state = 11;
-	// else if (!ft_strcmp(token->str, "live") || !ft_strcmp(token->str, "zjmp")
-	// || !ft_strcmp(token->str, "fork") || !ft_strcmp(token->str, "lfork"))
-	// 	env->syntax_state = 12;
-	// else if (!ft_strcmp(token->str, "st"))
-	// 	env->syntax_state = 13;
-	// else if (!ft_strcmp(token->str, "ld") || !ft_strcmp(token->str, "lld"))
-	// 	env->syntax_state = 16;
-	// else if (!ft_strcmp(token->str, "add") || !ft_strcmp(token->str, "sub"))
-	// 	env->syntax_state = 19;
-	// else if (!ft_strcmp(token->str, "sti"))
-	// 	env->syntax_state = 24;
-	// else if (!ft_strcmp(token->str, "and") || !ft_strcmp(token->str, "or")
-	// || !ft_strcmp(token->str, "xor"))
-	// 	env->syntax_state = 29;
-	// else if (!ft_strcmp(token->str, "ldi") || !ft_strcmp(token->str, "lldi"))
-	// 	env->syntax_state = 34;
-	// else
-	// 	return (-1);
-// }
-
 // void	get_bytepos(t_asm *env, t_token *token)
 // {
 	
@@ -88,7 +64,7 @@ int		g_syntactic_tab[40][12] =
 void	aff_token(t_asm *env, t_token *token)
 {
 	if (token->type == OP || token->type == LABEL)
-		printf("\n============== NEW INSTRUCTIONS ==============\n");
+		printf("\n==== NEW INSTRUCTIONS ====\n");
 	printf(" ________________________\n");
 	printf("|%10s %-12d |\n", "State", env->syntax_state);
 	printf("|%10s %-12s |\n", "Type", typestab[token->type]);
@@ -100,18 +76,28 @@ void	aff_token(t_asm *env, t_token *token)
 	printf("|________________________|\n");
 }
 
+void	error_token(t_asm *env, t_token *token, int i)
+{
+
+}
+
 int		check_token(t_asm *env)
 {
 	t_token *token;
 
 	token = env->tokens;
 	while (token
-	&& (env->syntax_state != -1 && env->syntax_state != 40))
+	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
 		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 10)
 		{
+			if (token->op_index == -1)
+			{
+				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
+				return (0);
+			}
 			printf("token [%s] going to state %d which correspond to operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
 		}
@@ -127,8 +113,7 @@ int		check_token(t_asm *env)
 	}
 	else
 	{
-		printf("INVALID TOKENS at line %d col %d\n", token->row, token->col);
-		aff_token(env, token);
+		printf("INVALID TOKENS at line %d col %d\n", token->row, token->col - 1);
 		return (0);
 	}
 }

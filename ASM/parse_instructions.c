@@ -12,18 +12,6 @@
 
 #include "includes/asm.h"
 
-int		ft_isspace(char c)
-{
-	printf("CHAR : [%c]\n", c);
-	if (c == ' ' || c == '\t' || c == '\v' || c == '\f')
-	{
-		printf("isspace returns 0 for char [%c]\n", c);
-		return (0);
-	}
-	printf("isspace returns -1 for char [%c]\n", c);
-	return (-1);
-}
-
 int		indstrstr(const char *str, const char *find)
 {
 	int		i;
@@ -40,25 +28,7 @@ int		indstrstr(const char *str, const char *find)
 		while (find[y] == str[i + y] && find[y])
 		{
 			if (find[y + 1] == '\0')
-			{
-				printf("found %s\n", find);
-				if (i != 0)
-					printf("str[i - 1] : [%c]\n", str[i - 1]);	
-				printf("str[i + y + 1] [%c]\n", str[i + y + 1]);				
-				if ((i != 0 && printf("STR I - 1 : [%c]\n", str[i - 1]) && ft_isspace(str[i - 1]) == -1 
-				&& (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%')))
-				|| (i == 0 && (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%'))))
-				{
-					if (str[i + y + 1] && printf("STR I + Y + 1 : [%c]\n", str[i + y + 1]) && (ft_isspace(str[i + y + 1] == -1) && str[i + y + 1] != '%'))
-						printf("not valid : char [%c]\n", str[i + y + 1]);
-					ret = -1;
-					i = i + y;
-					y = -1;
-				}
-				else
-					return (i);
-				
-			}
+				return (i);
 			y++;
 		}
 		i++;
@@ -66,29 +36,20 @@ int		indstrstr(const char *str, const char *find)
 	return (-1);
 }
 
-
 int		is_instruction(char *line)
 {
 	int		i;
-	int		inst;
-	int		retstr;
-	int		min;
+	int		ret;
 
 	i = 0;
-	inst = -1;
-	retstr = -1;
-	min = ft_strlen(line);
 	while (g_op_tab[i].name)
 	{
-		retstr = indstrstr(line, g_op_tab[i].name);
-		if (retstr != -1 && min >= retstr)
-		{
-			min = retstr;
-			inst = i;
-		}
+		ret = indstrstr(line, g_op_tab[i].name);
+		if (ret != -1 && ft_strlen(line) == ft_strlen(g_op_tab[i].name))
+			return (i);
 		i++;
 	}
-	return (inst != ft_strlen(line) ? inst : -1);
+	return (-1);
 }
 
 int		check_instruction(t_asm *p, char **line, int size)

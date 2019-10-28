@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/24 21:19:31 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/28 12:46:26 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char		*ft_itoa_bse(unsigned int n, int base, int len)
 	len--;
 	while (len >= 0)
 	{
-		str[len] = sbase[n % sbase];
-		n /= sbase;
+		str[len] = sbase[n % base];
+		n /= base;
 		len--;
 	}
 	return (str);

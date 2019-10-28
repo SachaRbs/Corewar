@@ -27,7 +27,7 @@ t_asm	*init_struct(int fd)
 	p->str = ft_strnew(1);
 	p->byte_pos = 0;
 	p->row = 1;
-	p->col = 0;
+	p->col = 1;
 	p->syntax_state = 0;
 	p->tokens = NULL;
 	p->labels = NULL;

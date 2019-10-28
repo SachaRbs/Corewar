@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anradixt <anradix@student.42.fr>           +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/27 17:59:47 by anradixt         ###   ########.fr       */
+/*   Updated: 2019/10/28 10:42:07 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 			new->type = is_reg(new->str) ? REGISTER : OP;
 		if (new->type == OP)
 		{
-			new->op_index = is_instruction(*line);
+			new->op_index = is_instruction(new->str);
 			new->dir_sz = g_op_tab[new->op_index].dir_sz;
 		}
 		add_token(&p->tokens, new);

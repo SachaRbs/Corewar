@@ -63,6 +63,7 @@ int		main(int argc, char **argv)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		exit(1);
 	p = init_struct(fd);
+	p->file = argv[1];
 	p->filename = check_filename(argv[1]);
 	parse(p);
 }
