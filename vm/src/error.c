@@ -39,7 +39,9 @@ void	free_proc(t_vm *vm)
 			free(current);
 			current = next;
 			next = current->next;
-		}	
+		}
+		free(current);
+		current = NULL;
 	}
 	vm->proc = NULL;
 }
