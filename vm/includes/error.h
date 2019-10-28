@@ -27,5 +27,6 @@ typedef enum	e_errors
 }				t_errors;
 
 void			ft_exit(t_vm *vm, t_errors error);
+void			close_program(t_vm *vm, int out);
 
 #endif

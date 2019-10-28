@@ -64,6 +64,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 {
 	header_t	*h;
 	int			rd;
+	int32_t		out;
 
 	(void)name;
 	if (!(h = ft_memalloc(sizeof(header_t))))
@@ -79,7 +80,11 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
 	vm->contestants[current->pnu] = h->prog_name;
-	return (reverser_32(h->prog_size));
+	out = reverser_32(h->prog_size);
+	free(h);
+	h = NULL;
+	return (out);
+	// return (reverser_32(h->prog_size));
 }
 
 int		find_playernum(t_vm *vm)
@@ -104,12 +109,9 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 {
 	int				i;
 	unsigned char	prog[CHAMP_MAX_SIZE];
+
 	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
 		ft_exit(vm, READ_PROCESUS);
-	// verifier
-	// i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);
-	// while (i--)
-	// 	vm->mem[current->pc - i] = i >= vm->sizes[pn] ? 0 : prog[i];
 	i = -1;
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
@@ -127,7 +129,6 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	current->carry = FALSE;
 	current->cycle = 0;
 	current->procnum = 1;
-	// current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct);
 	current->pc = pn * (MEM_SIZE / vm->pct);
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
@@ -152,12 +153,8 @@ int		find_player_alive(t_vm *vm)
 	return(max);
 }
 
-int		initialize(t_vm *vm, int ac, char **av)
+void	set_values_vm(t_vm *vm)
 {
-	int		i;
-	t_proc	*proc;
-
-	i = -1;
 	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
@@ -170,6 +167,15 @@ int		initialize(t_vm *vm, int ac, char **av)
 	vm->cycle = 0;
 	vm->check = 0;
 	vm->nbr_live = 0;
+}
+
+int		initialize(t_vm *vm, int ac, char **av)
+{
+	int		i;
+	t_proc	*proc;
+
+	i = -1;
+	set_values_vm(vm);
 	if (ac > 1)
 		parsing(vm, ac, av);
 	else

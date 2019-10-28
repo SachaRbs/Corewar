@@ -13,7 +13,7 @@
 #include "corewar.h"
 #include "error.h"
 
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_vm	*vm;
 
@@ -21,12 +21,6 @@ int	main(int ac, char **av)
 		ft_exit(vm, ERROR_MALLOC);
 	initialize(vm, ac, av);
 	run_corewar(vm);
+	close_program(vm, 0);
 	return (0);
 }
-
-/*
-***	Posible idea of why everything is fucked up
-*/
-
-	// if ((vm = (t_vm*)ft_memalloc(sizeof(t_vm))) == NULL)
-	// 	ft_exit(vm, ERROR_MALLOC);
