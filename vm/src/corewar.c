@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/28 17:51:20 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   corewar.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/11 10:39:50 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/28 21:05:26 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "operations.h"
 #include "op.h"
@@ -204,7 +204,7 @@ t_proc		*check_live(t_vm *vm)
 			proc = proc->next;
 		}
 	}
-	vm->nbr_live = 0;
+	vm->nbr_live = 1;
 	vm->next_check = vm->cycle_to_die;
 	return(vm->proc);
 }
