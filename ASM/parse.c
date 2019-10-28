@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 10:42:07 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/28 16:14:32 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
+
+#define STR (*line + p->col)
 
 void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 {
@@ -25,7 +27,6 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 	if ((p->col > size) && (is_divider((*line)[p->col]) || new->type == DIRECT))
 	{
 		new->str = ft_strsub(*line, start, p->col - start);
-		// printf("%s\n", new->str);
 		add_token(&p->tokens, new);
 	}
 	else if (new->type != DIRECT)
@@ -42,10 +43,11 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 {
 	int		size;
 
-	printf(RED"[%s]\n"RESET, *line + p->col);
+	printf(RED"[%s]\n"RESET, STR);
 	size = p->col;
 	while (ft_strchr(LABEL_CHARS, (*line)[p->col]))
 		p->col++;
+	// printf("%s\n", STR);
 	if ((*line)[p->col] == LABEL_CHAR)
 	{
 		new->str = ft_strsub(*line, size, p->col - size);
@@ -110,6 +112,6 @@ void	parse(t_asm *p)
 	}
 	if (!p->tokens)
 		printf("NULL\n");
-	// print_token(p->tokens);
-	check_token(p);
+	print_token(p->tokens);
+	// check_token(p);
 }
