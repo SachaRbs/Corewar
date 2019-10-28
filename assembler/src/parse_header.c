@@ -15,20 +15,35 @@
 void	parse_champion(t_asm *p, char *line)
 {
 	size_t		start;
+	char		*end;
+	char		*str;
 
 	start = 0;
+	str = NULL;
+	end = NULL;
     while (is_whitespace(line[p->col]) && line[p->col])
         p->col++;
     if (line[p->col] == '"')
     {
         p->col++;
 		start = p->col;
-		// NEEDS TO READ LINE UNTIL NEXT QUOTE
-		while (line[p->col] != '"')
-			p->col++;
+		printf("1%s\n", line);
+		str = ft_strdup(line);
+		while (ft_readline(p->fd, &p->str, &line) > 0 && !(end = ft_strchr((str), '"')))
+		{
+			printf("2%s\n", line);
+			str = ft_strjoin(str, line);
+		}
+		str = ft_strjoin(str, line);
+		printf("[%s]\n", str);
     }
-    p->champ = ft_strsub(line + start, 0, p->col - start);
-    if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
+	else
+		ft_lexerror(p);
+	printf("%ld\n", (end - (str + start)));
+    // p->champ = ft_strsub(str + start, 0, (end - (str + start)));
+	printf(GRN"%s\n"RESET, p->champ);
+    // p->champ = ft_strsub(line + start, 0, p->col - start);
+    if (p->champ && ft_strlen(p->champ) > PROG_NAME_LENGTH)
         ft_error("CHAMPION NAME TOO LONG");
 }
 

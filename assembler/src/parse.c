@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 17:25:52 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:33:45 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ void	parse_token(t_asm *p, char **line)
 			parse_digits(p, init_token(p, DIRECT), line, p->col);
 	}
 	else if ((*line)[p->col] == LABEL_CHAR)
-	{
-		printf("LABEL CHAR\n");
 		parse_symbol(p, init_token(p, IND_LABEL), line, p->col++);
-	}
 	else
 		parse_digits(p, init_token(p, INDEX), line, p->col);
 
@@ -111,7 +108,6 @@ void	parse(t_asm *p)
 		p->col = 0;
 		while(line[p->col])
 		{
-			printf("%s\n", line + p->col);
 			skip_whitespaces(p, line);
 			skip_comment(p, line);
 			if (line[p->col])
