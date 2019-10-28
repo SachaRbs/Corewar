@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   corewar.h                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 12:13:44 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/26 19:13:38 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   corewar.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
+/*   Updated: 2019/10/28 16:47:27 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #ifndef COREWAR_H
 # define COREWAR_H
 
@@ -30,11 +30,9 @@ typedef struct		s_proc
 	int				pc;
 	unsigned int	read;
 	int				carry;
-	// int				oc;
 	int				cycle_live;
 	int				live;
 	int				cycle;
-	// int				crossed;
 	unsigned int	action;
 	unsigned int	arcode;
 	int				arg_v[MAX_ARGS_NUMBER];
@@ -48,10 +46,11 @@ typedef struct		s_vm
 {
 	int				play_free[MAX_PLAYERS + 1];
 	unsigned char	mem[MEM_SIZE];
-	int				pnum[MAX_PLAYERS + 1]; // +1 ou pas ?
+	int				pnum[MAX_PLAYERS + 1];
 	char			*names[MAX_PLAYERS];
 	long			sizes[MAX_PLAYERS];
 	char			*contestants[MAX_PLAYERS + 1];
+	int				chmp_alive[MAX_PLAYERS + 1];
 	int				cycle_to_die;
 	int				next_check;
 	int				last_alive;

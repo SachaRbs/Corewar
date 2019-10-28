@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   init_vm.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/26 19:13:58 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_vm.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
+/*   Updated: 2019/10/28 16:32:17 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "corewar.h"
 #include "error.h"
 
@@ -155,11 +155,15 @@ int		find_player_alive(t_vm *vm)
 
 void	set_values_vm(t_vm *vm)
 {
+	int i;
+	i = -1;
 	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
 	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
+	while(++i < MAX_PLAYERS)
+		vm->contestants[i] = NULL;
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
