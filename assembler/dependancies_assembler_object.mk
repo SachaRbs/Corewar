@@ -6,12 +6,13 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/04 14:36:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 16:40:25 by epham            ###   ########.fr        #
+#    Updated: 2019/10/28 19:14:34 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 asm.o: asm.h
 check_token.o: asm.h
+check_labels.o: asm.h
 error_token.o: asm.h
 init.o: asm.h
 op.o: asm.h

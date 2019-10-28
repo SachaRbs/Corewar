@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/28 18:04:43 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/28 19:13:58 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ int		check_token(t_asm *env)
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state != -1 && token->type == LABEL)
 		{
-			save_label(&env->tok_lab, token/*, 1*/);
+			save_label(&env->tok_lab, token);
 			if (!env->tok_lab)
 				printf("APPEND LABEL FAILED\n");
 		}
 		else if (env->syntax_state != -1 && (token->type == IND_LABEL || token->type == DIRECT_LABEL))
 		{
-			save_label(&env->mentions, token/*, 2*/);
+			save_label(&env->mentions, token);
 			if (!env->mentions)
 				printf("APPEND MENTION FAILED\n");
 		}
@@ -158,6 +158,11 @@ int		check_token(t_asm *env)
 	if (env->syntax_state == 40)
 	{
 		print_label_lists(env);
+		if (check_labels(env) == -1)
+		{
+			printf("MENTION OF AN UNDECLARED LABEL\n");
+			return (0);
+		}
 		printf("VALID TOKENS\n");
 		return (1);
 	}

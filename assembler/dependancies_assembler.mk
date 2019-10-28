@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 16:41:05 by epham            ###   ########.fr        #
+#    Updated: 2019/10/28 19:14:19 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ NAME_ASSEMBLER				:=	asm
 SRC_ASSEMBLER 				=	\
 								asm.c \
 								check_token.c \
+								check_labels.c \
 								error_token.c \
 								init.c \
 								op.c \

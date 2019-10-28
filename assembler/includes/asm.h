@@ -203,4 +203,11 @@ void				skip_comment(t_asm *p, char *line);
 
 int					check_token(t_asm *env);
 
+/*
+***		check labels
+*/
+
+int					check_labels(t_asm *env);
+
+
 #endif
