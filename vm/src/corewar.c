@@ -6,24 +6,13 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/29 19:55:01 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 20:00:35 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "operations.h"
 #include "op.h"
-
-unsigned int		big_endian(unsigned int num, int n)
-{
-	if (n == 1)
-		return (num);
-	else if (n == 2)
-		return (reverser_16(num));
-	else if ( n == 4)
-		return (reverser_32(num));
-	return (-1);
-}
 
 int		wrong_ocp(t_proc *proc, t_op op)
 {
@@ -49,7 +38,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	unsigned int	code;
 
 	i = -1;
-	proc->arcode = op.ocp ? read_mem(vm, proc->read, 1, 1, proc) : DIR_CODE << 6;
+	proc->arcode = op.ocp ? read_mem_and_move_pc(vm, proc->read, 1, proc) : DIR_CODE << 6;
 	while (++i < MAX_ARGS_NUMBER)
 	{
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
@@ -63,7 +52,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 				return (wrong_ocp(proc, op));
 			proc->arg_a[i] = proc->read;
 			proc->arg_t[i] = code;
-			proc->arg_v[i] = read_mem(vm, proc->read, size, 1, proc);
+			proc->arg_v[i] = read_mem_and_move_pc(vm, proc->read, size, proc);
 		}
 		else if (code != 0)
 			return (0);
@@ -249,7 +238,7 @@ void	run_corewar(t_vm *vm)
 			else if (proc->cycle < vm->cycle)
 			{
 				proc->read = proc->pc;
-				proc->action = read_mem(vm, proc->pc, 1, 1, proc);
+				proc->action = read_mem_and_move_pc(vm, proc->pc, 1, proc);
 				if (proc->action > 0 && proc->action <= NBR_OP)
 					proc->cycle += g_op_tab[proc->action].cycle;
 				else
