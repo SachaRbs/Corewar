@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   corewar.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/11 10:39:50 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/28 21:05:26 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   corewar.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
+/*   Updated: 2019/10/29 12:22:29 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "corewar.h"
 #include "operations.h"
 #include "op.h"
@@ -217,17 +217,16 @@ void	run_corewar(t_vm *vm)
 
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle
+	&& printf("It is now cycle %d\n", vm->cycle)
 	&& (proc = --vm->next_check <= 0 ? check_live(vm) : vm->proc))
 	{
-		printf("It is now cycle %d\n", vm->cycle);
-		// printf("las_alive = %d\n", vm->last_alive);
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
 				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
 					operation->op[proc->action - 1](vm, proc);
-				// print_action(proc, vm, operation_failed);
+				print_action(proc, vm, operation_failed);
 				// if (vm->dump == -1)
 					// print_memory(vm->mem, proc, 0);
 				proc->pc = proc->read;
