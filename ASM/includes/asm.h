@@ -197,6 +197,8 @@ int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
 void				skip_comment(t_asm *p, char *line);
 
+int					ft_lexerror(t_asm *p);
+
 /*
 ***		check tokens
 */

@@ -186,6 +186,7 @@ t_asm				*init_struct(int fd);
 */
 
 int					ft_error(char *str);
+int					ft_lexerror(t_asm *p);
 
 /*
 ** utils

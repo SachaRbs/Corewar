@@ -1,0 +1,14 @@
+output
+output.c
+todo
+# Object files
+*.o
+# Libraries
+*.a
+**/*.a
+# Executables
+example
+asm
+*.out
+# Debug files
+*.dSYM/

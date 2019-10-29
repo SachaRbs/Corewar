@@ -12,6 +12,32 @@
 
 #include "../includes/asm.h"
 
+char	*parse_multiline(t_asm *p, char *line)
+{
+	size_t	size;
+	char	*buffer;
+	char	*str;
+	char	*end;
+
+	str = ft_strdup(line + p->col);
+	while (ft_readline(p->fd, &p->str, &buffer) > 0 && (!(end = ft_strchr(buffer, '"'))))
+	{
+		str = ft_strjoin(str, buffer);
+		p->row++;
+	}
+	size = ft_strlen(str);
+	str = ft_strjoin(str, buffer);
+	p->col = 0;
+	while (buffer[p->col] && buffer[p->col] != '\n')
+		p->col++;
+	if (buffer[p->col] == '\n')
+	{
+		p->col++;
+		p->row++;
+	}
+	return (ft_strsub(str, 0, p->col + size - 2));
+}
+
 void	parse_champion(t_asm *p, char *line)
 {
 	size_t		start;
@@ -23,12 +49,19 @@ void	parse_champion(t_asm *p, char *line)
     {
         p->col++;
 		start = p->col;
-		// NEEDS TO READ LINE UNTIL NEXT QUOTE
-		while (line[p->col] != '"')
-			p->col++;
+		if (ft_strchr(line + p->col, '"'))
+		{
+			while (line[p->col] && line[p->col] != '"')
+				p->col++;
+			p->champ = ft_strsub(line + start, 0, p->col - start);
+		}
+		else
+			p->champ = parse_multiline(p, line);
     }
-    p->champ = ft_strsub(line + start, 0, p->col - start);
-    if (ft_strlen(p->champ) > PROG_NAME_LENGTH)
+	else
+		ft_lexerror(p);
+	printf(GRN"[%s]\n"RESET, p->champ);
+    if (p->champ && ft_strlen(p->champ) > PROG_NAME_LENGTH)
         ft_error("CHAMPION NAME TOO LONG");
 }
 
@@ -43,11 +76,16 @@ void	parse_comment(t_asm *p, char *line)
     {
         p->col++;
 		start = p->col;
-		// NEEDS TO READ LINE UNTIL NEXT QUOTE
-		while (line[p->col] && line[p->col] != '"')
-			p->col++;
+		if (ft_strchr(line + p->col, '"'))
+		{
+			while (line[p->col] && line[p->col] != '"')
+				p->col++;
+			p->comment = ft_strsub(line + start, 0, p->col - start);
+		}
+		else
+			p->comment = parse_multiline(p, line);
     }
-    p->comment = ft_strsub(line + start, 0, p->col - start);
+	printf(GRN"[%s]\n"RESET, p->comment);
     if (ft_strlen(p->comment) > COMMENT_LENGTH)
         ft_error("CHAMPION COMMENT TOO LONG");
 }

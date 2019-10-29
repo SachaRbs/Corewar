@@ -19,6 +19,12 @@ int		ft_error(char *str)
 	exit(1);
 }
 
+int		ft_lexerror(t_asm *p)
+{
+	printf("Lexical error at [%d:%d]\n", p->row, p->col + 1);
+	exit(1);
+}
+
 int		is_reg(char *line)
 {
 	int		i;
@@ -47,7 +53,8 @@ int		is_divider(int c)
 {
 	return (is_whitespace(c) ||
 		c == ',' ||
-		c == '\n');
+		c == '\n' ||
+		c == '"');
 }
 
 void	skip_whitespaces(t_asm *p, char *line)
