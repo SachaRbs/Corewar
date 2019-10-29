@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 10:48:34 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 17:37:20 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	save_label(t_label **to, t_token *token)
 	new->name = ft_strdup(token->str);
 	new->col = token->col;
 	new->row = token->row;
+	new->from = token;
 	new->next = NULL;
 	if (!(*to))
 		*to = new;

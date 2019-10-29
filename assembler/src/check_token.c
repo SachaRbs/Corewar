@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 16:48:33 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 17:59:45 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int		check_end_syntax(t_asm *env, t_token *token)
 		if ((label = check_labels(env)))
 		{
 			//ERROR UNDECLARED LABEL
-			printf("MENTION OF AN UNDECLARED LABEL at %d:%d\n", label->row, label->col);
-			return (-1);
+			// printf("MENTION OF AN UNDECLARED LABEL at %d:%d\n", label->row, label->col);
+			return (get_error(env, label->from));
 		}
 		else
 		{
@@ -95,9 +95,8 @@ int		check_end_syntax(t_asm *env, t_token *token)
 	}
 	else
 	{
-		printf("ERROR\n");
-		return (-1);
-		// return (get_error(env, token));
+		// printf("ERROR\n");
+		return (get_error(env, token));
 	}
 }
 
@@ -113,19 +112,19 @@ int		check_token(t_asm *env)
 	{
 		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
-		if (env->syntax_state != -1 && token->type == LABEL)
+		if (env->syntax_state == -1)
+			return(get_error(env, token));
+		else if (token->type == LABEL)
 			save_label(&env->tok_lab, token);
-		else if (env->syntax_state != -1
-		&& (token->type == IND_LABEL || token->type == DIRECT_LABEL))
+		else if ((token->type == IND_LABEL || token->type == DIRECT_LABEL))
 			save_label(&env->mentions, token);
 		if (env->syntax_state == 10)
 		{
 			if (token->op_index == -1)
 			{
 				//ERROR SYNTAX OF OPERATION
-				get_error(env, token);
 				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
-				return (0);
+				return (get_error(env, token));
 			}
 			printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;

@@ -136,6 +136,7 @@ typedef	struct 		s_label
 	char			*name;
 	int				row;
 	int				col;
+	struct s_token	*from;
 	struct s_label	*next;
 }					t_label;
 
@@ -212,5 +213,10 @@ void				print_label_lists(t_asm *env);
 void				save_label(t_label **to, t_token *token);
 t_label				*check_labels(t_asm *env);
 
+/*
+***		error management
+*/
+
+int					get_error(t_asm *env, t_token *token);
 
 #endif

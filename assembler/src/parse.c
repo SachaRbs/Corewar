@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 16:55:22 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 18:04:28 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,5 @@ void	parse(t_asm *p)
 	if (!p->tokens)
 		printf("NULL\n");
 	print_token(p->tokens);
-	// check_token(p);
+	check_token(p);
 }
