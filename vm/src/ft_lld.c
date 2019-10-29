@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lld.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:30:39 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/24 18:01:15 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:47:41 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "operations.h"
 #include "error.h"
 #include "op.h"
+
+/*
+***		WRONG ?
+*/
 
 void	*ft_lld(t_vm *vm, t_proc *proc)
 {
@@ -23,6 +27,4 @@ void	*ft_lld(t_vm *vm, t_proc *proc)
 	proc->reg[proc->arg_v[1]] = number;
 	proc->carry = proc->reg[proc->arg_v[1]] ? 0 : 1;
 	return (NULL);
-} 
-
-//wrong
+}

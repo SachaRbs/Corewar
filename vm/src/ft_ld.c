@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ld.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 19:57:10 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/24 17:59:39 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:44:46 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,3 @@ void	*ft_ld(t_vm *vm, t_proc *proc)
 	proc->carry = proc->reg[proc->arg_v[1]] ? 0 : 1;
 	return (NULL);
 }
-

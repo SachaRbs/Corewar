@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lldi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:30:52 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/24 18:00:49 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:49:28 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "operations.h"
 #include "error.h"
 #include "op.h"
+
+/*
+***		WRONG ?
+*/
 
 void	*ft_lldi(t_vm *vm, t_proc *proc)
 {
@@ -22,5 +26,3 @@ void	*ft_lldi(t_vm *vm, t_proc *proc)
 	proc->reg[proc->arg_v[2]] = read_mem(vm, address, 4, 0, proc);
 	return (NULL);
 }
-
-//wrong

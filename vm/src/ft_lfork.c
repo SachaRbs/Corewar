@@ -1,28 +1,28 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_lfork.c                                       .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/15 20:30:21 by crfernan     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/28 21:50:39 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lfork.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/29 14:53:20 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/29 14:54:16 by crfernan         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "operations.h"
 #include "error.h"
 #include "op.h"
 
 int		lfind_procnum(t_vm *vm, t_proc *proc)
 {
+	int			out;
 	t_proc		*current;
-	int 		out;
 
 	out = 0;
 	(void)proc;
 	current = vm->proc;
-	while(current)
+	while (current)
 	{
 		if (out <= current->procnum)
 			out = current->procnum + 1;
@@ -33,8 +33,8 @@ int		lfind_procnum(t_vm *vm, t_proc *proc)
 
 void	*ft_lfork(t_vm *vm, t_proc *proc)
 {
-	t_proc *newproc;
-	int i;
+	int			i;
+	t_proc		*newproc;
 
 	i = -1;
 	if ((newproc = (t_proc*)ft_memalloc(sizeof(t_proc))) == NULL)
