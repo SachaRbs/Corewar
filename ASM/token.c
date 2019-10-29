@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/26 17:25:30 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 19:31:27 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "../includes/asm.h"
 
 t_token     *init_token(t_asm *p, t_type type)
 {
@@ -37,7 +37,7 @@ void		add_token(t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	printf(YEL"ADD TOKEN [%s]\n"RESET, typestab[new->type]);
+	// printf(YEL"ADD TOKEN [%s]\n"RESET, typestab[new->type]);
 	if (!(*head))
 	{
 		*head = new;
@@ -62,4 +62,19 @@ void		print_token(t_token *head)
 		curr = curr->next;
 	}
 	printf(RESET"\n");
+}
+
+void	free_tokens(t_token *head)
+{
+    t_token *tmp;;
+    t_token *curr;
+
+	tmp = head;
+    while (tmp != NULL)
+	{
+        curr = tmp;
+        tmp = tmp->next;
+        free(curr);
+		curr = NULL;
+    }
 }

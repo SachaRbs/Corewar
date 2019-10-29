@@ -13,8 +13,8 @@
 #ifndef ASM_H
 # define ASM_H
 
-#include "op.h"
-#include "../libft/includes/libft.h"
+#include "../../includes/op.h"
+#include "../../libft/includes/libft.h"
 #include <stdio.h>
 
 #define RED "\x1B[31m"
@@ -155,12 +155,13 @@ void				parse_symbol(t_asm *p, t_token *new, char **line, int start);
 t_token     		*init_token(t_asm *p, t_type type);
 void				add_token(t_token **head, t_token *newnode);
 void				print_token(t_token *head);
+void				free_tokens(t_token *head);
 
 /*
 ** header
 */
 
-void				parse_header(t_asm *p, t_token *newnode, char *line);
+void				parse_header(t_asm *p, t_token *newnode, char **line);
 
 /*
 ** label
@@ -186,6 +187,7 @@ t_asm				*init_struct(int fd);
 */
 
 int					ft_error(char *str);
+int					ft_lexerror(t_asm *p);
 
 /*
 ** utils
@@ -197,12 +199,19 @@ int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
 void				skip_comment(t_asm *p, char *line);
 
-int					ft_lexerror(t_asm *p);
-
 /*
 ***		check tokens
 */
 
 int					check_token(t_asm *env);
+
+/*
+***		check labels
+*/
+
+void				print_label_lists(t_asm *env);
+void				save_label(t_label **to, t_token *token);
+t_label				*check_labels(t_asm *env);
+
 
 #endif

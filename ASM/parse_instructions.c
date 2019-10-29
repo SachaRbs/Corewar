@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/asm.h"
+#include "../includes/asm.h"
 
 int		indstrstr(const char *str, const char *find)
 {
@@ -56,6 +56,7 @@ int		check_instruction(t_asm *p, char **line, int size)
 {
 	char	*str;
 
+	(void)p;
 	str = ft_strndup(*line, size);
 	if (is_instruction(str))
 	{
