@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 17:59:45 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 18:50:55 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
+
+void	fill_optoken(t_token *token)
+{
+	token->op_index = is_instruction(token->str);
+	token->dir_sz = g_op_tab[token->op_index].dir_sz;
+}
 
 void	aff_token(t_asm *env, t_token *token)
 {
@@ -123,7 +129,8 @@ int		check_token(t_asm *env)
 			if (token->op_index == -1)
 			{
 				//ERROR SYNTAX OF OPERATION
-				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
+				get_error(env, token);
+				// printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
 				return (get_error(env, token));
 			}
 			printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);

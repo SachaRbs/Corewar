@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 18:04:28 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 18:50:45 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 #define STR (*line + p->col)
 
+void	parse_content(t_token *token, char *line, int start, size_t len)
+{
+	if (token->type == IND_LABEL)
+		token->str = ft_strsub(line, start + 1, len - 1);
+	else
+		token->str = ft_strsub(line, start, len);
+}
+
 void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 {
 	int		size;
 
-	printf(CYN"[%s]\n"RESET, *line + p->col);
+	// printf(CYN"[%s]\n"RESET, *line + p->col);
 	size = start;
 	if ((*line)[p->col] == '-')
 		p->col++;
@@ -26,7 +34,7 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 		p->col++;
 	if ((p->col > size) && (is_divider((*line)[p->col]) || new->type == DIRECT))
 	{
-		new->str = ft_strsub(*line, start, p->col - start);
+		parse_content(new, *line, start, p->col - start);
 		add_token(&p->tokens, new);
 	}
 	else if (new->type != DIRECT)
@@ -43,36 +51,29 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 {
 	int		size;
 
-	printf(RED"[%s]\n"RESET, STR);
+	// printf(RED"[%s]\n"RESET, STR);
 	size = p->col;
 	while (ft_strchr(LABEL_CHARS, (*line)[p->col]))
 		p->col++;
-	// printf("%s\n", STR);
 	if ((*line)[p->col] == LABEL_CHAR && (p->col > size) && p->col++)
 	{
-		new->str = ft_strsub(*line, size, p->col - size);
+		parse_content(new, *line, size, p->col - size - 1);
 		new->type = LABEL;
 		add_token(&p->tokens, new);
 	}
 	else if ((p->col > size) && is_divider((*line)[p->col]))
 	{
-		new->str = ft_strsub(*line, start, p->col - start);
+		parse_content(new, *line, start, p->col - start);
 		if (*new->str == '.')
-			parse_header(p, new, *line);
+			parse_header(p, new, line);
 		if (new->type == INDEX)
 			new->type = is_reg(new->str) ? REGISTER : OP;
 		if (new->type == OP)
-		{
-			new->op_index = is_instruction(new->str);
-			new->dir_sz = g_op_tab[new->op_index].dir_sz;
-		}
+			fill_optoken(new);
 		add_token(&p->tokens, new);
 	}
 	else
-	{
-		printf(MAG"%s\n"RESET, STR);
 		ft_lexerror(p);
-	}
 }
 
 void	parse_token(t_asm *p, char **line)

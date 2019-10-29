@@ -1,6 +1,6 @@
 .name "zork
-#comment
-multi"
+
+salut"
 .comment "I'M ALIIIIVE"
 
 l2:		sti r1, %:live, %1

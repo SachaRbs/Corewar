@@ -161,7 +161,7 @@ void				print_token(t_token *head);
 ** header
 */
 
-void				parse_header(t_asm *p, t_token *newnode, char *line);
+void				parse_header(t_asm *p, t_token *newnode, char **line);
 
 /*
 ** label
@@ -204,6 +204,7 @@ void				skip_comment(t_asm *p, char *line);
 */
 
 int					check_token(t_asm *env);
+void				fill_optoken(t_token *token);
 
 /*
 ***		check labels
