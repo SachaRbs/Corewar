@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/29 14:37:26 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/29 17:07:05 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ typedef struct			s_vm
 	t_proc				*proc;
 }						t_vm;
 
+extern t_op				g_op_tab[17];
+
+
 int						initialize(t_vm *vm, int ac, char **av);
 void					run_corewar(t_vm *vm);
 void					pushfront_proc(t_proc **head, t_proc *new);
@@ -73,15 +76,34 @@ void					pushfront_proc(t_proc **head, t_proc *new);
 ***		UTILS
 */
 
-extern t_op				g_op_tab[17];
 
 int16_t					reverser_16(int16_t a);
 int32_t					reverser_32(int32_t a);
 unsigned int			big_endian(unsigned int num, int n);
-int						argument(t_vm *vm, t_proc *proc, int arg);
-void					writing_mem(t_vm *vm, int pc, int bytes, int value);
-int						read_mem(t_vm *vm, int address, int size,
-						int get, t_proc *proc);
 int						mod_address(int add);
+int						argument(t_vm *vm, t_proc *proc, int arg);
+
+
+
+/*
+***		READ_MEM
+*/
+
+int						read_mem(t_vm *vm, int address, int size);
+int						read_mem_and_move_pc(t_vm *vm, int address,
+						int size, t_proc *proc);
+
+/*
+***		WRITE_MEM
+*/
+
+void					writing_mem(t_vm *vm, int pc, int bytes, int value);
+
+/*
+***		PRINT
+*/
+
+void					print_action(t_proc *proc, t_vm *vm, int action_failed);
+void					print_memory(unsigned char *mem, t_proc *proc, int d);
 
 #endif

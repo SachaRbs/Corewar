@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_vm.mk                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
+#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/16 15:33:08 by sarobber         ###   ########.fr        #
+#    Updated: 2019/10/29 17:13:18 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ SRC_COREWAR 				=	corewar.c \
 								utils.c \
 								error.c \
 								op.c \
+								read_mem.c \
+								write_mem.c \
+								print.c \
 								operations.c \
 								ft_add.c \
 								ft_aff.c \
@@ -47,6 +50,8 @@ SRC_COREWAR 				=	corewar.c \
 								ft_sub.c \
 								ft_xor.c \
 								ft_zjmp.c
+
+# fuctions_that_we_dont_use_anymore.c
 
 INC_COREWAR					:=	corewar.h \
 								error.h \

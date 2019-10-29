@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_vm_object.mk                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
+#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:55:40 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/16 15:33:10 by sarobber         ###   ########.fr        #
+#    Updated: 2019/10/29 17:13:49 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,11 @@ main_vm.o: corewar.h error.h
 utils.o: corewar.h error.h
 op.o: corewar.h
 error.o: corewar.h error.h
+
+read_mem.o: corewar.h error.h
+write_mem.o: corewar.h error.h
+print.o: corewar.h error.h
+
 operations.o: operations.h error.h
 ft_add.o: operations.h error.h
 ft_aff.o: operations.h error.h
