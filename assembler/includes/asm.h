@@ -207,7 +207,9 @@ int					check_token(t_asm *env);
 ***		check labels
 */
 
-int					check_labels(t_asm *env);
+void				print_label_lists(t_asm *env);
+void				save_label(t_label **to, t_token *token);
+t_label				*check_labels(t_asm *env);
 
 
 #endif

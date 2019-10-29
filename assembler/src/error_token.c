@@ -6,13 +6,13 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 14:28:58 by epham             #+#    #+#             */
-/*   Updated: 2019/10/28 16:42:41 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 15:00:48 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-// void	error_token(t_asm *env, t_token *token, int i)
-// {
+void	get_error(t_asm *env, t_token *token)
+{
 	
-// }
+}

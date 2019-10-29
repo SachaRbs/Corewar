@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/28 19:13:58 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 16:48:33 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,104 +71,66 @@ void	aff_token(t_asm *env, t_token *token)
 	printf("|________________________|\n");
 }
 
-void	print_label_lists(t_asm *env)
+int		check_end_syntax(t_asm *env, t_token *token)
 {
-	t_label *head_labels;
-	t_label *head_mentions;
+	t_label	*label;
 
-	head_labels = env->tok_lab;
-	head_mentions = env->mentions;
-	printf("LABELS :\n");
-	while (head_labels)
+	label = NULL;
+	// EOF
+	if (!token)
+		env->syntax_state = g_syntactic_tab[env->syntax_state][11];
+	if (env->syntax_state == 40 && !token)
 	{
-		printf(" [%s %d:%d]", head_labels->name, head_labels->row, head_labels->col + 1);
-		head_labels = head_labels->next;
+		if ((label = check_labels(env)))
+		{
+			//ERROR UNDECLARED LABEL
+			printf("MENTION OF AN UNDECLARED LABEL at %d:%d\n", label->row, label->col);
+			return (-1);
+		}
+		else
+		{
+			printf("PARSING OK\n");
+			return (0);
+		}
 	}
-	printf("\n\nMENTIONS :\n");
-	while (head_mentions)
-	{
-		printf(" [%s %d:%d]", head_mentions->name, head_mentions->row, head_mentions->col + 1);
-		head_mentions = head_mentions->next;
-	}
-	printf("\n");
-}
-
-void	save_label(/*t_asm *env*/t_label **to, t_token *token/*, int i*/)
-{
-	t_label *head;
-	t_label *new;
-
-	head = *to;
-	printf("SAVING LABEL %s\n", token->str);
-	if (!head)
-		printf("FIRST LABEL TO BE SAVED\n");
-	if (!(new = malloc(sizeof(t_label))))
-		return ;
-	new->name = ft_strdup(token->str);
-	new->col = token->col;
-	new->row = token->row;
-	new->next = NULL;
-	if (!(*to))
-		*to = new;
 	else
 	{
-		while ((*to)->next)
-			*to = (*to)->next;
-		(*to)->next = new;
-		*to = head;
+		printf("ERROR\n");
+		return (-1);
+		// return (get_error(env, token));
 	}
 }
 
 int		check_token(t_asm *env)
 {
-	t_token *token;
+	t_token	*token;
+	t_label	*label_check;
 
 	token = env->tokens;
+	label_check = NULL;
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
 		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state != -1 && token->type == LABEL)
-		{
 			save_label(&env->tok_lab, token);
-			if (!env->tok_lab)
-				printf("APPEND LABEL FAILED\n");
-		}
-		else if (env->syntax_state != -1 && (token->type == IND_LABEL || token->type == DIRECT_LABEL))
-		{
+		else if (env->syntax_state != -1
+		&& (token->type == IND_LABEL || token->type == DIRECT_LABEL))
 			save_label(&env->mentions, token);
-			if (!env->mentions)
-				printf("APPEND MENTION FAILED\n");
-		}
 		if (env->syntax_state == 10)
 		{
 			if (token->op_index == -1)
 			{
+				//ERROR SYNTAX OF OPERATION
+				get_error(env, token);
 				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
 				return (0);
 			}
-			printf("token [%s] going to state %d which correspond to operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
+			printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
 		}
 		token = token->next;
 	}
-	if (!token)
-		env->syntax_state = g_syntactic_tab[env->syntax_state][11];
-	if (env->syntax_state == 40)
-	{
-		print_label_lists(env);
-		if (check_labels(env) == -1)
-		{
-			printf("MENTION OF AN UNDECLARED LABEL\n");
-			return (0);
-		}
-		printf("VALID TOKENS\n");
-		return (1);
-	}
-	else
-	{
-		printf("INVALID TOKENS at line %d col %d\n", token->row, token->col - 1);
-		return (0);
-	}
+	return (check_end_syntax(env, token));
 }
