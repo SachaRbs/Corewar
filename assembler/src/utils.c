@@ -20,6 +20,8 @@ int		ft_error(char *str)
 
 int		ft_lexerror(t_asm *p)
 {
+	printf("FREEING TOKENS\n");
+	free_tokens(p->tokens);
 	printf("Lexical error at [%d:%d]\n", p->row, p->col + 1);
 	exit(1);
 }

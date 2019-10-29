@@ -156,6 +156,7 @@ void				parse_symbol(t_asm *p, t_token *new, char **line, int start);
 t_token     		*init_token(t_asm *p, t_type type);
 void				add_token(t_token **head, t_token *newnode);
 void				print_token(t_token *head);
+void				free_tokens(t_token *head);
 
 /*
 ** header
