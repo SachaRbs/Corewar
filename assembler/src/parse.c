@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 18:36:43 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/29 18:46:39 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 
 }
 
+void	fill_optoken(t_token *token)
+{
+	token->op_index = is_instruction(token->str);
+	token->dir_sz = g_op_tab[token->op_index].dir_sz;
+}
+
 void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 {
 	int		size;
@@ -69,17 +75,11 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 		if (new->type == INDEX)
 			new->type = is_reg(new->str) ? REGISTER : OP;
 		if (new->type == OP)
-		{
-			new->op_index = is_instruction(new->str);
-			new->dir_sz = g_op_tab[new->op_index].dir_sz;
-		}
+			fill_optoken(new);
 		add_token(&p->tokens, new);
 	}
 	else
-	{
-		printf(MAG"%s\n"RESET, STR);
 		ft_lexerror(p);
-	}
 }
 
 void	parse_token(t_asm *p, char **line)
