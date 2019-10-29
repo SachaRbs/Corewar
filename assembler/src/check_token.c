@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 16:48:33 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 16:57:40 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		check_token(t_asm *env)
 			if (token->op_index == -1)
 			{
 				//ERROR SYNTAX OF OPERATION
-				get_error(env, token);
+				// get_error(env, token);
 				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
 				return (0);
 			}

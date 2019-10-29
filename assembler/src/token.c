@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 16:42:41 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 17:17:25 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		add_token(t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	printf(YEL"ADD TOKEN [%s]\n"RESET, typestab[new->type]);
+	// printf(YEL"ADD TOKEN [%s]\n"RESET, typestab[new->type]);
 	if (!(*head))
 	{
 		*head = new;

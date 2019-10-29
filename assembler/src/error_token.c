@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 14:28:58 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 15:00:48 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 16:58:13 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-void	get_error(t_asm *env, t_token *token)
-{
+// void	get_error(t_asm *env, t_token *token)
+// {
 	
-}
+// }

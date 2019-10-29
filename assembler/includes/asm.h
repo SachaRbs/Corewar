@@ -160,7 +160,7 @@ void				print_token(t_token *head);
 ** header
 */
 
-void				parse_header(t_asm *p, t_token *newnode, char *line);
+void				parse_header(t_asm *p, t_token *newnode, char **line);
 
 /*
 ** label
