@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 18:50:55 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 19:33:47 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ int		check_token(t_asm *env)
 	{
 		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
+		if (env->syntax_state == 5)
+			env->f_header = 1;
 		if (env->syntax_state == -1)
 			return(get_error(env, token));
 		else if (token->type == LABEL)

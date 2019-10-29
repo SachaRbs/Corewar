@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 14:28:58 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 18:49:43 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/29 19:35:46 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int		get_error(t_asm *env, t_token *token)
 {
-	if (token->type == OP)
+	if (env->f_header == 0)
+	{
+		printf("%s:%d:%d: Incomplete header\n", env->file, token->row, token->col);
+	}
+	else if (token->type == OP)
 	{
 		if (token->prev->type == LABEL || token->prev->type == NEWLINE)
 		{
@@ -29,7 +33,7 @@ int		get_error(t_asm *env, t_token *token)
 	}
 	else if (token->type == DIRECT_LABEL || token->type == IND_LABEL)
 	{
-		printf("%s:%d:%d: Undeclared label \"%s\" used\n"
+		printf("%s:%d:%d: Undeclared label \"%s\"\n"
 		, env->file, token->row, token->col, token->str);
 	}
 	else
