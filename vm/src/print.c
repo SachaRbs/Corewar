@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/30 13:56:43 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:08:21 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 		{
 			if (proc->action == 11 && i != 0)
 				printf(" %d", argument(vm, proc, i));
+			else if (proc->action == 10 && i == 0)
+				printf(" %d", argument(vm, proc, i));
 			else if (proc->action == 6 && i == 0)
 				printf(" -%d", proc->arg_v[i]);
 			else if (proc->action == 8 && i == 0)
@@ -73,6 +75,8 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 				printf(" r%d", proc->arg_v[i]);
 			i++;
 		}
+		if (proc->action == 12)
+			printf(" (%d)", proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
 		if (proc->action == 11 && (vm->cycle == 8470 || vm->cycle == 8650 || vm->cycle == 8708))
 		{
 			printf("\n       | -> store to %d + %d = %d (with pc and mod -%d)",
@@ -85,15 +89,13 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
 			proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD));
 		}
+		if (proc->action == 10)
+			printf("\n       | -> load from %d + %d = %d (with pc and mod %d)", argument(vm, proc, 0), argument(vm, proc, 1),
+			argument(vm, proc, 0) + argument(vm, proc, 1), proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
 		if (proc->action == 9 && proc->carry)
 			printf(" OK\n");
 		if (proc->action == 9 && !proc->carry)
 			printf(" FAILED");
-		if (proc->action == 10)
-			printf("\n       | -> load from %d + %d = %d (with pc and mod %d)", argument(vm, proc, 0), argument(vm, proc, 1),
-			argument(vm, proc, 0) + argument(vm, proc, 1), proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
-		if (proc->action == 12)
-			printf(" (%d)", proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
 	}
 	if (proc->action != 9 || (proc->action == 9 && !proc->carry))
 	{
