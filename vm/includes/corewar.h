@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/29 17:07:05 by crfernan         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   corewar.h                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/05 12:13:44 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/30 15:29:01 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #ifndef COREWAR_H
 # define COREWAR_H
 
@@ -82,6 +82,8 @@ int32_t					reverser_32(int32_t a);
 unsigned int			big_endian(unsigned int num, int n);
 int						mod_address(int add);
 int						argument(t_vm *vm, t_proc *proc, int arg);
+int						find_procnum(t_vm *vm);
+
 
 
 

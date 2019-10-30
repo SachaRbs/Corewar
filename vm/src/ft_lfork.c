@@ -1,35 +1,18 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_lfork.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 14:53:20 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/29 16:25:08 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   ft_lfork.c                                       .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/29 14:53:20 by crfernan     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/30 15:29:55 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "operations.h"
 #include "error.h"
 #include "op.h"
-
-int		lfind_procnum(t_vm *vm, t_proc *proc)
-{
-	int			out;
-	t_proc		*current;
-
-	out = 0;
-	(void)proc;
-	current = vm->proc;
-	while (current)
-	{
-		if (out <= current->procnum)
-			out = current->procnum + 1;
-		current = current->next;
-	}
-	return (out);
-}
 
 void	*ft_lfork(t_vm *vm, t_proc *proc)
 {
@@ -45,7 +28,7 @@ void	*ft_lfork(t_vm *vm, t_proc *proc)
 	newproc->cycle_live = proc->cycle_live;
 	newproc->pc = proc->arg_a[0] % MEM_SIZE;
 	newproc->pnu = proc->pnu;
-	newproc->procnum = lfind_procnum(vm, proc);
+	newproc->procnum = find_procnum(vm);
 	pushfront_proc(&vm->proc, newproc);
 	return (NULL);
 }

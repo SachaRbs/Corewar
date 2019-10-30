@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_vm.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/28 16:32:17 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   init_vm.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/30 15:28:20 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "error.h"
 
@@ -128,7 +128,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		ft_exit(vm, FAIL_ON_READ);
 	current->carry = FALSE;
 	current->cycle = 0;
-	current->procnum = 1;
+	current->procnum = !vm->proc ? 1 : find_procnum(vm);
 	current->pc = pn * (MEM_SIZE / vm->pct);
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
