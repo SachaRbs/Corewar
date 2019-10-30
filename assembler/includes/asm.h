@@ -62,7 +62,6 @@ typedef	struct		s_asm
 	int				syntax_state;
 	struct s_token	*tokens;
 	struct s_label	*labels;
-	struct s_label	*tok_lab;
 	struct s_label	*mentions;
 }					t_asm;
 
@@ -144,6 +143,7 @@ typedef	struct 		s_label
 	char			*name;
 	int				row;
 	int				col;
+	struct s_token	*from;
 	struct s_label	*next;
 }					t_label;
 
@@ -212,6 +212,7 @@ void				skip_comment(t_asm *p, char *line);
 */
 
 int					check_token(t_asm *env);
+void				fill_optoken(t_token *token);
 
 /*
 ***		check labels
@@ -223,5 +224,16 @@ t_label				*check_labels(t_asm *env);
 
 void				write_to_file(t_asm *p);
 
+/*
+***		error management
+*/
+
+int					get_error(t_asm *env, t_token *token);
+
+/*
+***		FREE
+*/
+
+void				free_asm(t_asm *env);
 
 #endif

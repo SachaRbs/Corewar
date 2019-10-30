@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:23:17 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 17:00:59 by epham            ###   ########.fr        #
+#    Updated: 2019/10/30 16:19:28 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ fclean: clean
 	$(MAKE) fclean -C $(L_FT) --no-print-directory
 	rm -f $(NAME)
 
+# debug: OPTI_FLAGS := -g3
 debug: OPTI_FLAGS := $(SHARE_DEBUG)
 debug: re clean
 

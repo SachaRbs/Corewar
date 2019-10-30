@@ -31,7 +31,6 @@ t_asm	*init_struct(int fd)
 	p->syntax_state = 0;
 	p->tokens = NULL;
 	p->labels = NULL;
-	p->tok_lab = NULL;
 	p->mentions = NULL;
 	return (p);
 }
