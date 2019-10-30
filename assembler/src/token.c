@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 19:31:27 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:02:15 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	free_tokens(t_token *head)
 	{
         curr = tmp;
         tmp = tmp->next;
+		if (curr->str)
+			ft_strdel(&curr->str);
         free(curr);
 		curr = NULL;
     }

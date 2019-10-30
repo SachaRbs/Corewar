@@ -20,7 +20,7 @@ t_asm	*init_struct(int fd)
 		exit(1);
 	p->fd = fd;
 	p->filename = NULL;
-	p->file = ft_strnew(0);
+	p->file = NULL;
 	p->champ = NULL;
 	p->comment = NULL;
 	p->f_header = 0;

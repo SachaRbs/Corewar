@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 16:14:49 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 16:47:37 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void		write_header(t_asm *p)
 	write_byte(ret, pos, 0x16, 4);
 	pos += 4;
 	ft_memcpy(&ret[pos], p->comment, ft_strlen(p->comment));
-	pos += COMMENT_LENGTH;
-	// write_byte(ret, pos, 0x16, 4);
+	pos += COMMENT_LENGTH + 4;
 	write(p->fd, ret, SIZE);
 }
 
 void		write_to_file(t_asm *p)
 {
+	printf(BOLDWHITE"Wrote output to %s\n"RESET, p->filename);
 	write_header(p);
 }

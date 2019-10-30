@@ -1,6 +1,9 @@
 output
 output.c
 todo
+champs/*
+*.cor
+*.s
 # Object files
 *.o
 # Libraries

@@ -64,6 +64,13 @@ int		main(int argc, char **argv)
 		exit(1);
 	p = init_struct(fd);
 	p->file = argv[1];
-	p->filename = check_filename(argv[1]);
+	if (!(p->filename = check_filename(argv[1])))
+	{
+		printf("file error\n");
+		return (0);
+	}
 	parse(p);
+	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+			return (0);
+	write_to_file(p);
 }

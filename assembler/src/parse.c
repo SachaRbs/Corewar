@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 19:31:22 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:19:57 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	parse_token(t_asm *p, char **line)
 
 void	parse(t_asm *p)
 {
-	static char		*str;
+	// static char		*str;
 	char 			*line;
 
-	str = ft_strnew(1);
+	// str = ft_strnew(1);
 	while ((ft_readline(p->fd, &p->str, &line) > 0))
 	{
 		p->col = 0;
@@ -121,9 +121,8 @@ void	parse(t_asm *p)
 				parse_token(p, &line);
 		}
     	p->row++;
+		ft_strdel(&line);
 	}
-	if (!p->tokens)
-		printf("NULL\n");
 	print_token(p->tokens);
 	// check_token(p);
 }
