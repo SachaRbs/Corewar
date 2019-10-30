@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 15:17:55 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/30 18:18:03 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1},
 	{-1, -1, 10, 7, -1, -1, -1, -1, -1, -1, 6, -1},
 	{-1, -1, 10, -1, -1, -1, -1, -1, -1, -1, 6, -1},
-	{-1, -1, 10, 7, -1, -1, -1, -1, -1, -1, 8, 40},
+	{-1, -1, 10, 9, -1, -1, -1, -1, -1, -1, 8, 40},
 	{-1, -1, 10, -1, -1, -1, -1, -1, -1, -1, 8, -1},
 	{50},
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
@@ -88,11 +88,7 @@ int		check_end_syntax(t_asm *env, t_token *token)
 	if (env->syntax_state == 40 && !token)
 	{
 		if ((label = check_labels(env)))
-		{
-			//ERROR UNDECLARED LABEL
-			// printf("MENTION OF AN UNDECLARED LABEL at %d:%d\n", label->row, label->col);
 			return (get_error(env, label->from));
-		}
 		else
 		{
 			printf("PARSING OK\n");
@@ -100,10 +96,7 @@ int		check_end_syntax(t_asm *env, t_token *token)
 		}
 	}
 	else
-	{
-		// printf("ERROR\n");
 		return (get_error(env, token));
-	}
 }
 
 int		check_token(t_asm *env)

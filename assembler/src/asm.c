@@ -20,7 +20,7 @@ char	*check_filename(char *file)
 	tmp = file;
 	if ((tmp = ft_strrchr(tmp, '/')))
 		file = tmp + 1;
-	if (!(dot = ft_strchr(file, '.')))
+	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
@@ -70,7 +70,7 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	parse(p);
-	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-			return (0);
-	write_to_file(p);
+	// if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	// 		return (0);
+	// write_to_file(p);
 }

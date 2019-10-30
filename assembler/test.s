@@ -4,6 +4,6 @@
 xor :label,r1,r2
 
 loop:
-label: xor :label,r1,r2
+label: xor :lbel,r1,r2
 
 #live r1

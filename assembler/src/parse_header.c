@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.c                                           :+:      :+:    :+:   */
+/*   parse_header.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/17 17:10:56 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/09/17 17:49:22 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/10/30 17:38:19 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/10/30 17:46:24 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*parse_multiline(t_asm *p, char **line)
 	char	*end;
 
 	str = ft_strdup(*line + p->col);
-	while (ft_readline(p->fd, &p->str, line) > 0 && (!(end = ft_strchr(*line, '"'))))
+	while (ft_readline(p->fd, &p->str, line) > 0
+	&& (!(end = ft_strchr(*line, '"'))))
 	{
 		str = ft_strjoin(str, *line);
 		p->row++;
@@ -38,11 +39,11 @@ void	parse_champion(t_asm *p, char **line)
 	size_t		start;
 
 	start = 0;
-    while (is_whitespace((*line)[p->col]) && (*line)[p->col])
-        p->col++;
-    if ((*line)[p->col] == '"')
-    {
-        p->col++;
+	while (is_whitespace((*line)[p->col]) && (*line)[p->col])
+		p->col++;
+	if ((*line)[p->col] == '"')
+	{
+		p->col++;
 		start = p->col;
 		if (ft_strchr(*line + p->col, '"'))
 		{
@@ -52,12 +53,12 @@ void	parse_champion(t_asm *p, char **line)
 		}
 		else
 			p->champ = parse_multiline(p, line);
-    }
+	}
 	else
 		ft_lexerror(p);
 	printf(GRN"%s\n"RESET, p->champ);
-    if (!p->champ || ft_strlen(p->champ) > PROG_NAME_LENGTH)
-        ft_error("CHAMPION NAME TOO LONG");
+	if (!p->champ || ft_strlen(p->champ) > PROG_NAME_LENGTH)
+		ft_error("CHAMPION NAME TOO LONG");
 }
 
 void	parse_comment(t_asm *p, char **line)
@@ -65,11 +66,11 @@ void	parse_comment(t_asm *p, char **line)
 	size_t		start;
 
 	start = 0;
-    while (is_whitespace((*line)[p->col]) && (*line)[p->col])
-        p->col++;
-    if ((*line)[p->col] == '"')
-    {
-        p->col++;
+	while (is_whitespace((*line)[p->col]) && (*line)[p->col])
+		p->col++;
+	if ((*line)[p->col] == '"')
+	{
+		p->col++;
 		start = p->col;
 		if (ft_strchr(*line + p->col, '"'))
 		{
@@ -79,10 +80,10 @@ void	parse_comment(t_asm *p, char **line)
 		}
 		else
 			p->comment = parse_multiline(p, line);
-    }
+	}
 	printf(GRN"%s\n"RESET, p->comment);
-    if (!p->comment || ft_strlen(p->comment) > COMMENT_LENGTH)
-        ft_error("CHAMPION COMMENT TOO LONG");
+	if (!p->comment || ft_strlen(p->comment) > COMMENT_LENGTH)
+		ft_error("CHAMPION COMMENT TOO LONG");
 }
 
 void	parse_header(t_asm *p, t_token *new, char **line)
