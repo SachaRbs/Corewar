@@ -20,7 +20,7 @@ t_asm	*init_struct(int fd)
 		exit(1);
 	p->fd = fd;
 	p->filename = NULL;
-	p->file = ft_strnew(0);
+	p->file = NULL;
 	p->champ = NULL;
 	p->comment = NULL;
 	p->f_header = 0;
@@ -31,7 +31,6 @@ t_asm	*init_struct(int fd)
 	p->syntax_state = 0;
 	p->tokens = NULL;
 	p->labels = NULL;
-	p->tok_lab = NULL;
 	p->mentions = NULL;
 	return (p);
 }

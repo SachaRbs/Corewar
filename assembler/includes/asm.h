@@ -54,7 +54,6 @@ typedef	struct		s_asm
 	int				syntax_state;
 	struct s_token	*tokens;
 	struct s_label	*labels;
-	struct s_label	*tok_lab;
 	struct s_label	*mentions;
 }					t_asm;
 
@@ -220,5 +219,11 @@ t_label				*check_labels(t_asm *env);
 */
 
 int					get_error(t_asm *env, t_token *token);
+
+/*
+***		FREE
+*/
+
+void				free_asm(t_asm *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 17:37:20 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/30 15:52:20 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_label_lists(t_asm *env)
 	t_label *head_labels;
 	t_label *head_mentions;
 
-	head_labels = env->tok_lab;
+	head_labels = env->labels;
 	head_mentions = env->mentions;
 	printf("LABELS :\n");
 	while (head_labels)
@@ -75,20 +75,13 @@ t_label		*check_labels(t_asm *env)
 	t_label	*mentions;
 	int		check;
 	
-	labels = env->tok_lab;
+	labels = env->labels;
 	mentions = env->mentions;
 	while (mentions)
 	{
 		check = 0;
 		while (labels)
 		{
-			//TO REMOVE ONCE PARSING OF INDEX LABEL IS WITHOUT :
-			if (mentions->name[0] == ':' && !ft_strcmp(mentions->name + 1, labels->name))
-			{
-				check = 1;
-				break ;
-			}
-			//
 			if (!ft_strcmp(mentions->name, labels->name))
 			{
 				check = 1;
@@ -99,7 +92,7 @@ t_label		*check_labels(t_asm *env)
 		if (check == 0)
 			return (mentions);
 		mentions = mentions->next;
-		labels = env->tok_lab;
+		labels = env->labels;
 	}
 	return (NULL);
 }

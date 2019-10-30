@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/04 14:36:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 19:14:34 by epham            ###   ########.fr        #
+#    Updated: 2019/10/30 16:01:18 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,4 +22,5 @@ parse_instructions.o: asm.h
 parse_label.o: asm.h
 token.o: asm.h
 utils.o: asm.h
+free.o: asm.h
 write.o: asm.h

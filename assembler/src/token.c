@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/29 19:31:27 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:52:35 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,3 @@ void		print_token(t_token *head)
 	printf(RESET"\n");
 }
 
-void	free_tokens(t_token *head)
-{
-    t_token *tmp;;
-    t_token *curr;
-
-	tmp = head;
-    while (tmp != NULL)
-	{
-        curr = tmp;
-        tmp = tmp->next;
-        free(curr);
-		curr = NULL;
-    }
-}

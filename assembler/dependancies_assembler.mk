@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 19:14:19 by epham            ###   ########.fr        #
+#    Updated: 2019/10/30 16:01:27 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_ASSEMBLER 				=	\
 								check_token.c \
 								check_labels.c \
 								error_token.c \
+								free.c \
 								init.c \
 								op.c \
 								parse.c \
