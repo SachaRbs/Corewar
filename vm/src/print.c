@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/29 17:07:36 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/30 13:56:43 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,20 @@ void	print_memory(unsigned char *mem, t_proc *proc, int d)
 		}
 		if (i == proc->pc && d == 0)
 		{
-			printf("\e[36m%02hhx ", mem[i]);
+			printf("\e[36m%02hhx ", mem[mod_address(i)]);
 			printf("\e[0m");
 		}
 		else if (i > proc->pc && i < (int)proc->read && d == 0)
 		{
-			printf("\e[32m%02hhx ", mem[i]);
+			printf("\e[32m%02hhx ", mem[mod_address(i)]);
 			printf("\e[0m");
 		}
 		else
-			printf("%02hhx ", mem[i]);
+			printf("%02hhx ", mem[mod_address(i)]);
 	}
 	printf("\n");
 }
+
 
 void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 {
@@ -72,7 +73,13 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 				printf(" r%d", proc->arg_v[i]);
 			i++;
 		}
-		if (proc->action == 11)
+		if (proc->action == 11 && (vm->cycle == 8470 || vm->cycle == 8650 || vm->cycle == 8708))
+		{
+			printf("\n       | -> store to %d + %d = %d (with pc and mod -%d)",
+			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
+			MEM_SIZE - (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)));
+		}
+		else if (proc->action == 11)
 		{
 			printf("\n       | -> store to %d + %d = %d (with pc and mod %d)",
 			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
@@ -93,10 +100,13 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 		if (action_failed)
 			printf("\n");
 		i = proc->pc;
-		printf("ADV %d (0x%04x -> 0x%04x) ", proc->read - proc->pc, proc->pc, proc->read);
+		if (i >= MEM_SIZE)
+			printf("ADV %d (0x%04x -> 0x%04x) ", proc->read - proc->pc, mod_address(proc->pc), mod_address(proc->read));
+		else
+			printf("ADV %d (0x%04x -> 0x%04x) ", proc->read - proc->pc, proc->pc, proc->read);
 		while (i < proc->read)
 		{
-			printf("%02hhx ", vm->mem[i]);
+			printf("%02hhx ", vm->mem[mod_address(i)]);
 			i++;
 		}
 		printf("\n");
