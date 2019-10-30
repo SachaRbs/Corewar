@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 11:58:28 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/30 13:54:14 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:05:42 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef char				t_arg_type;
 #define T_DIR				2
 #define T_IND				4
 #define T_LAB				8
+
+# define NBR_OP				16
 
 /*
 **

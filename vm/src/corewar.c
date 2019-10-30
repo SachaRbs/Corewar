@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 18:04:05 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:04:54 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	print_action(t_proc *proc)
 
 	i = 0;
 	printf("PLAYER No %d :\n", proc->pnu);
-	printf("action = %s\n", op_tab[proc->action].name);
+	printf("action = %s\n", g_op_tab[proc->action].name);
 	while (i < 4){
 		printf("arg_v[%d] = %d\n",i, proc->arg_v[i]);
 		proc->arg_v[i] = 0;
@@ -159,7 +159,7 @@ void	run_corewar(t_vm *vm)
 				proc->read = proc->pc;
 				proc->action = get_instruction(vm, 1, &proc->read);
 				if (!(proc->action > 0 && proc->action <= NBR_OP
-				&& get_arg(vm, proc, op_tab[proc->action])))
+				&& get_arg(vm, proc, g_op_tab[proc->action])))
 					proc->pc++;
 			}
 			proc = proc->next;
