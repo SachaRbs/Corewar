@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/30 15:08:21 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:15:52 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 				printf(" %d", argument(vm, proc, i));
 			else if (proc->action == 10 && i == 0)
 				printf(" %d", argument(vm, proc, i));
-			else if (proc->action == 6 && i == 0)
-				printf(" -%d", proc->arg_v[i]);
 			else if (proc->action == 8 && i == 0)
 				printf(" %d", argument(vm, proc, i));
+			else if (proc->action == 6 && i == 0)
+				printf(" -%d", proc->arg_v[i]);
+			else if (proc->action == 3 && i != 0)
+				printf(" %d", proc->arg_v[i]);
 			else if (proc->arg_t[i] == DIR_CODE)
 				printf(" %d", proc->arg_v[i]);
 			else if (proc->arg_t[i] == IND_CODE)

@@ -15,8 +15,8 @@ fi
 touch $DIFF_FILE
 while [ $OUT_CONDITION ]
 do
-	./corewar -d $CYCLE ../ressources/vm_champs/champs/$1 > $OUR_FILE
-	../ressources/vm_champs/corewar -v 22 -d $CYCLE ../ressources/vm_champs/champs/$1 > $THEM_FILE
+	./corewar -d $CYCLE ../ressources/vm_champs/champs/$1.cor > $OUR_FILE
+	../ressources/vm_champs/corewar -v 22 -d $CYCLE ../ressources/vm_champs/champs/$1.cor > $THEM_FILE
 	diff $OUR_FILE $THEM_FILE > $DIFF_FILE
 	if [ -s $DIFF_FILE ]
 	then
