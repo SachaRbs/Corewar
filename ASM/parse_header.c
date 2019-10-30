@@ -55,7 +55,7 @@ void	parse_champion(t_asm *p, char **line)
     }
 	else
 		ft_lexerror(p);
-	printf(GRN"[%s]\n"RESET, p->champ);
+	printf(GRN"%s\n"RESET, p->champ);
     if (p->champ && ft_strlen(p->champ) > PROG_NAME_LENGTH)
         ft_error("CHAMPION NAME TOO LONG");
 }
@@ -80,7 +80,7 @@ void	parse_comment(t_asm *p, char **line)
 		else
 			p->comment = parse_multiline(p, line);
     }
-	printf(GRN"[%s]\n"RESET, p->comment);
+	printf(GRN"%s\n"RESET, p->comment);
     if (ft_strlen(p->comment) > COMMENT_LENGTH)
         ft_error("CHAMPION COMMENT TOO LONG");
 }

@@ -214,4 +214,6 @@ void				save_label(t_label **to, t_token *token);
 t_label				*check_labels(t_asm *env);
 
 
+void				write_to_file(t_asm *p);
+
 #endif

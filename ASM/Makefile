@@ -26,7 +26,8 @@ SRCS		=	asm.c					\
 				op.c					\
 				check_token.c			\
 				error_token.c			\
-				check_labels.c
+				check_labels.c			\
+				write.c
 # SRCSREP = srcs
 OBJS		=	$(SRCS:.c=.o)
 

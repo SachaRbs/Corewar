@@ -66,4 +66,7 @@ int		main(int argc, char **argv)
 	p->file = argv[1];
 	p->filename = check_filename(argv[1]);
 	parse(p);
+	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+		exit(1);
+	write_to_file(p);
 }
