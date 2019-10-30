@@ -70,6 +70,7 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	parse(p);
+	free_asm(p);
 	// if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	// 		return (0);
 	// write_to_file(p);
