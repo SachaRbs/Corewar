@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/30 14:06:54 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:58:02 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	run_corewar(t_vm *vm)
 			{
 				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
 					operation->op[proc->action - 1](vm, proc);
-				print_action(proc, vm, operation_failed);
+				// print_action(proc, vm, operation_failed);
 				if (vm->dump == -1)
 				{
 					// print_memory(vm->mem, proc, 0);
@@ -157,4 +157,7 @@ void	run_corewar(t_vm *vm)
 			printf("Contestant %d, \"%s\", has won !\n", vm->last_alive, vm->contestants[vm->last_alive]);
 		else
 			printf("vm->last_alive WRONG\n");
+	if (operation)
+		free(operation);
+	operation = NULL;
 }

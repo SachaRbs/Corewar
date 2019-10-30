@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/30 15:15:52 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:28:34 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 	i = 0;
 	if (action_failed)
 	{
-		if (proc->procnum < 10)
-			printf("P    %d | %s", proc->procnum, g_op_tab[proc->action].name);
-		else
+		if (proc->procnum > 99)
+			printf("P  %d | %s", proc->procnum, g_op_tab[proc->action].name);
+		else if (proc->procnum > 9)
 			printf("P   %d | %s", proc->procnum, g_op_tab[proc->action].name);
+		else
+			printf("P    %d | %s", proc->procnum, g_op_tab[proc->action].name);
 		while (i < g_op_tab[proc->action].nb_arg)
 		{
 			if (proc->action == 11 && i != 0)
