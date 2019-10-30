@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 18:18:03 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:51:57 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		check_token(t_asm *env)
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
-		aff_token(env, token);
+		// aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 5)
 			env->f_header = 1;
