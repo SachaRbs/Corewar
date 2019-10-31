@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:38:19 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 17:46:24 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:50:12 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	parse_champion(t_asm *p, char **line)
 	}
 	else
 		ft_lexerror(p);
-	printf(GRN"%s\n"RESET, p->champ);
+	// printf(GRN"%s\n"RESET, p->champ);
 	if (!p->champ || ft_strlen(p->champ) > PROG_NAME_LENGTH)
 		ft_error("CHAMPION NAME TOO LONG");
 }
@@ -81,7 +81,7 @@ void	parse_comment(t_asm *p, char **line)
 		else
 			p->comment = parse_multiline(p, line);
 	}
-	printf(GRN"%s\n"RESET, p->comment);
+	// printf(GRN"%s\n"RESET, p->comment);
 	if (!p->comment || ft_strlen(p->comment) > COMMENT_LENGTH)
 		ft_error("CHAMPION COMMENT TOO LONG");
 }
