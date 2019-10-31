@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/28 16:50:56 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/31 17:54:30 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int				ft_printf(const char *format, ...);
 */
 
 int				ft_atoi_base(const char *str, int size, int base);
+long			ft_atol(const char *str);
 
 /*
 ***		FUNCTIONS FROM THE LIB OF YOANN

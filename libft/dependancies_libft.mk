@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft.mk                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
+#    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 16:51:11 by epham            ###   ########.fr        #
+#    Updated: 2019/10/31 17:54:27 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,7 +112,8 @@ SRC_LIBFT = \
 	ft_printf_main.c \
 	ft_strnjoin.c \
 	ft_strndup.c \
-	ft_islower.c
+	ft_islower.c \
+	ft_atol.c \
 
 INC_LIBFT					:=	libft.h \
 								ft_printf.h
