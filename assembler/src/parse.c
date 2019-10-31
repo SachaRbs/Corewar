@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 18:51:46 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 14:20:23 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,31 @@
 
 #define STR (*line + p->col)
 
+unsigned int	ft_nblen(int n, int base)
+{
+	unsigned int	count;
+
+	count = 1;
+	while (n /= base)
+		count++;
+	return (count);
+}
+
 void	parse_content(t_token *token, char *line, int start, size_t len)
 {
+	size_t	size;
+
 	if (token->type == IND_LABEL)
 		token->str = ft_strsub(line, start + 1, len - 1);
+	else if (token->type == DIRECT)
+	{
+		token->str = ft_strsub(line, start, len);
+		token->value = ft_atoi(line + start);
+		size = token->str[0] == '-' ? ft_strlen(token->str) - 1 : ft_strlen(token->str);
+		printf("%s: %zu %d\n", token->str, size, ft_nblen(token->value, 10));
+		if (size != ft_nblen(token->value, 10))
+			ft_error("VALUE > INTMAX");
+	}
 	else
 		token->str = ft_strsub(line, start, len);
 }

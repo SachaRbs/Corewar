@@ -110,6 +110,7 @@ static const char *typestab[11] =
 typedef struct		s_token
 {
 	char			*str;
+	int				value;
 	enum e_type		type;
 	int				op_index;
 	int				dir_sz;
