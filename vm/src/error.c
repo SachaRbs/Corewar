@@ -22,18 +22,43 @@ char g_error_message[9][200] = {
 	{"# ERROR  6            Size du champion trop grande #"},
 	{"# ERROR  7                         Mauvaise option #"},
 	{"# ERROR  8                       Trop de champions #"},
-	{"# ERROR  8   Read procesus from function load_proc #"}
+	{"# ERROR  9   Read procesus from function load_proc #"}
 };
+
+void	free_proc(t_vm *vm)
+{
+	t_proc	*current;
+	t_proc	*next;
+
+	if (vm->proc)
+	{
+		current = vm->proc;
+		next = current->next;
+		while (next)
+		{
+			free(current);
+			current = next;
+			next = current->next;
+		}
+		free(current);
+		current = NULL;
+	}
+	vm->proc = NULL;
+}
 
 /*
 ***		THIS FUNCTION SHOULD FREE AND SET TO NULL EVERYTHING
 */
 
-void	close_program(t_vm *vm)
+void	close_program(t_vm *vm, int out)
 {
 	if (vm)
+	{
+		free_proc(vm);
+		free(vm);
 		vm = NULL;
-	exit(-1);
+	}
+	exit(out);
 }
 
 /*
@@ -51,5 +76,5 @@ void	ft_exit(t_vm *vm, t_errors error)
 	ft_putendl("####################################################");
 	ft_putendl("####################################################\n");
 	ft_putendl("\e[0m");
-	close_program(vm);
+	close_program(vm, -1);
 }

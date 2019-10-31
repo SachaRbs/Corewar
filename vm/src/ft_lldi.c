@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lldi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:30:52 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 19:03:28 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 15:34:39 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 #include "error.h"
 #include "op.h"
 
+/*
+***		WRONG ?
+*/
+
 void	*ft_lldi(t_vm *vm, t_proc *proc)
 {
-	proc->reg[proc->arg_v[2]] = big_endian(vm->mem[proc->pc
-	+ argument(vm, proc, 0) + argument(vm, proc, 1)], 4);
-	return (NULL);	
+	int address;
+
+	address = (proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1)));
+	proc->reg[proc->arg_v[2]] = read_mem(vm, address, 4);
+	return (NULL);
 }
