@@ -15,7 +15,7 @@ Have Fun"
 			start:
 
 live:
-	live	%42
+	live	%41
 	live	%0
 	live	%-42
 	live	%-0
