@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 17:31:05 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:59:17 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 t_token     *init_token(t_asm *p, t_type type)
 {
-    t_token		*token;
+	t_token		*token;
 
-    if (!(token = malloc(sizeof(t_token))))
-        ft_error("TOKEN MALLOC");
-    token->str = NULL;
-    token->type = type;
+	if (!(token = malloc(sizeof(t_token))))
+		ft_error("TOKEN MALLOC");
+	token->str = NULL;
+	token->type = type;
 	if (token->type == SEPARATOR)				// A DELETE CEST POUR LE PRINT
 		token->str = ft_strdup(",");
 	if (token->type == NEWLINE)					// A DELETE CEST POUR LE PRINT
 		token->str = ft_strdup("\\n");
 	token->op_index = -1;
 	token->dir_sz = 0;
-    token->row = p->row;
-    token->col = p->col;
-    token->next = NULL;
-    token->prev = NULL;
-    return (token);
+	token->row = p->row;
+	token->col = p->col;
+	token->next = NULL;
+	token->prev = NULL;
+	return (token);
 }
 
 void		add_token(t_token **head, t_token *new)

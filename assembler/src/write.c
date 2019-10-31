@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 16:47:37 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 16:55:27 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	write_byte(char *byte, int pos, int value, size_t size)
 	}
 }
 
-#define SIZE 4096
+#define SIZE 2192
 
 void		write_header(t_asm *p)
 {

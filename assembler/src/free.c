@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:52:05 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 17:29:51 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:26:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ void		free_labels(t_label *labels)
 
 void		free_asm(t_asm *env)
 {
-	if (env->filename)
-		free(env->filename);
-	if (env->champ)
-		free(env->champ);
-	if (env->comment)
-		free(env->comment);
-	if (env->str)
-		free(env->str);
+	ft_strdel(&env->filename);
+	ft_strdel(&env->champ);
+	ft_strdel(&env->comment);
+	ft_strdel(&env->str);
+	ft_strdel(&env->line);
 	if (env->tokens)
 		free_tokens(env->tokens);
 	if (env->labels)

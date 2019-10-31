@@ -41,7 +41,7 @@ int		ft_readline(int fd, char **str, char **line)
 			return (-1);
 	sz = 0;
 	while ((*str)[sz] && (*str)[sz] != '\n')
-		++sz;
+		sz++;
 	if ((*line = ft_strndup(*str, sz + 1)) == NULL)
 		return (-1);
 	if ((*str)[sz] == '\n')
@@ -73,4 +73,5 @@ int		main(int argc, char **argv)
 	// if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 	// 		return (0);
 	// write_to_file(p);
+	free_asm(p);
 }

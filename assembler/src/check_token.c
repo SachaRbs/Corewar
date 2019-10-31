@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 18:51:57 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:30:27 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		check_end_syntax(t_asm *env, t_token *token)
 			return (get_error(env, label->from));
 		else
 		{
-			printf("PARSING OK\n");
+			printf(GRN"PARSING OK\n"RESET);
 			return (0);
 		}
 	}

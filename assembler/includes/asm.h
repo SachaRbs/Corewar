@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:24:03 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/09/17 17:05:29 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:57:47 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct		s_asm
 	int				fd;
 	char			*filename;
 	char			*file;
+	char			*line;
 	char			*champ;
 	char			*comment;
 	int				f_header;
@@ -110,7 +111,7 @@ static const char *typestab[11] =
 typedef struct		s_token
 {
 	char			*str;
-	int				value;
+	long			value;
 	enum e_type		type;
 	int				op_index;
 	int				dir_sz;
@@ -155,7 +156,7 @@ int 				ft_readline(int fd, char **str, char **line);
 */
 
 void				parse(t_asm *p);
-void				parse_symbol(t_asm *p, t_token *new, char **line, int start);
+void				parse_symbol(t_asm *p, t_token *new, int start);
 
 /*
 ** token
@@ -170,7 +171,7 @@ void				free_tokens(t_token *head);
 ** header
 */
 
-void				parse_header(t_asm *p, t_token *newnode, char **line);
+void				parse_header(t_asm *p, t_token *newnode);
 
 /*
 ** label
