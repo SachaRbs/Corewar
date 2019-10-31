@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 15:52:20 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/31 11:38:39 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ void	save_label(t_label **to, t_token *token)
 	t_label *new;
 
 	head = *to;
-	printf("SAVING LABEL %s\n", token->str);
-	if (!head)
-		printf("FIRST LABEL TO BE SAVED\n");
 	if (!(new = malloc(sizeof(t_label))))
 		return ;
 	new->name = ft_strdup(token->str);

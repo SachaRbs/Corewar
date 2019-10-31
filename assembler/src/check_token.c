@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/30 18:51:57 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 11:37:21 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ void	fill_optoken(t_token *token)
 void	aff_token(t_asm *env, t_token *token)
 {
 	if (token->type == OP || token->type == LABEL)
-		printf("\n==== NEW INSTRUCTIONS ====\n");
-	printf(" ________________________\n");
-	printf("|%10s %-12d |\n", "State", env->syntax_state);
-	printf("|%10s %-12s |\n", "Type", typestab[token->type]);
-	printf("|%10s %-12s |\n", "Value", token->str);
-	printf("|%10s %-12d |\n", "Row", token->row);
-	printf("|%10s %-12d |\n", "Col", token->col);
-	printf("|%10s %-12d |\n", "Op ind", token->op_index);
-	printf("|%10s %-12d |\n", "Dir sz", token->dir_sz);
-	printf("|________________________|\n");
+		ft_printf("\n==== NEW INSTRUCTIONS ====\n");
+	ft_printf(" ________________________\n");
+	ft_printf("|%10s %-12d |\n", "State", env->syntax_state);
+	ft_printf("|%10s %-12s |\n", "Type", typestab[token->type]);
+	ft_printf("|%10s %-12s |\n", "Value", token->str);
+	ft_printf("|%10s %-12d |\n", "Row", token->row);
+	ft_printf("|%10s %-12d |\n", "Col", token->col);
+	ft_printf("|%10s %-12d |\n", "Op ind", token->op_index);
+	ft_printf("|%10s %-12d |\n", "Dir sz", token->dir_sz);
+	ft_printf("|________________________|\n");
 }
 
 int		check_end_syntax(t_asm *env, t_token *token)
@@ -109,7 +109,7 @@ int		check_token(t_asm *env)
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
-		// aff_token(env, token);
+		aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 5)
 			env->f_header = 1;
@@ -123,7 +123,7 @@ int		check_token(t_asm *env)
 		{
 			if (token->op_index == -1)
 				return (get_error(env, token));
-			printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
+			// printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
 		}
 		token = token->next;
