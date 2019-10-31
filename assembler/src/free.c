@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:52:05 by epham             #+#    #+#             */
-/*   Updated: 2019/10/31 17:26:07 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:18:51 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	free_tokens(t_token *head)
 	{
 		curr = tmp;
 		tmp = tmp->next;
-		if (curr->str)
-			free(curr->str);
-		curr->str = NULL;
+		// printf("[%s] -> %s\n", curr->str, typestab[curr->type]);
+		ft_strdel(&curr->str);
 		free(curr);
 		curr = NULL;
 	}

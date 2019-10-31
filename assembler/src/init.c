@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:36:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 17:58:04 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:46:35 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_asm	*init_struct(int fd)
 	p->champ = NULL;
 	p->comment = NULL;
 	p->f_header = 0;
-	// p->str = NULL;
-	p->str = ft_strnew(5);
+	p->str = ft_strnew(1);
 	p->byte_pos = 0;
 	p->row = 1;
 	p->col = 1;

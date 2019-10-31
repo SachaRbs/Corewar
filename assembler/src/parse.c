@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 17:55:16 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:37:52 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	parse_content(t_asm *p, t_token *token, int start, size_t len)
 		token->str = ft_strsub(p->line, start, len);
 		str_len = ft_strlen(token->str);
 		token->value = ft_atol(p->line + start);
-		printf("value %ld %s\n", token->value, token->str);
 		size = token->str[0] == '-' ? str_len - 1 : str_len;
-		if (size != ft_nblen(token->value))
+		if (size != ft_nblen(token->value)
+		|| token->value > UINT_MAX
+		|| token->value < INT_MIN)
 			ft_lexerror(p);
 	}
 	else
@@ -50,7 +51,6 @@ void	parse_digits(t_asm *p, t_token *new, int start)
 {
 	int		size;
 
-	// printf(CYN"[%s]\n"RESET, *line + p->col);
 	size = start;
 	if (p->line[p->col] == '-')
 		p->col++;
@@ -75,7 +75,6 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 {
 	int		size;
 
-	// printf(RED"[%s]\n"RESET, STR);
 	size = p->col;
 	while (ft_strchr(LABEL_CHARS, p->line[p->col]))
 		p->col++;

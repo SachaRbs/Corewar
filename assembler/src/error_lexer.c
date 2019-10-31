@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:35:52 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 16:32:38 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:41:18 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ void	print_error(t_asm *p)
 	int		i;
 
 	i = 0;
-	err_buffer = ft_strnew(p->col + 1);
+	err_buffer = ft_strnew(p->col + 11);
 	printf(BOLDWHITE"%s: ", p->file);
 	printf(BOLDRED"LEXICAL ERROR"RESET);
 	printf(BOLDWHITE" at %d:%d\n", p->row, p->col);
-	printf(RESET"%10s", p->line);
+	printf(RESET"          ");
+	printf(RESET"%s", p->line);
 	while (i < p->col + 10)
 	{
 		err_buffer[i] = ' ';
