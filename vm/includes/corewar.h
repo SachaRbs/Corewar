@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   corewar.h                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 12:13:44 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/30 15:29:01 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   corewar.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
+/*   Updated: 2019/10/31 16:49:16 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #ifndef COREWAR_H
 # define COREWAR_H
 
@@ -60,6 +60,7 @@ typedef struct			s_vm
 	int					nbr_live;
 	int					check;
 	int					pct;
+	int 				procct;
 	int					dump;
 	int					cycle;
 	t_proc				*proc;

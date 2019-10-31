@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/31 11:23:46 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/31 17:06:57 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		wrong_ocp(t_proc *proc, t_op op)
 	int i;
 
 	i = -1;
+	proc->read = proc->pc + 2;
 	while (++i < op.nb_arg)
 	{
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
@@ -39,6 +40,7 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 
 	i = -1;
 	proc->arcode = op.ocp ? read_mem_and_move_pc(vm, proc->read, 1, proc) : DIR_CODE << 6;
+	vm->procct += (proc->action == 12 || proc->action == 15) ? 1 : 0;
 	while (++i < MAX_ARGS_NUMBER)
 	{
 		code = ((proc->arcode >> (6 - i * 2)) & 3);
@@ -49,7 +51,10 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 			else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 				size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 			else
+			{
+				proc->read -= size;
 				return (wrong_ocp(proc, op));
+			}
 			proc->arg_a[i] = proc->read;
 			proc->arg_t[i] = code;
 			proc->arg_v[i] = read_mem_and_move_pc(vm, proc->read, size, proc);
@@ -74,7 +79,7 @@ void	arg_to_zero(t_proc *proc)
 	}
 }
 
-t_proc		*check_live(t_vm *vm)
+void		*check_live(t_vm *vm)
 {
 	t_proc *proc;
 	t_proc *tmp;
@@ -106,7 +111,7 @@ t_proc		*check_live(t_vm *vm)
 	}
 	vm->nbr_live = 1;
 	vm->next_check = vm->cycle_to_die;
-	return(vm->proc);
+	return(NULL);
 }
 
 void	run_corewar(t_vm *vm)
@@ -117,16 +122,18 @@ void	run_corewar(t_vm *vm)
 
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle
-	&& printf("It is now cycle %d\n", vm->cycle)
-	&& (proc = --vm->next_check <= 0 ? check_live(vm) : vm->proc))
+	// && printf("It is now cycle %d\n", vm->cycle)
+	&& (proc = vm->proc))
+	// && (proc = --vm->next_check <= 0 ? check_live(vm) : vm->proc))
 	{
+		printf("It is now cycle %d\n", vm->cycle);
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
 				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
 					operation->op[proc->action - 1](vm, proc);
-				// print_action(proc, vm, operation_failed);
+				print_action(proc, vm, operation_failed);
 				if (vm->dump == -1)
 				{
 					// print_memory(vm->mem, proc, 0);
@@ -149,6 +156,7 @@ void	run_corewar(t_vm *vm)
 			}
 			proc = proc->next;
 		}
+		proc = --vm->next_check <= 0 ? check_live(vm) : NULL;
 	}
 	if (vm->cycle == vm->dump)
 		print_memory(vm->mem, vm->proc, 1);

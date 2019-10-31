@@ -1,6 +1,6 @@
 #!/bin/bash
 make
-CYCLE=0
+CYCLE=17950
 PRINT_CYCLE=0
 OUT_CONDITION=1
 
@@ -16,7 +16,7 @@ touch $DIFF_FILE
 while [ $OUT_CONDITION ]
 do
 	./corewar -d $CYCLE ../ressources/vm_champs/champs/$1.cor > $OUR_FILE
-	../ressources/vm_champs/corewar -v 22 -d $CYCLE ../ressources/vm_champs/champs/$1.cor > $THEM_FILE
+	../ressources/vm_champs/corewar -v 2 -d $CYCLE ../ressources/vm_champs/champs/$1.cor > $THEM_FILE
 	diff $OUR_FILE $THEM_FILE > $DIFF_FILE
 	if [ -s $DIFF_FILE ]
 	then
@@ -25,6 +25,6 @@ do
 		break
 	else
 		echo "Cycle "$CYCLE" is correct"
-		let "CYCLE = CYCLE + 25"
+		let "CYCLE = CYCLE + 1"
 	fi
 done

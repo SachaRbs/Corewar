@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_lfork.c                                       .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/29 14:53:20 by crfernan     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/30 15:29:55 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lfork.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/29 14:53:20 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/31 16:52:52 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "operations.h"
 #include "error.h"
 #include "op.h"
@@ -26,9 +26,10 @@ void	*ft_lfork(t_vm *vm, t_proc *proc)
 		newproc->reg[i] = proc->reg[i];
 	newproc->carry = proc->carry;
 	newproc->cycle_live = proc->cycle_live;
-	newproc->pc = proc->arg_a[0] % MEM_SIZE;
+	newproc->cycle = vm->cycle;
 	newproc->pnu = proc->pnu;
-	newproc->procnum = find_procnum(vm);
+	newproc->pc = mod_address(proc->pc + proc->arg_v[0]);
+	newproc->procnum = vm->procct;
 	pushfront_proc(&vm->proc, newproc);
 	return (NULL);
 }

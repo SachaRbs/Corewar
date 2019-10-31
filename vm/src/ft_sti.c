@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:31:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/29 18:53:49 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/31 13:07:28 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	*ft_sti(t_vm *vm, t_proc *proc)
 
 	pc = mod_address(proc->pc);
 	address = pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD);
+	// address = mod_address(pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD));
 	writing_mem(vm, address, 4, proc->reg[proc->arg_v[0]]);
 
 	return (NULL);

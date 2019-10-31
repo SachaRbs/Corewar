@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/30 17:28:34 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/10/31 15:29:15 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,18 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 			else if (proc->arg_t[i] == REG_CODE)
 				printf(" r%d", proc->arg_v[i]);
 			i++;
-		}
+		}		
+		if (proc->action == 15)
+			printf(" (%d)", proc->pc);
 		if (proc->action == 12)
 			printf(" (%d)", proc->pc + argument(vm, proc, 0) + (argument(vm, proc, 1) % IDX_MOD));
-		if (proc->action == 11 && (vm->cycle == 8470 || vm->cycle == 8650 || vm->cycle == 8708))
-		{
-			printf("\n       | -> store to %d + %d = %d (with pc and mod -%d)",
-			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
-			MEM_SIZE - (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)));
-		}
-		else if (proc->action == 11)
+		// if (proc->action == 11 && (vm->cycle == 8470 || vm->cycle == 8650 || vm->cycle == 8708))
+		// {
+		// 	printf("\n       | -> store to %d + %d = %d (with pc and mod -%d)",
+		// 	argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
+		// 	MEM_SIZE - (proc->pc + ((argument(vm, proc, 1) + argument(vm, proc, 2)) % IDX_MOD)));
+		// }
+		if (proc->action == 11)
 		{
 			printf("\n       | -> store to %d + %d = %d (with pc and mod %d)",
 			argument(vm, proc, 1), argument(vm, proc, 2), (argument(vm, proc, 1) + argument(vm, proc, 2)),
@@ -115,6 +117,7 @@ void	print_action(t_proc *proc, t_vm *vm, int action_failed)
 			printf("%02hhx ", vm->mem[mod_address(i)]);
 			i++;
 		}
+		// printf("P    %d | %s", proc->procnum, g_op_tab[proc->action].name);
 		printf("\n");
 	}
 }
