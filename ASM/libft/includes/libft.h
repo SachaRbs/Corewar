@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:29:08 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/16 13:58:38 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:47:19 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ unsigned int		ft_nblen(unsigned long long n, int base);
 unsigned int		ft_abs(int value);
 size_t				ft_wstrlen(const int *str);
 char				*ft_itoa(int n);
+long		ft_atol(const char *str);
 
 #endif

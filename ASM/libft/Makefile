@@ -6,7 +6,7 @@
 #    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/11 19:12:59 by anonymous         #+#    #+#              #
-#    Updated: 2019/10/16 13:58:48 by yoribeir         ###   ########.fr        #
+#    Updated: 2019/11/01 15:47:00 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ MISC_SRCS = ft_atoi.c \
 	   ft_nblen.c \
 	   ft_abs.c \
 	   ft_wstrlen.c \
+	   ft_atol.c \
 
 LST_SRCS = ft_lstadd.c \
 		   ft_lstdelone.c \

@@ -6,27 +6,13 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 17:24:50 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:03:05 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-int		ft_error(char *str)
-{
-	ft_putendl_fd(str, 2);
-	exit(1);
-}
-
-int		ft_lexerror(t_asm *p)
-{
-	printf("FREEING TOKENS\n");
-	free_tokens(p->tokens);
-	printf("Lexical error at [%d:%d]\n", p->row, p->col + 1);
-	exit(1);
-}
-
-int		is_reg(char *line)
+int		is_reg(t_asm *p, char *line)
 {
 	int		i;
 	int		reg;
@@ -37,6 +23,8 @@ int		is_reg(char *line)
 		reg = ft_atoi(line + i);
 		if (reg <= REG_NUMBER && reg > 0)
 			return (1);
+		else
+			ft_lexerror(p);
 	}
 	return (0);
 }

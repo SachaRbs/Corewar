@@ -6,21 +6,21 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:36:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/09/17 17:49:09 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:51:56 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-t_asm	*init_struct(int fd)
+t_asm	*init_struct(int fd, char *filename, char *file)
 {
 	t_asm	*p;
 
 	if (!(p = malloc(sizeof(t_asm))))
-		exit(1);
+		ft_error("MALLOC ERROR");
 	p->fd = fd;
-	p->filename = NULL;
-	p->file = ft_strnew(0);
+	p->filename = filename;
+	p->file = file;
 	p->champ = NULL;
 	p->comment = NULL;
 	p->f_header = 0;
@@ -31,7 +31,6 @@ t_asm	*init_struct(int fd)
 	p->syntax_state = 0;
 	p->tokens = NULL;
 	p->labels = NULL;
-	p->tok_lab = NULL;
 	p->mentions = NULL;
 	return (p);
 }

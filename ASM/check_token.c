@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/29 16:57:40 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 17:30:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1},
 	{-1, -1, 10, 7, -1, -1, -1, -1, -1, -1, 6, -1},
 	{-1, -1, 10, -1, -1, -1, -1, -1, -1, -1, 6, -1},
-	{-1, -1, 10, 7, -1, -1, -1, -1, -1, -1, 8, 40},
+	{-1, -1, 10, 9, -1, -1, -1, -1, -1, -1, 8, 40},
 	{-1, -1, 10, -1, -1, -1, -1, -1, -1, -1, 8, -1},
 	{50},
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
@@ -56,6 +56,12 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
 
+void	fill_optoken(t_token *token)
+{
+	token->op_index = is_instruction(token->str);
+	token->dir_sz = g_op_tab[token->op_index].dir_sz;
+}
+
 void	aff_token(t_asm *env, t_token *token)
 {
 	if (token->type == OP || token->type == LABEL)
@@ -82,23 +88,15 @@ int		check_end_syntax(t_asm *env, t_token *token)
 	if (env->syntax_state == 40 && !token)
 	{
 		if ((label = check_labels(env)))
-		{
-			//ERROR UNDECLARED LABEL
-			printf("MENTION OF AN UNDECLARED LABEL at %d:%d\n", label->row, label->col);
-			return (-1);
-		}
+			return (get_error(env, label->from));
 		else
 		{
-			printf("PARSING OK\n");
+			printf(GRN"PARSING OK\n"RESET);
 			return (0);
 		}
 	}
 	else
-	{
-		printf("ERROR\n");
-		return (-1);
-		// return (get_error(env, token));
-	}
+		return (get_error(env, token));
 }
 
 int		check_token(t_asm *env)
@@ -111,22 +109,20 @@ int		check_token(t_asm *env)
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
-		aff_token(env, token);
+		// aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
-		if (env->syntax_state != -1 && token->type == LABEL)
-			save_label(&env->tok_lab, token);
-		else if (env->syntax_state != -1
-		&& (token->type == IND_LABEL || token->type == DIRECT_LABEL))
+		if (env->syntax_state == 5)
+			env->f_header = 1;
+		if (env->syntax_state == -1)
+			return(get_error(env, token));
+		else if (token->type == LABEL)
+			save_label(&env->labels, token);
+		else if ((token->type == IND_LABEL || token->type == DIRECT_LABEL))
 			save_label(&env->mentions, token);
 		if (env->syntax_state == 10)
 		{
 			if (token->op_index == -1)
-			{
-				//ERROR SYNTAX OF OPERATION
-				// get_error(env, token);
-				printf("%s:%d:%d: Wrong syntax for operation\n", env->file, token->row, token->col + 1);
-				return (0);
-			}
+				return (get_error(env, token));
 			printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
 		}
