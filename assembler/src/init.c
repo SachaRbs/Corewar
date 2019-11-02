@@ -25,6 +25,7 @@ t_asm	*init_struct(int fd)
 	p->comment = NULL;
 	p->f_header = 0;
 	p->str = ft_strnew(1);
+	p->exec_sz = 0;
 	p->byte_pos = 0;
 	p->row = 1;
 	p->col = 1;

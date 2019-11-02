@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 18:51:46 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/02 16:32:31 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	parse(t_asm *p)
     	p->row++;
 		ft_strdel(&line);
 	}
-	print_token(p->tokens);
+	// print_token(p->tokens);
 	if (check_token(p) == -1)
 		exit(1);
 }

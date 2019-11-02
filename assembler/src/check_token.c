@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/10/31 11:37:21 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/02 17:11:51 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		check_token(t_asm *env)
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
-		aff_token(env, token);
+		// aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 5)
 			env->f_header = 1;
@@ -119,13 +119,10 @@ int		check_token(t_asm *env)
 			save_label(&env->labels, token);
 		else if ((token->type == IND_LABEL || token->type == DIRECT_LABEL))
 			save_label(&env->mentions, token);
-		if (env->syntax_state == 10)
-		{
-			if (token->op_index == -1)
-				return (get_error(env, token));
-			// printf("token [%s] going to state %d = operation [%s]\n", token->str, g_op_tab[token->op_index].syntactic_index, g_op_tab[token->op_index].name);
+		if (env->syntax_state == 10 && token->op_index == -1)
+			return (get_error(env, token));
+		else if (env->syntax_state == 10)
 			env->syntax_state = g_op_tab[token->op_index].syntactic_index;
-		}
 		token = token->next;
 	}
 	return (check_end_syntax(env, token));

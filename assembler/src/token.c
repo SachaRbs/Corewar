@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 17:31:05 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/02 14:48:15 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ t_token     *init_token(t_asm *p, t_type type)
 		token->str = ft_strdup("\\n");
 	token->op_index = -1;
 	token->dir_sz = 0;
+	token->exec_sz = 0;
+	token->byte_pos = 0;
+	token->byte_sz = 0;
     token->row = p->row;
     token->col = p->col;
     token->next = NULL;

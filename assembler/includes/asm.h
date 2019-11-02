@@ -56,6 +56,7 @@ typedef	struct		s_asm
 	char			*comment;
 	int				f_header;
 	char			*str;
+	int				exec_sz;
 	int				byte_pos;
 	int				row;
 	int				col;
@@ -115,8 +116,9 @@ typedef struct		s_token
 	int				dir_sz;
 	int				row;
 	int				col;
-	int				byte_pos;
-	int				byte_sz;
+	unsigned int	byte_pos;
+	unsigned int	byte_sz;
+	unsigned int	exec_sz;
 	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
@@ -223,6 +225,9 @@ void				save_label(t_label **to, t_token *token);
 t_label				*check_labels(t_asm *env);
 
 void				write_to_file(t_asm *p);
+void				write_byte(char *byte, int pos, int value, size_t size);
+void				get_exec_sz(t_asm *p);
+char				*write_exec(t_asm *p);
 
 /*
 ***		error management

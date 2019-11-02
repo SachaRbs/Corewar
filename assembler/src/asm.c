@@ -4,7 +4,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 18:23:36 by anonymous         #+#    #+#             */
+/*   Created: 2019/09/09 18:23:36 by yoribeir          #+#    #+#             */
 /*   Updated: 2019/09/18 14:51:35 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -18,13 +18,13 @@ char	*check_filename(char *file)
 	char	*tmp;
 
 	tmp = file;
-	if ((tmp = ft_strrchr(tmp, '/')))
-		file = tmp + 1;
+	// if ((tmp = ft_strrchr(tmp, '/')))
+		// file = tmp + 1;
 	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
-	filename = ft_strnew(dot - file + 4);
+	filename = ft_strnew(ft_strlen(file) + 2);
 	ft_strncpy(filename, file, (dot - file + 1));
 	ft_strncpy(ft_strchr(filename, '.') + 1, "cor", 3);
 	return (filename);
@@ -70,8 +70,8 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	parse(p);
+	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+		return (0);
+	write_to_file(p);
 	free_asm(p);
-	// if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-	// 		return (0);
-	// write_to_file(p);
 }

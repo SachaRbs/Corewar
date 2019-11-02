@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    dependancies_assembler_object.mk                   :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
+#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/04 14:36:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/30 17:37:04 by yoribeir         ###   ########.fr        #
+#    Updated: 2019/11/02 14:42:28 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 asm.o: asm.h
+bytes.o: asm.h
 check_token.o: asm.h
 check_labels.o: asm.h
 error_lexer.o: asm.h
