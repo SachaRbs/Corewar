@@ -6,11 +6,20 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/11/02 16:07:26 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:19:38 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
+
+/*
+***		LABEL BYTE POS
+*/
+
+// void	get_label_pos(t_asm *p)
+// {
+// 	t_label 
+// }
 
 void	print_label_lists(t_asm *env)
 {
@@ -49,6 +58,7 @@ void	save_label(t_label **to, t_token *token)
 	new->name = ft_strdup(token->str);
 	new->col = token->col;
 	new->row = token->row;
+	new->byte_pos = 0;
 	new->from = token;
 	new->next = NULL;
 	if (!(*to))
@@ -82,6 +92,7 @@ t_label		*check_labels(t_asm *env)
 			if (!ft_strcmp(mentions->name, labels->name))
 			{
 				check = 1;
+				mentions->from->value = labels->from->byte_pos - mentions->from->byte_pos;
 				break ;
 			}
 			labels = labels->next;

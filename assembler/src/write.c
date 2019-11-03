@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/02 17:49:19 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:49:26 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,15 @@ void		write_to_file(t_asm *p)
 	char	*header;
 	char	*exec;
 
+	header = NULL;
+	exec = NULL;
 	printf(BOLDWHITE"Wrote output program to %s\n"RESET, p->filename);
-	get_exec_sz(p);
-	if (p->exec_sz > 682)
-		exit(1);
+	// get_exec_sz(p);
+	// if (p->exec_sz > 682)
+	// {
+		// printf("EXEC SIZE TOO BIG\n");
+		// exit(1);
+	// }
 	header = write_header(p);
 	exec = write_exec(p);
 	write(p->fd, header, SIZE);

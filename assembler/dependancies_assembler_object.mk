@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/04 14:36:43 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/02 14:42:28 by epham            ###   ########.fr        #
+#    Updated: 2019/11/03 21:29:17 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ check_labels.o: asm.h
 error_lexer.o: asm.h
 error_parser.o: asm.h
 init.o: asm.h
+ocp.o: asm.h
 op.o: asm.h
 parse.o: asm.h
 parse_header.o: asm.h

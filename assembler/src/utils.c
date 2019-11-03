@@ -12,7 +12,7 @@
 
 #include "../includes/asm.h"
 
-int		is_reg(char *line)
+int		is_reg(char *line, t_asm *p)
 {
 	int		i;
 	int		reg;
@@ -21,8 +21,14 @@ int		is_reg(char *line)
 	if (line[i++] == 'r')
 	{
 		reg = ft_atoi(line + i);
-		if (reg <= REG_NUMBER && reg > 0)
+		if (reg <= __INT_MAX__ && reg > 0)
 			return (1);
+		else
+		{
+			print_error(p);
+			ft_error("Register value is out of bounds");
+			free_asm(p);
+		}
 	}
 	return (0);
 }

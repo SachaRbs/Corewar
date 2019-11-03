@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/11/02 17:11:51 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/03 22:26:24 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
 
-void	fill_optoken(t_token *token)
-{
-	token->op_index = is_instruction(token->str);
-	token->dir_sz = g_op_tab[token->op_index].dir_sz;
-}
-
 void	aff_token(t_asm *env, t_token *token)
 {
 	if (token->type == OP || token->type == LABEL)
@@ -73,7 +67,6 @@ void	aff_token(t_asm *env, t_token *token)
 	ft_printf("|%10s %-12d |\n", "Row", token->row);
 	ft_printf("|%10s %-12d |\n", "Col", token->col);
 	ft_printf("|%10s %-12d |\n", "Op ind", token->op_index);
-	ft_printf("|%10s %-12d |\n", "Dir sz", token->dir_sz);
 	ft_printf("|________________________|\n");
 }
 
@@ -87,6 +80,7 @@ int		check_end_syntax(t_asm *env, t_token *token)
 		env->syntax_state = g_syntactic_tab[env->syntax_state][11];
 	if (env->syntax_state == 40 && !token)
 	{
+		get_exec_sz(env);
 		if ((label = check_labels(env)))
 			return (get_error(env, label->from));
 		else

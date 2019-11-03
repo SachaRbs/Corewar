@@ -22,6 +22,7 @@ char	*check_filename(char *file)
 		// file = tmp + 1;
 	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
+	// ft_putendl(dot);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
 	filename = ft_strnew(ft_strlen(file) + 2);
@@ -71,7 +72,10 @@ int		main(int argc, char **argv)
 	}
 	parse(p);
 	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	{
+		printf("WRONG CREATIONG FILE\n");
 		return (0);
+	}
 	write_to_file(p);
 	free_asm(p);
 }

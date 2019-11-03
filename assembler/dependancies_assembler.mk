@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/02 14:44:06 by epham            ###   ########.fr        #
+#    Updated: 2019/11/03 21:29:05 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,9 @@ SRC_ASSEMBLER 				=	asm.c					\
 								error_parser.c			\
 								free.c					\
 								init.c					\
+								ocp.c					\
 								op.c					\
-								parse.c				\
+								parse.c					\
 								parse_header.c			\
 								parse_instructions.c	\
 								token.c					\

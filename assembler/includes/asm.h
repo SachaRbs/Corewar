@@ -113,9 +113,10 @@ typedef struct		s_token
 	char			*str;
 	enum e_type		type;
 	int				op_index;
-	int				dir_sz;
+	int				ocp;
 	int				row;
 	int				col;
+	int				value;
 	unsigned int	byte_pos;
 	unsigned int	byte_sz;
 	unsigned int	exec_sz;
@@ -143,6 +144,7 @@ typedef struct		s_inst
 typedef	struct 		s_label
 {
 	char			*name;
+	int				byte_pos;
 	int				row;
 	int				col;
 	struct s_token	*from;
@@ -196,6 +198,7 @@ t_asm				*init_struct(int fd);
 ** error
 */
 
+void				print_error(t_asm *p);
 int					ft_error(char *str);
 int					ft_lexerror(t_asm *p);
 
@@ -203,7 +206,7 @@ int					ft_lexerror(t_asm *p);
 ** utils
 */
 
-int					is_reg(char *line);
+int					is_reg(char *line, t_asm *p);
 int 				is_whitespace(int c);
 int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
@@ -214,7 +217,6 @@ void				skip_comment(t_asm *p, char *line);
 */
 
 int					check_token(t_asm *env);
-void				fill_optoken(t_token *token);
 
 /*
 ***		check labels
@@ -224,10 +226,18 @@ void				print_label_lists(t_asm *env);
 void				save_label(t_label **to, t_token *token);
 t_label				*check_labels(t_asm *env);
 
+/*
+***		ENCODING
+*/
+
 void				write_to_file(t_asm *p);
 void				write_byte(char *byte, int pos, int value, size_t size);
 void				get_exec_sz(t_asm *p);
 char				*write_exec(t_asm *p);
+void				get_ocp(t_token **token);
+int					ocp_2_args(t_token *token);
+int					ocp_3_args(t_token *token);
+
 
 /*
 ***		error management

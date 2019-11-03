@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/02 16:32:31 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:50:56 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
 		if (*new->str == '.')
 			parse_header(p, new, line);
 		if (new->type == INDEX)
-			new->type = is_reg(new->str) ? REGISTER : OP;
+			new->type = is_reg(new->str, p) ? REGISTER : OP;
 		if (new->type == OP)
-			fill_optoken(new);
+			new->op_index = is_instruction(new->str);
 		add_token(&p->tokens, new);
 	}
 	else
