@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_vm.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/31 16:50:05 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   init_vm.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 17:53:09 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "error.h"
 
@@ -41,6 +41,8 @@ void	parsing(t_vm *vm, int ac, char **av)
 			}
 			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
 				vm->dump = ft_atoi(av[i]);
+			else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
+				vm->v = ft_atoi(av[i]);
 			else
 				ft_exit(vm, MAUVAISE_OPTION);
 		}
@@ -165,6 +167,7 @@ void	set_values_vm(t_vm *vm)
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
 	while(++i < MAX_PLAYERS)
 		vm->contestants[i] = NULL;
+	vm->v = 0;
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
