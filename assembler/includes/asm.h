@@ -3,39 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 18:24:03 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/09/17 17:05:29 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 13:09:05 by epham             #+#    #+#             */
+/*   Updated: 2019/11/04 13:21:02 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
-#include "../../includes/op.h"
-#include "../../libft/includes/libft.h"
-#include <stdio.h>
+# include "../../includes/op.h"
+# include "../../libft/includes/libft.h"
 
-#define RED "\x1B[31m"
-#define GRN "\x1B[32m"
-#define YEL "\x1B[33m"
-#define BLU "\x1B[34m"
-#define MAG "\x1B[35m"
-#define CYN "\x1B[36m"
-#define WHT "\x1B[37m"
-#define RESET "\x1B[0m"
-#define BOLDBLACK   "\033[1m\033[30m"
-#define BOLDRED     "\033[1m\033[31m"
-#define BOLDGREEN   "\033[1m\033[32m"
-#define BOLDYELLOW  "\033[1m\033[33m"
-#define BOLDBLUE    "\033[1m\033[34m"
-#define BOLDMAGENTA "\033[1m\033[35m"
-#define BOLDCYAN    "\033[1m\033[36m"
-#define BOLDWHITE   "\033[1m\033[37m"
+# define RED			"\x1B[31m"
+# define GRN			"\x1B[32m"
+# define YEL			"\x1B[33m"
+# define BLU			"\x1B[34m"
+# define MAG			"\x1B[35m"
+# define CYN			"\x1B[36m"
+# define WHT			"\x1B[37m"
+# define RESET			"\x1B[0m"
+# define BOLDBLACK		"\033[1m\033[30m"
+# define BOLDRED		"\033[1m\033[31m"
+# define BOLDGREEN		"\033[1m\033[32m"
+# define BOLDYELLOW		"\033[1m\033[33m"
+# define BOLDBLUE		"\033[1m\033[34m"
+# define BOLDMAGENTA	"\033[1m\033[35m"
+# define BOLDCYAN		"\033[1m\033[36m"
+# define BOLDWHITE		"\033[1m\033[37m"
 
-#define SIZE 2192
-
+# define SIZE 2192
 
 /*
 ***		GLOBAL VARIABLES
@@ -90,7 +88,7 @@ typedef enum		e_type
 ***		TYPES AS STRINGS FOR DEBUGGING
 */
 
-static const char *typestab[11] =
+static const char *g_typestab[11] =
 {
 	"NAME",
 	"COMMENT",
@@ -131,18 +129,18 @@ typedef struct		s_token
 
 typedef struct		s_inst
 {
-	int 			dir_size;
-	int 			ocp;
-	unsigned int 	wr_size;
-	int 			oct;
-	unsigned int 	param[3];
+	int				dir_size;
+	int				ocp;
+	unsigned int	wr_size;
+	int				oct;
+	unsigned int	param[3];
 }					t_inst;
 
 /*
 ***		LABELS
 */
 
-typedef	struct 		s_label
+typedef	struct		s_label
 {
 	char			*name;
 	int				byte_pos;
@@ -152,80 +150,56 @@ typedef	struct 		s_label
 	struct s_label	*next;
 }					t_label;
 
-int 				ft_readline(int fd, char **str, char **line);
+t_asm				*init_struct(int fd);
 
 /*
-** parser
+**		PARSING
 */
 
+int					ft_readline(int fd, char **str, char **line);
 void				parse(t_asm *p);
-void				parse_symbol(t_asm *p, t_token *new, char **line, int start);
+void				parse_symbol(t_asm *p, t_token *new, char **l, int start);
+void				parse_header(t_asm *p, t_token *newnode, char **line);
 
 /*
-** token
+**		TOKEN MANAGEMENT
 */
 
-t_token     		*init_token(t_asm *p, t_type type);
+t_token				*init_token(t_asm *p, t_type type);
 void				add_token(t_token **head, t_token *newnode);
+int					check_token(t_asm *env);
 void				print_token(t_token *head);
 void				free_tokens(t_token *head);
 
 /*
-** header
+**		LABEL MANAGEMENT
 */
 
-void				parse_header(t_asm *p, t_token *newnode, char **line);
+void				print_labels(t_label *head);
+t_label				*add_label(t_asm *p, char *str);
+void				print_label_lists(t_asm *env);
+void				save_label(t_label **to, t_token *token);
+t_label				*check_labels(t_asm *env);
 
 /*
-** label
-*/
-
-void 				print_labels(t_label *head);
-t_label 			*add_label(t_asm *p, char *str);
-
-/*
-***	instructions
+***		UTILS
 */
 
 int					is_instruction(char *line);
-
-/*
-** init
-*/
-
-t_asm				*init_struct(int fd);
-
-/*
-** error
-*/
-
-void				print_error(t_asm *p);
-int					ft_error(char *str);
-int					ft_lexerror(t_asm *p);
-
-/*
-** utils
-*/
-
 int					is_reg(char *line, t_asm *p);
-int 				is_whitespace(int c);
+int					is_whitespace(int c);
 int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
 void				skip_comment(t_asm *p, char *line);
 
 /*
-***		check tokens
+**		ERROR
 */
 
-int					check_token(t_asm *env);
-
-/*
-***		check labels
-*/
-
-void				print_label_lists(t_asm *env);
-void				save_label(t_label **to, t_token *token);
-t_label				*check_labels(t_asm *env);
+int					get_error(t_asm *env, t_token *token);
+void				print_error(t_asm *p);
+int					ft_error(char *str);
+int					ft_lexerror(t_asm *p);
 
 /*
 ***		ENCODING
@@ -239,13 +213,6 @@ char				*write_exec(t_asm *p);
 void				get_ocp(t_token **token);
 int					ocp_2_args(t_token *token);
 int					ocp_3_args(t_token *token);
-
-
-/*
-***		error management
-*/
-
-int					get_error(t_asm *env, t_token *token);
 
 /*
 ***		FREE
