@@ -6,7 +6,7 @@
 #    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:41:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/04 17:48:05 by yoribeir         ###   ########.fr        #
+#    Updated: 2019/11/04 18:47:25 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,3 +100,4 @@ ft_wstrlen.o: libft.h
 ft_nblen.o: libft.h
 ft_nbrlen.o: libft.h
 ft_strjoinfree.o: libft.h
+ft_strjoindel.o: libft.h
