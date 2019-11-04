@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 18:16:31 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:28:38 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		is_reg(t_asm *p, char *line)
 		if (reg <= 16 && reg > 0)
 			return (1);
 		else
-			lexical_error(p);
+			lexical_error(p, 6);
 	}
 	return (0);
 }

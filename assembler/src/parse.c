@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:08:33 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 18:16:01 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:35:29 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parse_content(t_asm *p, t_token *token, int start, size_t len)
 		if (size != ft_nbrlen(token->value)
 		|| token->value > UINT_MAX
 		|| token->value < INT_MIN)
-			lexical_error(p);
+			lexical_error(p, 1);
 	}
 	else
 		token->str = ft_strsub(p->line, start, len);
@@ -55,7 +55,7 @@ void	parse_digits(t_asm *p, t_token *new, int start)
 		parse_symbol(p, new, start);
 	}
 	else
-		lexical_error(p);
+		lexical_error(p, 2);
 }
 
 void	parse_symbol(t_asm *p, t_token *new, int start)
@@ -83,7 +83,7 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 		add_token(&p->tokens, new);
 	}
 	else
-		lexical_error(p);
+		lexical_error(p, 2);
 }
 
 void	parse_token(t_asm *p)
@@ -122,6 +122,4 @@ void	parse(t_asm *p)
 		p->row++;
 		ft_strdel(&p->line);
 	}
-	if (check_token(p) == -1)
-		exit(1);
 }

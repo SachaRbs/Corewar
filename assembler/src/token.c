@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 16:01:36 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 18:45:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ t_token		*init_token(t_asm *p, t_type type)
 		ft_error("TOKEN MALLOC");
 	token->str = NULL;
 	token->type = type;
-	// if (token->type == SEPARATOR)
-	// 	token->str = ft_strdup(",");
-	// if (token->type == NEWLINE)
-	// 	token->str = ft_strdup("\\n");
 	token->value = 0;
 	token->ocp = 0;
 	token->op_index = -1;

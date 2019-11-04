@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 17:50:35 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:42:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ int		main(int argc, char **argv)
 		ft_error("file error");
 	p = init_struct(fd, filename, argv[1]);
 	parse(p);
-	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	if (check_token(p) == -1)
+		ft_error("token error");
+	if ((p->fd = create_file(filename)) == -1)
 		ft_error("file creation error");
 	write_to_file(p);
 	free_asm(p);
