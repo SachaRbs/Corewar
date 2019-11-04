@@ -1,11 +1,12 @@
-
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   asm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 18:23:36 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/09/18 14:51:35 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
+/*   Updated: 2019/11/04 12:01:30 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +23,6 @@ char	*check_filename(char *file)
 		// file = tmp + 1;
 	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
-	// ft_putendl(dot);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
 	filename = ft_strnew(ft_strlen(file) + 2);
@@ -35,8 +35,10 @@ int		ft_readline(int fd, char **str, char **line)
 {
 	char	buffer[BUFF_SIZE + 1];
 	char	*ptr;
+	char	*tmp;
 	ssize_t sz;
 
+	tmp = *str;
 	while (!ft_strchr(*str, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
 		if (!(*str = ft_strnjoin(*str, buffer, sz)))
 			return (-1);

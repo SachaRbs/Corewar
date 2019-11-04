@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/11/03 22:26:24 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 12:05:54 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int		check_end_syntax(t_asm *env, t_token *token)
 	t_label	*label;
 
 	label = NULL;
-	// EOF
 	if (!token)
 		env->syntax_state = g_syntactic_tab[env->syntax_state][11];
 	if (env->syntax_state == 40 && !token)
@@ -84,10 +83,7 @@ int		check_end_syntax(t_asm *env, t_token *token)
 		if ((label = check_labels(env)))
 			return (get_error(env, label->from));
 		else
-		{
-			printf("PARSING OK\n");
 			return (0);
-		}
 	}
 	else
 		return (get_error(env, token));
@@ -103,12 +99,11 @@ int		check_token(t_asm *env)
 	while (token
 	&& env->syntax_state != -1 && env->syntax_state != 40)
 	{
-		// aff_token(env, token);
 		env->syntax_state = g_syntactic_tab[env->syntax_state][token->type];
 		if (env->syntax_state == 5)
 			env->f_header = 1;
 		if (env->syntax_state == -1)
-			return(get_error(env, token));
+			return (get_error(env, token));
 		else if (token->type == LABEL)
 			save_label(&env->labels, token);
 		else if ((token->type == IND_LABEL || token->type == DIRECT_LABEL))

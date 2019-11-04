@@ -34,7 +34,8 @@
 #define BOLDCYAN    "\033[1m\033[36m"
 #define BOLDWHITE   "\033[1m\033[37m"
 
-#define SPACE " \f\r\t\v"
+#define SIZE 2192
+
 
 /*
 ***		GLOBAL VARIABLES
@@ -230,6 +231,7 @@ t_label				*check_labels(t_asm *env);
 ***		ENCODING
 */
 
+char				*write_header(t_asm *p);
 void				write_to_file(t_asm *p);
 void				write_byte(char *byte, int pos, int value, size_t size);
 void				get_exec_sz(t_asm *p);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:35:52 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/30 17:36:11 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 12:15:49 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int		ft_error(char *str)
 
 void	print_error(t_asm *p)
 {
-	printf(BOLDWHITE"%s: ", p->file);
-	printf(BOLDRED"LEXICAL ERROR"RESET);
-	printf(BOLDWHITE" at [%d:%d]\n", p->row, p->col);
+	ft_printf(BOLDWHITE"%s: ", p->file);
+	ft_printf(BOLDRED"LEXICAL ERROR"RESET);
+	ft_printf(BOLDWHITE" at [%d:%d]\n"RESET, p->row, p->col);
 }
 
 int		ft_lexerror(t_asm *p)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/28 17:24:50 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 12:26:21 by epham             #+#    #+#             */
+/*   Updated: 2019/11/04 12:26:23 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ int		is_reg(char *line, t_asm *p)
 	if (line[i++] == 'r')
 	{
 		reg = ft_atoi(line + i);
-		if (reg <= __INT_MAX__ && reg > 0)
+		if (reg <= 16 && reg > 0)
 			return (1);
 		else
 		{
 			print_error(p);
 			ft_error("Register value is out of bounds");
 			free_asm(p);
+			exit(1);
 		}
 	}
 	return (0);

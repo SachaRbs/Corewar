@@ -6,13 +6,13 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/03 23:50:56 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 12:23:48 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-#define STR (*line + p->col)
+// #define STR (*line + p->col)
 
 void	parse_content(t_token *token, char *line, int start, size_t len)
 {
@@ -44,7 +44,6 @@ void	parse_digits(t_asm *p, t_token *new, char **line, int start)
 	}
 	else
 		ft_lexerror(p);
-
 }
 
 void	parse_symbol(t_asm *p, t_token *new, char **line, int start)
@@ -95,24 +94,23 @@ void	parse_token(t_asm *p, char **line)
 		parse_symbol(p, init_token(p, IND_LABEL), line, p->col++);
 	else
 		parse_digits(p, init_token(p, INDEX), line, p->col);
-
 }
 
 void	parse(t_asm *p)
 {
-	char 			*line;
+	char	*line;
 
 	while ((ft_readline(p->fd, &p->str, &line) > 0))
 	{
 		p->col = 0;
-		while(line[p->col])
+		while (line[p->col])
 		{
 			skip_whitespaces(p, line);
 			skip_comment(p, line);
 			if (line[p->col])
 				parse_token(p, &line);
 		}
-    	p->row++;
+		p->row++;
 		ft_strdel(&line);
 	}
 	// print_token(p->tokens);

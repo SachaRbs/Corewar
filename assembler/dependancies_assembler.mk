@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/03 21:29:05 by epham            ###   ########.fr        #
+#    Updated: 2019/11/04 11:57:27 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,21 +25,21 @@ L_ASSEMBLER_DIR				:=	assembler
 NAME_ASSEMBLER				:=	asm
 
 SRC_ASSEMBLER 				=	asm.c					\
-								bytes.c					\
 								check_token.c			\
 								check_labels.c			\
+								encode.c				\
 								error_lexer.c			\
 								error_parser.c			\
 								free.c					\
 								init.c					\
-								ocp.c					\
+								get_ocp.c				\
 								op.c					\
 								parse.c					\
 								parse_header.c			\
 								parse_instructions.c	\
 								token.c					\
 								utils.c					\
-								write.c
+								write.c					\
 
 INC_ASSEMBLER					:=	asm.h
 
