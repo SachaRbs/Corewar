@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_xor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 20:32:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/16 19:01:59 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:56:57 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 void	*ft_xor(t_vm *vm, t_proc *proc)
 {
 	proc->reg[proc->arg_v[2]] = argument(vm, proc, 0) ^ argument(vm, proc, 1);
+	proc->carry = proc->reg[proc->arg_v[2]] == 0 ? 1 : 0;
 	return (NULL);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 20:29:25 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/17 15:34:03 by sarobber         ###   ########.fr       */
+/*   Created: 2019/10/29 14:47:53 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/31 16:52:45 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	*ft_fork(t_vm *vm, t_proc *proc)
 {
-	t_proc *newproc;
-	int i;
+	int			i;
+	t_proc		*newproc;
 
 	i = -1;
 	if ((newproc = (t_proc*)ft_memalloc(sizeof(t_proc))) == NULL)
@@ -25,10 +25,11 @@ void	*ft_fork(t_vm *vm, t_proc *proc)
 	while (++i < REG_NUMBER)
 		newproc->reg[i] = proc->reg[i];
 	newproc->carry = proc->carry;
+	newproc->cycle = vm->cycle;
 	newproc->cycle_live = proc->cycle_live;
-	newproc->pc = proc->arg_a[0] % IDX_MOD;
+	newproc->pc = mod_address(proc->pc + (proc->arg_v[0] % IDX_MOD));
 	newproc->pnu = proc->pnu;
+	newproc->procnum = vm->procct;
 	pushfront_proc(&vm->proc, newproc);
-	// pushfront_proc(&vm->first_proc, newproc);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 15:39:31 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/31 16:50:05 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	parsing(t_vm *vm, int ac, char **av)
 					ft_exit(vm, INVALID_INPUT);
 				vm->play_free[vm->pnum[vm->pct]] = 1;
 			}
-			else if (av[i][1] == 'd')
+			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
 				vm->dump = ft_atoi(av[i]);
 			else
 				ft_exit(vm, MAUVAISE_OPTION);
@@ -64,6 +64,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 {
 	header_t	*h;
 	int			rd;
+	int32_t		out;
 
 	(void)name;
 	if (!(h = ft_memalloc(sizeof(header_t))))
@@ -78,7 +79,12 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	return (reverser_32(h->prog_size));
+	vm->contestants[current->pnu] = h->prog_name;
+	out = reverser_32(h->prog_size);
+	free(h);
+	h = NULL;
+	return (out);
+	// return (reverser_32(h->prog_size));
 }
 
 int		find_playernum(t_vm *vm)
@@ -103,17 +109,14 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 {
 	int				i;
 	unsigned char	prog[CHAMP_MAX_SIZE];
+
 	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
 		ft_exit(vm, READ_PROCESUS);
-	// verifier
-	// i = MEM_SIZE / vm->pct + ((int)current->pc >= MEM_SIZE / vm->pct);
-	// while (i--)
-	// 	vm->mem[current->pc - i] = i >= vm->sizes[pn] ? 0 : prog[i];
 	i = -1;
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
 	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[0] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
+	current->reg[1] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
 }
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)
@@ -125,7 +128,8 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		ft_exit(vm, FAIL_ON_READ);
 	current->carry = FALSE;
 	current->cycle = 0;
-	// current->pc = MEM_SIZE - 1 - (pn * MEM_SIZE / vm->pct);
+	current->procnum = !vm->proc ? 1 : find_procnum(vm);
+	vm->procct = current->procnum;
 	current->pc = pn * (MEM_SIZE / vm->pct);
 	if (vm->pnum[pn] == -1)
 		current->pnu = find_playernum(vm);
@@ -134,14 +138,40 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 	load_proc(vm, fd, current, pn);
 }
 
-void	print_memory(unsigned char *mem)
+int		find_player_alive(t_vm *vm)
+{
+	int max;
+	t_proc *current;
+
+	current = vm->proc;
+	max = -1;
+	while(current)
+	{
+		if (current->pnu > max)
+			max = current->pnu;
+		current = current->next;
+	}
+	return(max);
+}
+
+void	set_values_vm(t_vm *vm)
 {
 	int i;
-
 	i = -1;
-	while (++i < MEM_SIZE)
-		printf("%02hhx ", mem[i]);
-	printf("\n");
+	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
+	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
+	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
+	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
+	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
+	while(++i < MAX_PLAYERS)
+		vm->contestants[i] = NULL;
+	vm->dump = -1;
+	vm->pct = 0;
+	vm->cycle_to_die = CYCLE_TO_DIE;
+	vm->next_check = vm->cycle_to_die;
+	vm->cycle = 0;
+	vm->check = 0;
+	vm->nbr_live = 0;
 }
 
 int		initialize(t_vm *vm, int ac, char **av)
@@ -150,16 +180,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	t_proc	*proc;
 
 	i = -1;
-	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
-	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
-	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
-	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
-	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
-	vm->dump = -1;
-	vm->pct = 0;
-	vm->cycle_to_die = CYCLE_TO_DIE;
-	vm->cycle = 0;
-	vm->check = 0;
+	set_values_vm(vm);
 	if (ac > 1)
 		parsing(vm, ac, av);
 	else
@@ -173,6 +194,6 @@ int		initialize(t_vm *vm, int ac, char **av)
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
-	// print_memory(vm->mem);
+	vm->last_alive = find_player_alive(vm);
 	return (0);
 }

@@ -3,46 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:58 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/14 11:13:38 by crfernan         ###   ########.fr       */
+/*   Created: 2018/12/11 16:10:34 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/04 12:37:12 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
 
-int		count_len_str(const char *format, int j)
+void	init_parser(t_parser *p)
 {
-	while (format[j] != '%' && format[j] != '{' && format[j] != '\0')
-		j++;
-	return (j);
+	p->width = 0;
+	p->precision = 0;
+	p->f = 0;
+	p->base = 0;
+	p->slen = 0;
+	p->s = NULL;
+}
+
+void	apply_spec_flags(t_parser *p, char c)
+{
+	if (c != 'i' && c != 'd')
+		p->f &= ~(PLUS | SPACE);
+	if (p->f & PRECISION)
+		p->f &= ~ZERO_FILL;
+	if (p->base == 10)
+		p->f &= ~PREFIX;
+	if (p->f & ZEROVALUE)
+		p->f &= ~PREFIX;
+	if (c == 'x' || c == 'X' || c == 'u' || c == 'o' || c == 'b')
+		p->f |= UNSIGNED;
+	if (p->f & PRECISION && !p->precision)
+		p->f |= ZEROPREC;
+}
+
+int		parser(t_parser *p, char **format)
+{
+	init_parser(p);
+	parse_flags(p, format);
+	parse_width(p, format);
+	parse_precision(p, format);
+	parse_length(p, format);
+	p->format = **format;
+	if (p->format == 'O' || p->format == 'U' || p->format == 'D'
+		|| p->format == 'F')
+	{
+		if (p->format == 'U')
+			p->f |= UMAJ;
+		p->format += 32;
+	}
+	p->base = get_base(p, p->format);
+	p->prefix = get_prefix(p, p->format);
+	apply_spec_flags(p, p->format);
+	if (p->f & FLAGS_L && (p->format == 'c' || p->format == 's'))
+		p->format -= 32;
+	return (0);
+}
+
+int		process(va_list args, const char *format)
+{
+	int			ret;
+	t_parser	*p;
+	t_jumptable	jt;
+
+	p = malloc(sizeof(t_parser));
+	ret = 0;
+	while (*format != '\0')
+	{
+		if (*format == '%')
+		{
+			parser(p, (char **)&format);
+			jt = init_table(p->format);
+			if (jt)
+				ret += jt(p, args);
+			init_parser(p);
+		}
+		else
+		{
+			ft_putchar(*format);
+			ret++;
+		}
+		format++;
+	}
+	free(p);
+	return (ret);
 }
 
 int		ft_printf(const char *format, ...)
 {
-	unsigned int	i;
-	unsigned int	j;
-	va_list			ap;
-	char			*result;
-	t_specifier		specifier;
+	va_list		args;
+	int			ret;
 
-	result = ft_dupexit("");
-	g_res_len = 0;
-	va_start(ap, format);
-	j = 0;
-	ft_reset_specifier(&specifier, 0);
-	while (format[j] != '\0')
-	{
-		i = j;
-		ft_reset_specifier(&specifier, 1);
-		result = ft_strnjoin_printf(result, ft_dupexit(format + i),
-		g_res_len, (j = count_len_str(format, j)) - i);
-		g_res_len += j - i;
-		if (format[j] == '%' && get_specif(format + j + 1, &specifier, &j) == 0)
-			result = ft_get_argument(&ap, result, &specifier);
-		else if (format[j] == '{')
-			result = ft_set_color(result, format + j + 1, &j);
-	}
-	return (ft_final(result, &ap, &specifier));
+	va_start(args, format);
+	ret = process(args, format);
+	va_end(args);
+	return (ret);
 }

@@ -5,17 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 13:58:55 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 19:37:52 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 14:08:33 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/04 15:08:13 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 #include <limits.h>
 
-#define STR (p->line + p->col)
-
-unsigned int	ft_nblen(long n)
+unsigned int	ft_nbrlen(long n)
 {
 	unsigned int	count;
 
@@ -38,7 +36,7 @@ void	parse_content(t_asm *p, t_token *token, int start, size_t len)
 		str_len = ft_strlen(token->str);
 		token->value = ft_atol(p->line + start);
 		size = token->str[0] == '-' ? str_len - 1 : str_len;
-		if (size != ft_nblen(token->value)
+		if (size != ft_nbrlen(token->value)
 		|| token->value > UINT_MAX
 		|| token->value < INT_MIN)
 			ft_lexerror(p);
@@ -68,7 +66,6 @@ void	parse_digits(t_asm *p, t_token *new, int start)
 	}
 	else
 		ft_lexerror(p);
-
 }
 
 void	parse_symbol(t_asm *p, t_token *new, int start)
@@ -90,9 +87,9 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 		if (*new->str == '.')
 			parse_header(p, new);
 		if (new->type == INDEX)
-			new->type = is_reg(new->str) ? REGISTER : OP;
+			new->type = is_reg(p, new->str) ? REGISTER : OP;
 		if (new->type == OP)
-			fill_optoken(new);
+			new->op_index = is_instruction(new->str);
 		add_token(&p->tokens, new);
 	}
 	else
@@ -118,28 +115,25 @@ void	parse_token(t_asm *p)
 		parse_symbol(p, init_token(p, IND_LABEL), p->col++);
 	else
 		parse_digits(p, init_token(p, INDEX), p->col);
-
 }
 
 void	parse(t_asm *p)
 {
+
 	while ((ft_readline(p->fd, &p->str, &p->line) > 0))
 	{
 		p->col = 0;
-		while(p->line[p->col])
+		while (p->line[p->col])
 		{
 			skip_whitespaces(p, p->line);
 			skip_comment(p, p->line);
 			if (p->line[p->col])
 				parse_token(p);
 		}
-    	p->row++;
+		p->row++;
 		ft_strdel(&p->line);
 	}
-	ft_strdel(&p->line);
-	printf(GRN"%s\n"RESET, p->champ);
-	printf(GRN"%s\n"RESET, p->comment);
-	print_token(p->tokens);
+	// print_token(p->tokens);
 	if (check_token(p) == -1)
 		exit(1);
 }

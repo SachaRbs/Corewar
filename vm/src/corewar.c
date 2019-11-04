@@ -6,46 +6,31 @@
 /*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/17 18:04:05 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:06:57 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "operations.h"
+#include "op.h"
 
-unsigned int		big_endian(unsigned int num, int n)
+int		wrong_ocp(t_proc *proc, t_op op)
 {
-	if (n == 1)
-		return (num);
-	else if (n == 2)
-		return (reverser_16(num));
-	else if ( n == 4)
-		return (reverser_32(num));
-	return (-1);
+	int code;
+	int i;
+
+	i = -1;
+	proc->read = proc->pc + 2;
+	while (++i < op.nb_arg)
+	{
+		code = ((proc->arcode >> (6 - i * 2)) & 3);
+		if (code == REG_CODE)
+			proc->read += REG_SIZE;
+		else if (code == IND_CODE || code == DIR_CODE)
+			proc->read += (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
+	}
+	return (0);
 }
-
-unsigned int	get_instruction(t_vm *vm, int size, unsigned int *pc)
-{
-	int		val;
-
-	val = 0;
-	if (*pc + size < MEM_SIZE)
-		ft_memcpy(&val, &(vm->mem[*pc]), size);
-	else
-		val = -1;
-	*pc += size;
-	return (big_endian(val, size));
-}
-
-// int		check_arcode(int action, int arcode)
-// {
-// 	int code;
-	
-// 	while (++i < op.nb_arg)
-// 	{
-// 		code = ((proc->arcode >> (6 - i * 2)) & 3);
-// 	}
-// }
 
 int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 {
@@ -54,13 +39,11 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 	unsigned int	code;
 
 	i = -1;
-	proc->cycle += op.cycle;
-	proc->arcode = op.ocp ? get_instruction(vm, 1, &proc->read) : DIR_CODE << 6;
-	// if (check_arcode(proc->action, proc->arcode))
-	// 	return(0);
+	proc->arcode = op.ocp ? read_mem_and_move_pc(vm, proc->read, 1, proc) : DIR_CODE << 6;
+	vm->procct += (proc->action == 12 || proc->action == 15) ? 1 : 0;
 	while (++i < MAX_ARGS_NUMBER)
 	{
-		code = ((proc->arcode >> (6 - i * 2)) & 3); 
+		code = ((proc->arcode >> (6 - i * 2)) & 3);
 		if (i < op.nb_arg)
 		{
 			if (code == REG_CODE && op.args[i] & T_REG)
@@ -68,57 +51,18 @@ int		get_arg(t_vm *vm, t_proc *proc, t_op op)
 			else if ((code == IND_CODE && op.args[i] & T_IND) || (code == DIR_CODE && op.args[i] & T_DIR))
 				size = (code == IND_CODE || op.index) ? IND_SIZE : DIR_SIZE;
 			else
-				return (0);
+			{
+				proc->read -= size;
+				return (wrong_ocp(proc, op));
+			}
 			proc->arg_a[i] = proc->read;
 			proc->arg_t[i] = code;
-			proc->arg_v[i] = get_instruction(vm, size, &proc->read);
+			proc->arg_v[i] = read_mem_and_move_pc(vm, proc->read, size, proc);
 		}
 		else if (code != 0)
 			return (0);
 	}
-	// if ( code == 0)
-		return (1);
-	// return (0);
-}
-
-void	print_action(t_proc *proc)
-{
-	int	i;
-
-	i = 0;
-	printf("PLAYER No %d :\n", proc->pnu);
-	printf("action = %s\n", op_tab[proc->action].name);
-	while (i < 4){
-		printf("arg_v[%d] = %d\n",i, proc->arg_v[i]);
-		proc->arg_v[i] = 0;
-		i++;
-	}
-	printf("\n\n");
-}
-
-void	print_memory2(unsigned char *mem, t_proc *proc)
-{
-	int i;
-
-	i = -1;
-	while (++i < MEM_SIZE)
-	{
-		if (i == proc->pc)
-		{
-			printf("\e[36m%02hhx ", mem[i]);
-			// printf("%02hhx ", mem[i]);
-			printf("\e[0m");
-		}
-		else if (i > proc->pc && i < (int)proc->read)
-		{
-			printf("\e[32m%02hhx ", mem[i]);
-			printf("\e[0m");
-			// printf("%02hhx ", mem[i]);
-		}
-		else
-			printf("%02hhx ", mem[i]);
-	}
-	printf("\n");
+	return (1);
 }
 
 void	arg_to_zero(t_proc *proc)
@@ -135,35 +79,93 @@ void	arg_to_zero(t_proc *proc)
 	}
 }
 
+void		*check_live(t_vm *vm)
+{
+	t_proc *proc;
+	t_proc *tmp;
+
+
+	tmp = NULL;
+	proc = vm->proc;
+	if ((vm->nbr_live > NBR_LIVE || ++vm->check > MAX_CHECKS) && (vm->check = 1))
+	{
+		vm->cycle_to_die -= CYCLE_DELTA;
+		printf("Cycle to die is now %d\n", vm->cycle_to_die);
+	}
+	while (proc)
+	{
+		if (!proc->live)
+		{
+			if (tmp)
+				tmp->next = proc->next;
+			else
+				vm->proc = vm->proc->next;
+			free(proc);
+			proc = tmp ? tmp->next : vm->proc;
+		}
+		else if ((tmp = proc))
+		{
+			proc->live = 0;
+			proc = proc->next;
+		}
+	}
+	vm->nbr_live = 1;
+	vm->next_check = vm->cycle_to_die;
+	return(NULL);
+}
+
 void	run_corewar(t_vm *vm)
 {
-	t_proc	*proc;
+	t_proc			*proc;
 	t_operations	*operation;
+	int				operation_failed;
 
 	operation = fill_operations(vm);
-	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle)
+	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle
+	// && printf("It is now cycle %d\n", vm->cycle)
+	&& (proc = vm->proc))
+	// && (proc = --vm->next_check <= 0 ? check_live(vm) : vm->proc))
 	{
-		proc = vm->proc;
+		printf("It is now cycle %d\n", vm->cycle);
 		while (proc && proc->pnu)
 		{
 			if (vm->cycle == proc->cycle)
 			{
-				operation->op[proc->action - 1](vm, proc);
-				print_memory2(vm->mem, proc);
-				getchar();
+				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
+					operation->op[proc->action - 1](vm, proc);
+				print_action(proc, vm, operation_failed);
+				if (vm->dump == -1)
+				{
+					// print_memory(vm->mem, proc, 0);
+					// getchar();
+				}
 				proc->pc = proc->read;
 				arg_to_zero(proc);
 			}
 			else if (proc->cycle < vm->cycle)
 			{
 				proc->read = proc->pc;
-				proc->action = get_instruction(vm, 1, &proc->read);
-				if (!(proc->action > 0 && proc->action <= NBR_OP
-				&& get_arg(vm, proc, op_tab[proc->action])))
+				proc->action = read_mem_and_move_pc(vm, proc->pc, 1, proc);
+				if (proc->action > 0 && proc->action <= NBR_OP)
+					proc->cycle += g_op_tab[proc->action].cycle;
+				else
+				{
 					proc->pc++;
+					proc->cycle++; //THIS IS SOMETHING THAT CRISTINA DECIDED TO INVENT
+				}
 			}
 			proc = proc->next;
 		}
+		proc = --vm->next_check <= 0 ? check_live(vm) : NULL;
 	}
+	if (vm->cycle == vm->dump)
+		print_memory(vm->mem, vm->proc, 1);
+	else
+		if (vm->last_alive > 0 && vm->last_alive < 5)
+			printf("Contestant %d, \"%s\", has won !\n", vm->last_alive, vm->contestants[vm->last_alive]);
+		else
+			printf("vm->last_alive WRONG\n");
+	if (operation)
+		free(operation);
+	operation = NULL;
 }
-// when we move the pc higher than MEMN_MAX just put it to 0

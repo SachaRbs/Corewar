@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 18:24:03 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 19:32:21 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:05:29 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 #define BOLDCYAN    "\033[1m\033[36m"
 #define BOLDWHITE   "\033[1m\033[37m"
 
-#define SPACE " \f\r\t\v"
+#define SIZE 2192
+
 
 /*
 ***		GLOBAL VARIABLES
@@ -57,6 +58,7 @@ typedef	struct		s_asm
 	char			*comment;
 	int				f_header;
 	char			*str;
+	int				exec_sz;
 	int				byte_pos;
 	int				row;
 	int				col;
@@ -111,14 +113,15 @@ static const char *typestab[11] =
 typedef struct		s_token
 {
 	char			*str;
-	long			value;
 	enum e_type		type;
 	int				op_index;
-	int				dir_sz;
+	int				ocp;
 	int				row;
 	int				col;
-	int				byte_pos;
-	int				byte_sz;
+	long			value;
+	unsigned int	byte_pos;
+	unsigned int	byte_sz;
+	unsigned int	exec_sz;
 	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
@@ -143,6 +146,7 @@ typedef struct		s_inst
 typedef	struct 		s_label
 {
 	char			*name;
+	int				byte_pos;
 	int				row;
 	int				col;
 	struct s_token	*from;
@@ -190,12 +194,13 @@ int					is_instruction(char *line);
 ** init
 */
 
-t_asm				*init_struct(int fd);
+t_asm				*init_struct(int fd, char *filename, char *file);
 
 /*
 ** error
 */
 
+void				print_error(t_asm *p);
 int					ft_error(char *str);
 int					ft_lexerror(t_asm *p);
 
@@ -203,7 +208,7 @@ int					ft_lexerror(t_asm *p);
 ** utils
 */
 
-int					is_reg(char *line);
+int					is_reg(t_asm *p, char *line);
 int 				is_whitespace(int c);
 int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);
@@ -214,7 +219,6 @@ void				skip_comment(t_asm *p, char *line);
 */
 
 int					check_token(t_asm *env);
-void				fill_optoken(t_token *token);
 
 /*
 ***		check labels
@@ -224,7 +228,19 @@ void				print_label_lists(t_asm *env);
 void				save_label(t_label **to, t_token *token);
 t_label				*check_labels(t_asm *env);
 
+/*
+***		ENCODING
+*/
+
+char				*write_header(t_asm *p);
 void				write_to_file(t_asm *p);
+void				write_byte(char *byte, int pos, int value, size_t size);
+void				get_exec_sz(t_asm *p);
+char				*write_exec(t_asm *p);
+void				get_ocp(t_token **token);
+int					ocp_2_args(t_token *token);
+int					ocp_3_args(t_token *token);
+
 
 /*
 ***		error management

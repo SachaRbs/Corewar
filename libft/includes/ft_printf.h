@@ -3,124 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/25 15:34:24 by ibaran            #+#    #+#             */
-/*   Updated: 2019/10/10 17:05:25 by crfernan         ###   ########.fr       */
+/*   Created: 2018/12/11 15:57:50 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/04 12:36:18 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
-
 # define FT_PRINTF_H
 
-# include <stdarg.h>
 # include "libft.h"
+# include <stdarg.h>
+# include <stdint.h>
 
-# define FLAGS specifier->flags
-# define WIDTH specifier->width
-# define PRECISION specifier->precision
-# define LENGTH specifier->length
-# define CONVERSION specifier->conversion
+# define LEFT_ALIGN	(1 << 0)
+# define SPACE		(1 << 1)
+# define PLUS		(1 << 2)
+# define ZERO_FILL	(1 << 3)
+# define PREFIX		(1 << 4)
 
-# define RED "\033[38;1;31m"
-# define DARK_RED "\033[38;0;31m"
-# define GREEN "\033[38;1;32m"
-# define DARK_GREEN "\033[38;0;32m"
-# define YELLOW "\033[38;1;33m"
-# define DARK_YELLOW "\033[38;0;33m"
-# define BLUE "\033[38;1;34m"
-# define DARK_BLUE "\033[38;0;34m"
-# define MAGENTA "\033[38;1;35m"
-# define DARK_MAGENTA "\033[38;0;35m"
-# define CYAN "\033[38;1;36m"
-# define DARK_CYAN "\033[38;0;36m"
-# define EOC "\033[38;0;00m"
+# define NONE			(1 << 5)
+# define FLAGS_HH		(1 << 6)
+# define FLAGS_H		(1 << 7)
+# define FLAGS_L		(1 << 8)
+# define FLAGS_LL		(1 << 9)
+# define FLAGS_J		(1 << 10)
+# define FLAGS_Z		(1 << 11)
 
-int				g_res_len;
-int				g_str_len;
+# define NEG			(1 << 12)
+# define CAPSBASE		(1 << 13)
+# define UNSIGNED		(1 << 14)
+# define PRECISION		(1 << 15)
+# define ZEROVALUE		(1 << 16)
+# define UMAJ			(1 << 17)
+# define ZEROPREC		(1 << 18)
 
-typedef struct	s_specifier
+# define BUF_SIZE 128
+
+typedef	struct	s_parser
 {
-	char		*flags;
 	int			width;
 	int			precision;
-	char		*length;
-	char		conversion;
-}				t_specifier;
+	int			len;
+	int			slen;
+	int			base;
+	long		f;
+	char		*s;
+	char		*prefix;
+	char		format;
+	char		*buf;
+}				t_parser;
 
-typedef struct	s_functions
-{
-	char		*(*funs[8])(void*, t_specifier*);
-	char		*conversions[8];
-}				t_functions;
-
+typedef	int	(*t_jumptable)(t_parser *p, va_list args);
 int				ft_printf(const char *format, ...);
 
 /*
-** FT_IMPORTANTS.C
+** -------- PARSERS --------
 */
-char			*ft_strnjoin_printf(char *s1, char *s2, size_t n1, size_t n2);
-int				get_specif(const char *format, t_specifier *specifier,
-				unsigned int *j);
-void			ft_reset_specifier(t_specifier *specifier,
-				unsigned short first);
-int				ft_final(char *result, va_list *ap, t_specifier *specifier);
+
+int				parse_flags(t_parser *p, char **format);
+int				parse_width(t_parser *p, char **format);
+int				parse_precision(t_parser *p, char **format);
+void			parse_length(t_parser *p, char **format);
+char			*get_prefix(t_parser *p, char c);
+
 /*
-** FT_GETTING_ARGUMENT.C
+** -------- HANDLERS --------
 */
-char			*ft_get_argument(va_list *ap, char *result,
-				t_specifier *specifier);
+
+t_jumptable		init_table(char c);
+intmax_t		get_int_length(t_parser *p, va_list args);
+int				handle_int(t_parser *p, va_list args);
+int				handle_unsigned(t_parser *p, va_list args);
+int				handle_octal(t_parser *p, va_list args);
+int				handle_char(t_parser *p, va_list args);
+int				handle_pointer(t_parser *p, va_list args);
+int				handle_escape(t_parser *p, va_list args);
+int				handle_string(t_parser *p, va_list args);
+int				handle_wchar(t_parser *p, va_list args);
+int				handle_wstring(t_parser *p, va_list args);
+int				handle_float(t_parser *p, va_list args);
+
+void			print_buffer(char *buf, int len, int *ret);
+void			print_width(t_parser *p, int len, int *ret, int flag);
+void			print_strwidth(t_parser *p, int len, int *ret);
+void			handle_uprec(t_parser *p, char *buf, int *len);
+void			append_uprefix(t_parser *p, char *buf, int *len);
+
 /*
-** FT_FILLING.C
+** UTILS
 */
-void			ft_fill_flags(const char *format, unsigned int *i,
-				t_specifier *specifier);
-void			ft_fill_width(const char *format, unsigned int *i,
-				t_specifier *specifier);
-void			ft_fill_precision(const char *format, unsigned int *i,
-				t_specifier *specifier);
-void			ft_fill_length(const char *format, unsigned int *i,
-				t_specifier *specifier);
-/*
-** FOR_DI.C
-*/
-char			*none_di(void *po, t_specifier *specifier);
-/*
-** FOR_UOXX.C
-*/
-char			*none_uuoxxb(void *po, t_specifier *specifier);
-/*
-** FT_CSPPERCENT.C
-*/
-char			*none_c(void *po, t_specifier *specifier);
-char			*none_s(void *po, t_specifier *specifier);
-char			*none_p(void *po, t_specifier *specifier);
-char			*none_percent(void *po, t_specifier *specifier);
-/*
-** FT_F.C
-*/
-char			*none_f(void *po, t_specifier *specifier);
-char			*none_n(void *po, t_specifier *specifier);
-/*
-** FT_STRNCPY_ZERO.C
-*/
-char			*ft_strncpy_zero(char *dest, const char *src, size_t n);
-/*
-** FT_ARGUMENT_VALUE.C
-*/
-void			*arg_value(int i, va_list *ap, t_specifier *specifier);
-/*
-** FT_DUPEXIT.C
-*/
-char			*ft_dupexit(const char *src);
-char			*ft_ctoaexit(char c);
-char			*ft_strndupexit(const char *src, size_t n);
-char			*ft_nctoaexit(char c, size_t n);
-/*
-** FT_COLOR.c
-*/
-char			*ft_set_color(char *result, const char *format,
-				unsigned int *j);
+
+char			*itoa_base_long(t_parser *p, long long n, int base, char *s);
+void			itoa_handlezero(t_parser *p, intmax_t nbr);
+char			*itoa_base_ulong(t_parser *p, uintmax_t n, int base, char *s);
+int				get_base(t_parser *p, char c);
+void			ft_putwchar(wchar_t chr);
 
 #endif

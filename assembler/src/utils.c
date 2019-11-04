@@ -6,13 +6,13 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/10/31 17:58:16 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:10:32 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-int		is_reg(char *line)
+int		is_reg(t_asm *p, char *line)
 {
 	int		i;
 	int		reg;
@@ -21,8 +21,10 @@ int		is_reg(char *line)
 	if (line[i++] == 'r')
 	{
 		reg = ft_atoi(line + i);
-		if (reg <= REG_NUMBER && reg > 0)
+		if (reg <= 16 && reg > 0)
 			return (1);
+		else
+			ft_lexerror(p);
 	}
 	return (0);
 }
@@ -41,7 +43,10 @@ int		is_divider(int c)
 	return (is_whitespace(c) ||
 		c == ',' ||
 		c == '\n' ||
-		c == '"');
+		c == '"' ||
+		c == DIRECT_CHAR ||
+		c == COMMENT_CHAR ||
+		c == ALT_COMMENT_CHAR);
 }
 
 void	skip_whitespaces(t_asm *p, char *line)
@@ -57,3 +62,13 @@ void	skip_comment(t_asm *p, char *line)
 		while (line[p->col] != '\n')
 			p->col++;
 }
+
+// return (c == '\0'
+// 			|| c == '\n'
+// 			|| is_whitespace(c)
+// 			|| c == COMMAND_CHAR
+// 			|| c == '\"'
+// 			|| c == DIRECT_CHAR
+// 			|| c == SEPARATOR_CHAR
+// 			|| c == COMMENT_CHAR
+// 			|| c == ALT_COMMENT_CHAR)

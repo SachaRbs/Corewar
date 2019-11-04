@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:52:05 by epham             #+#    #+#             */
-/*   Updated: 2019/10/31 19:18:51 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:16:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 ***		FREE TOKENS
 */
 
-void	free_tokens(t_token *head)
+void		free_tokens(t_token *head)
 {
-	t_token *tmp;;
+	t_token *tmp;
 	t_token *curr;
 
 	tmp = head;
@@ -39,7 +39,7 @@ void	free_tokens(t_token *head)
 
 void		free_labels(t_label *labels)
 {
-	t_label *tmp;;
+	t_label *tmp;
 	t_label *curr;
 
 	tmp = labels;

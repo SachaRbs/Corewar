@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_live.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 19:55:09 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/17 15:40:36 by sarobber         ###   ########.fr       */
+/*   Created: 2019/10/29 14:45:39 by crfernan          #+#    #+#             */
+/*   Updated: 2019/10/29 14:45:51 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,15 @@
 
 void	*ft_live(t_vm *vm, t_proc *proc)
 {
-	t_proc	*current;
+	int		value;
 
-	current = vm->proc;
-	while (current)
+	value = proc->arg_v[0];
+	proc->live = 1;
+	vm->nbr_live++;
+	if (value > 0 && value < vm->pct)
 	{
-		if (current->reg[0] == proc->arg_v[0])
-			break;
-		current = current->next;
-	}
-	if (current != NULL)
-	{
-		vm->live = current->reg[0];
-		// proc->cycle_live = vm->cycle; //NOT SURE ABOUT THIS
-		proc->cycle_live = 0;
+		vm->last_alive = value;
+		ft_printf("%s reporting in.\n", vm->contestants[value]);
 	}
 	return (NULL);
 }
-
-	// while (current)
-	// {
-	// 	if (current->pnu == proc->arg_v[0])
-	// 		break;
-	// 	current = current->next;
-	// }
-	// if (current != NULL)
-	// 	vm->live = current->pnu;
