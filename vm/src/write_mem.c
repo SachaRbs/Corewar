@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   write_mem.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 17:01:36 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/31 13:07:15 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   write_mem.c                                      .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/29 17:01:36 by crfernan     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/03 18:35:24 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "corewar.h"
 #include "error.h"
 
@@ -17,6 +17,7 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 {
 	int i;
 	int sign;
+	int end;
 	int div;
 	int hex;
 	int address;
@@ -54,7 +55,7 @@ void	writing_mem(t_vm *vm, int pc, int bytes, int value)
 		// 	address = MEM_SIZE + address;
 		if (sign == 1)
 			vm->mem[address] = hex;
-		else if (div > 1)
+		else if ((end = value % div))
 			vm->mem[address] = 255 - hex;
 		else
 			vm->mem[address] = 256 - hex;

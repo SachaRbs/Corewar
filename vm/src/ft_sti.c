@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_sti.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/15 20:31:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/31 13:07:28 by sarobber         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   ft_sti.c                                         .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/15 20:31:34 by crfernan     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 18:52:00 by sacha       ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 #include "operations.h"
 #include "error.h"
 #include "op.h"
@@ -42,13 +42,4 @@ void	*ft_sti(t_vm *vm, t_proc *proc)
 	writing_mem(vm, address, 4, proc->reg[proc->arg_v[0]]);
 
 	return (NULL);
-
-	// i = proc->pc;
-	// printf("ADV %d (0x%04x -> 0x%04x) ", proc->read - proc->pc, proc->pc, proc->read);
-	// while (i < proc->pc + 10)
-	// {
-	// 	printf("%d [%02hhx] ", i, vm->mem[mod_address(i)]);
-	// 	i++;
-	// }
-	// printf("\n");
 }
