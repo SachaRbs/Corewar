@@ -51,6 +51,7 @@ typedef	struct		s_asm
 	int				fd;
 	char			*filename;
 	char			*file;
+	char			*line;
 	char			*champ;
 	char			*comment;
 	int				f_header;
@@ -150,7 +151,7 @@ typedef	struct		s_label
 	struct s_label	*next;
 }					t_label;
 
-t_asm				*init_struct(int fd);
+t_asm				*init_struct(int fd, char *filename, char *file);
 
 /*
 **		PARSING
@@ -186,7 +187,7 @@ t_label				*check_labels(t_asm *env);
 */
 
 int					is_instruction(char *line);
-int					is_reg(char *line, t_asm *p);
+int					is_reg(t_asm *p, char *line);
 int					is_whitespace(int c);
 int					is_divider(int c);
 void				skip_whitespaces(t_asm *p, char *line);

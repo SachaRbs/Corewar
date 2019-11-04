@@ -1,12 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
+
 /*                                                        :::      ::::::::   */
 /*   asm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 15:20:48 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/09/09 18:23:36 by anonymous         #+#    #+#             */
+/*   Updated: 2019/09/18 14:51:35 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +18,13 @@ char	*check_filename(char *file)
 	char	*tmp;
 
 	tmp = file;
-	// if ((tmp = ft_strrchr(tmp, '/')))
-		// file = tmp + 1;
+	if ((tmp = ft_strrchr(tmp, '/')))
+		file = tmp + 1;
 	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
 	filename = ft_strnew(dot - file + 4);
-	// filename = ft_strnew(ft_strlen(file) + 2);
 	ft_strncpy(filename, file, (dot - file + 1));
 	ft_strncpy(ft_strchr(filename, '.') + 1, "cor", 3);
 	return (filename);
@@ -57,24 +55,22 @@ int		ft_readline(int fd, char **str, char **line)
 {
 	char	buffer[BUFF_SIZE + 1];
 	char	*ptr;
-	char	*tmp;
 	ssize_t sz;
 
-	tmp = *str;
 	while (!ft_strchr(*str, '\n') && (sz = read(fd, buffer, BUFF_SIZE)) > 0)
 		if (!(*str = ft_strnjoinfree(*str, buffer, sz)))
 			return (-1);
 	sz = 0;
 	while ((*str)[sz] && (*str)[sz] != '\n')
-		++sz;
+		sz++;
 	if ((*line = ft_strndup(*str, sz + 1)) == NULL)
 		return (-1);
 	if ((*str)[sz] == '\n')
-		++sz;
+		sz++;
 	ptr = *str;
 	if ((*str = ft_strdup(ptr + sz)) == NULL)
 		return (-1);
-	free(ptr);
+	ft_strdel(&ptr);
 	return (sz > 0 ? sz : 0);
 }
 
@@ -92,11 +88,8 @@ int		main(int argc, char **argv)
 		ft_error("file error");
 	p = init_struct(fd, filename, argv[1]);
 	parse(p);
-	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-	{
-		printf("WRONG CREATIONG FILE\n");
-		return (0);
-	}
-	write_to_file(p);
+	// if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
+	// 		return (0);
+	// write_to_file(p);
 	free_asm(p);
 }

@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:38:19 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 14:30:42 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:01:49 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	parse_header(t_asm *p, t_token *new)
 	if (!ft_strncmp(new->str, NAME_CMD_STRING, 5))
 	{
 		if (p->champ && new->type == NAME)
-			ft_error("HEADER ALREADY EXISTS");
+			ft_lexerror(p);
 		new->type = NAME;
 		parse_champion(p);
 		if (p->line[p->col] == '"')
@@ -120,7 +120,7 @@ void	parse_header(t_asm *p, t_token *new)
 	else if (!ft_strncmp(new->str, COMMENT_CMD_STRING, 8))
 	{
 		if (p->comment && new->type == COMMENT)
-			ft_error("HEADER ALREADY EXISTS");
+			ft_lexerror(p);
 		new->type = COMMENT;
 		parse_comment(p);
 		if (p->line[p->col] == '"')

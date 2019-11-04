@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft_object.mk                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
+#    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:41:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/04 13:02:28 by epham            ###   ########.fr        #
+#    Updated: 2019/11/04 14:15:44 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

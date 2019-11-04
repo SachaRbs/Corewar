@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft.mk                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
+#    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/04 13:02:41 by epham            ###   ########.fr        #
+#    Updated: 2019/11/04 15:00:45 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,8 +113,8 @@ SRC_LIBFT = \
 	parsers.c \
 	utils.c \
 	ft_wstrlen.c \
-	ft_nblen.c
-
+	ft_nblen.c \
+	ft_atol.c
 
 INC_LIBFT					:=	libft.h \
 								ft_printf.h

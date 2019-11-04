@@ -1,45 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_instructions.c                               :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 17:27:06 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 14:07:53 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/09/11 17:36:24 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/01 18:51:56 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-int		is_instruction(char *line)
+t_asm	*init_struct(int fd, char *filename, char *file)
 {
-	int		i;
+	t_asm	*p;
 
-	i = 0;
-	while (g_op_tab[i].name)
-	{
-		if (!ft_strcmp(g_op_tab[i].name, line))
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-int		check_instruction(t_asm *p, char **line, int size)
-{
-	char	*str;
-
-	(void)p;
-	str = ft_strndup(*line, size);
-	if (is_instruction(str))
-	{
-		printf(RED "%s\n" RESET, str);
-		return (1);
-	}
-	else
-	{
-		printf("INSTRUCTION: [%s] NOT VALID\n", *line);
-		return (0);
-	}
+	if (!(p = malloc(sizeof(t_asm))))
+		ft_error("MALLOC ERROR");
+	p->fd = fd;
+	p->filename = filename;
+	p->file = file;
+	p->champ = NULL;
+	p->comment = NULL;
+	p->f_header = 0;
+	p->str = ft_strnew(1);
+	p->byte_pos = 0;
+	p->row = 1;
+	p->col = 1;
+	p->syntax_state = 0;
+	p->tokens = NULL;
+	p->labels = NULL;
+	p->mentions = NULL;
+	return (p);
 }

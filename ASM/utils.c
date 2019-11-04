@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:10:32 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:03:05 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		is_reg(t_asm *p, char *line)
 	if (line[i++] == 'r')
 	{
 		reg = ft_atoi(line + i);
-		if (reg <= 16 && reg > 0)
+		if (reg <= REG_NUMBER && reg > 0)
 			return (1);
 		else
 			ft_lexerror(p);
@@ -43,10 +43,7 @@ int		is_divider(int c)
 	return (is_whitespace(c) ||
 		c == ',' ||
 		c == '\n' ||
-		c == '"' ||
-		c == DIRECT_CHAR ||
-		c == COMMENT_CHAR ||
-		c == ALT_COMMENT_CHAR);
+		c == '"');
 }
 
 void	skip_whitespaces(t_asm *p, char *line)
@@ -62,13 +59,3 @@ void	skip_comment(t_asm *p, char *line)
 		while (line[p->col] != '\n')
 			p->col++;
 }
-
-// return (c == '\0'
-// 			|| c == '\n'
-// 			|| is_whitespace(c)
-// 			|| c == COMMAND_CHAR
-// 			|| c == '\"'
-// 			|| c == DIRECT_CHAR
-// 			|| c == SEPARATOR_CHAR
-// 			|| c == COMMENT_CHAR
-// 			|| c == ALT_COMMENT_CHAR)

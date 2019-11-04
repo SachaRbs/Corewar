@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:52:05 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 12:17:18 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 15:16:07 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void		free_tokens(t_token *head)
 	{
 		curr = tmp;
 		tmp = tmp->next;
-		if (curr->str)
-			free(curr->str);
-		curr->str = NULL;
+		// printf("[%s] -> %s\n", curr->str, typestab[curr->type]);
+		ft_strdel(&curr->str);
 		free(curr);
 		curr = NULL;
 	}
@@ -62,14 +61,11 @@ void		free_labels(t_label *labels)
 
 void		free_asm(t_asm *env)
 {
-	if (env->filename)
-		free(env->filename);
-	if (env->champ)
-		free(env->champ);
-	if (env->comment)
-		free(env->comment);
-	if (env->str)
-		free(env->str);
+	ft_strdel(&env->filename);
+	ft_strdel(&env->champ);
+	ft_strdel(&env->comment);
+	ft_strdel(&env->str);
+	ft_strdel(&env->line);
 	if (env->tokens)
 		free_tokens(env->tokens);
 	if (env->labels)

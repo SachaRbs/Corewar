@@ -13,5 +13,6 @@ champs/*
 example
 asm
 *.out
+sasm
 # Debug files
 *.dSYM/
