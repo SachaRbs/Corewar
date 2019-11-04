@@ -6,22 +6,12 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:08:33 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:08:13 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:16:01 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 #include <limits.h>
-
-unsigned int	ft_nbrlen(long n)
-{
-	unsigned int	count;
-
-	count = 1;
-	while (n /= 10)
-		count++;
-	return (count);
-}
 
 void	parse_content(t_asm *p, t_token *token, int start, size_t len)
 {
@@ -39,7 +29,7 @@ void	parse_content(t_asm *p, t_token *token, int start, size_t len)
 		if (size != ft_nbrlen(token->value)
 		|| token->value > UINT_MAX
 		|| token->value < INT_MIN)
-			ft_lexerror(p);
+			lexical_error(p);
 	}
 	else
 		token->str = ft_strsub(p->line, start, len);
@@ -65,7 +55,7 @@ void	parse_digits(t_asm *p, t_token *new, int start)
 		parse_symbol(p, new, start);
 	}
 	else
-		ft_lexerror(p);
+		lexical_error(p);
 }
 
 void	parse_symbol(t_asm *p, t_token *new, int start)
@@ -93,7 +83,7 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 		add_token(&p->tokens, new);
 	}
 	else
-		ft_lexerror(p);
+		lexical_error(p);
 }
 
 void	parse_token(t_asm *p)
@@ -119,7 +109,6 @@ void	parse_token(t_asm *p)
 
 void	parse(t_asm *p)
 {
-
 	while ((ft_readline(p->fd, &p->str, &p->line) > 0))
 	{
 		p->col = 0;
@@ -133,7 +122,6 @@ void	parse(t_asm *p)
 		p->row++;
 		ft_strdel(&p->line);
 	}
-	// print_token(p->tokens);
 	if (check_token(p) == -1)
 		exit(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:49:52 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 18:16:31 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		is_reg(t_asm *p, char *line)
 		if (reg <= 16 && reg > 0)
 			return (1);
 		else
-			ft_lexerror(p);
+			lexical_error(p);
 	}
 	return (0);
 }
