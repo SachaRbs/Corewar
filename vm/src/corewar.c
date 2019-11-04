@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/04 11:27:50 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:08:16 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void		*check_live(t_vm *vm)
 			else
 				vm->proc = vm->proc->next;
 			free(proc);
+			proc = NULL;
 			proc = tmp ? tmp->next : vm->proc;
 		}
 		else if ((tmp = proc))
@@ -112,7 +113,7 @@ void		*check_live(t_vm *vm)
 	}
 	vm->nbr_live = 1;
 	vm->next_check = vm->cycle_to_die;
-	return(NULL);
+	return (NULL);
 }
 
 void	run_corewar(t_vm *vm)
@@ -135,11 +136,6 @@ void	run_corewar(t_vm *vm)
 					operation->op[proc->action - 1](vm, proc);
 				if (vm->v == 2 || vm->v == 3)
 					print_action(proc, vm, operation_failed);
-				if (vm->dump == -1)
-				{
-					// print_memory(vm->mem, proc, 0);
-					// getchar();
-				}
 				proc->pc = proc->read;
 				arg_to_zero(proc);
 			}
@@ -152,14 +148,14 @@ void	run_corewar(t_vm *vm)
 				else
 				{
 					proc->pc++;
-					proc->cycle++; //THIS IS SOMETHING THAT CRISTINA DECIDED TO INVENT
+					proc->cycle++;
 				}
 			}
 			proc = proc->next;
 		}
 		proc = --vm->next_check <= 0 ? check_live(vm) : NULL;
 	}
-	if (vm->cycle == vm->dump)
+	if (vm->proc && vm->dump != -1 && vm->cycle == vm->dump)
 		print_memory(vm->mem, vm->proc, 1);
 	else
 		if (vm->last_alive > 0 && vm->last_alive < 5)

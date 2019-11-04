@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/31 15:29:15 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:09:48 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	print_memory(unsigned char *mem, t_proc *proc, int d)
 	int i;
 
 	i = -1;
-	// ft_printf("\e[1;1H\e[2J");
-	while (++i < MEM_SIZE)
+	while (proc && mem && ++i < MEM_SIZE)
 	{
 		if (i % 64 == 0)
 		{

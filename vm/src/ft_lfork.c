@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lfork.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 14:53:20 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/31 16:52:52 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:07:42 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	*ft_lfork(t_vm *vm, t_proc *proc)
 	newproc->cycle_live = proc->cycle_live;
 	newproc->cycle = vm->cycle;
 	newproc->pnu = proc->pnu;
+	newproc->live = proc->live;
 	newproc->pc = mod_address(proc->pc + proc->arg_v[0]);
 	newproc->procnum = vm->procct;
 	pushfront_proc(&vm->proc, newproc);

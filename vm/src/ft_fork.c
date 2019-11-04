@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 14:47:53 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/31 16:52:45 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:07:53 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	*ft_fork(t_vm *vm, t_proc *proc)
 	newproc->carry = proc->carry;
 	newproc->cycle = vm->cycle;
 	newproc->cycle_live = proc->cycle_live;
+	newproc->live = proc->live;
 	newproc->pc = mod_address(proc->pc + (proc->arg_v[0] % IDX_MOD));
 	newproc->pnu = proc->pnu;
 	newproc->procnum = vm->procct;
