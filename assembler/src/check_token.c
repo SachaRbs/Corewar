@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 12:05:54 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 13:10:54 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	aff_token(t_asm *env, t_token *token)
 		ft_printf("\n==== NEW INSTRUCTIONS ====\n");
 	ft_printf(" ________________________\n");
 	ft_printf("|%10s %-12d |\n", "State", env->syntax_state);
-	ft_printf("|%10s %-12s |\n", "Type", typestab[token->type]);
+	ft_printf("|%10s %-12s |\n", "Type", g_typestab[token->type]);
 	ft_printf("|%10s %-12s |\n", "Value", token->str);
 	ft_printf("|%10s %-12d |\n", "Row", token->row);
 	ft_printf("|%10s %-12d |\n", "Col", token->col);

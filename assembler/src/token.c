@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 12:25:23 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 13:11:52 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		print_token(t_token *head)
 	printf(YEL"\n\nTOKENS:\n");
 	while (curr)
 	{
-		printf("%15s [%s]\n", curr->str, typestab[curr->type]);
+		printf("%15s [%s]\n", curr->str, g_typestab[curr->type]);
 		curr = curr->next;
 	}
 	printf(RESET"\n");
