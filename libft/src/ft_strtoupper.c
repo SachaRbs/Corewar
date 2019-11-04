@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtolower_printf.c                             :+:      :+:    :+:   */
+/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:53 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:53 by crfernan         ###   ########.fr       */
+/*   Created: 2019/03/15 17:52:17 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/03/15 17:52:27 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char		*ft_strtolower_printf(char *s)
-{
-	int		i;
+#include "libft.h"
 
+char	*ft_strtoupper(char *str)
+{
+	size_t len;
+	size_t i;
+
+	len = ft_strlen(str);
 	i = 0;
-	while (s[i])
+	while (i < len)
 	{
-		if ('A' <= s[i] && s[i] <= 'Z')
-			s[i] += 32;
+		if (str[i] >= 'a' && str[i] <= 'z')
+			str[i] = str[i] - 'a' + 'A';
 		i++;
 	}
-	return (s);
+	return (str);
 }

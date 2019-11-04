@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 12:40:05 by epham            ###   ########.fr       */
+/*   Created: 2019/03/20 16:41:11 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/03/20 17:43:21 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+unsigned int	ft_abs(int value)
 {
-	size_t i;
-
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)s)[i] = (char)'\0';
-		i++;
-	}
+	if (value == -2147483648)
+		return ((unsigned int)2147483647 + 1);
+	return (value > 0 ? value : -value);
 }

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen_printf.c                                 :+:      :+:    :+:   */
+/*   ft_nblen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:53 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:53 by crfernan         ###   ########.fr       */
+/*   Created: 2019/03/15 17:56:06 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/03/28 17:47:30 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen_printf(const char *str)
+unsigned int	ft_nblen(unsigned long long n, int base)
 {
-	char	*pointer;
+	unsigned int	count;
 
-	pointer = (char*)str;
-	while (*pointer)
-		pointer++;
-	return (pointer - str);
+	count = 1;
+	while (n /= base)
+		count++;
+	return (count);
 }

@@ -6,10 +6,11 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:41:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 16:51:29 by epham            ###   ########.fr        #
+#    Updated: 2019/11/04 13:02:28 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+ft_abs.o: libft.h
 ft_strjoin.o: libft.h
 ft_memalloc.o: libft.h
 ft_strcat.o: libft.h
@@ -54,6 +55,7 @@ ft_putnbr.o: libft.h
 ft_putendl.o: libft.h
 ft_strequ.o: libft.h
 ft_strnequ.o: libft.h
+ft_strtoupper.o: libft.h
 ft_putchar_fd.o: libft.h
 ft_putstr_fd.o: libft.h
 ft_putendl_fd.o: libft.h
@@ -76,27 +78,23 @@ ft_ctoa.o: libft.h
 ft_nctoa.o: libft.h
 ft_ftoa.o: libft.h
 ft_itoa_printf.o: libft.h
-ft_strchr_printf.o: libft.h
-ft_strcmp_printf.o: libft.h
-ft_strlen_printf.o: libft.h
-ft_strtolower_printf.o : libft.h
 ft_atoi_printf.o : libft.h
 ft_max.o: libft.h
 ft_min.o: libft.h
 ft_power.o: libft.h
-for_csppercent.o: ft_printf.h
-for_di.o: ft_printf.h
-for_f.o: ft_printf.h
-for_uoxx.o: ft_printf.h
-ft_argument_value.o: ft_printf.h
-ft_color.o: ft_printf.h
-ft_dupexit.o: ft_printf.h
-ft_filling.o: ft_printf.h
-ft_getting_argument.o: ft_printf.h
-ft_importants.o: ft_printf.h
-ft_strncpy_zero.o: ft_printf.h
-ft_printf_main.o: ft_printf.h
-
 ft_strnjoin.o: libft.h
 ft_strndup.o: libft.h
 ft_islower.o: libft.h
+handle_char.o: ft_printf.h
+handle_escape.o: ft_printf.h
+handle_float.o: ft_printf.h
+handle_int.o: ft_printf.h
+handle_pointer.o: ft_printf.h
+handle_string.o: ft_printf.h
+handle_unsigned.o: ft_printf.h
+handle_wchar.o: ft_printf.h
+handlers.o: ft_printf.h
+parsers.o: ft_printf.h
+utils.o: ft_printf.h
+ft_wstrlen.o: libft.h
+ft_nblen.o: libft.h
