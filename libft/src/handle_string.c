@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 14:29:36 by yoann             #+#    #+#             */
-/*   Updated: 2019/11/04 12:48:21 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 17:52:50 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
 
 void		print_strwidth(t_parser *p, int len, int *ret)
 {

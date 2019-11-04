@@ -6,7 +6,7 @@
 #    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/11/04 15:00:45 by yoribeir         ###   ########.fr        #
+#    Updated: 2019/11/04 17:47:52 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,9 @@ SRC_LIBFT = \
 	utils.c \
 	ft_wstrlen.c \
 	ft_nblen.c \
-	ft_atol.c
+	ft_nbrlen.c \
+	ft_strjoinfree.c \
+	ft_atol.c \
 
 INC_LIBFT					:=	libft.h \
 								ft_printf.h
