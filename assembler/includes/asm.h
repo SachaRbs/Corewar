@@ -116,7 +116,7 @@ typedef struct		s_token
 	int				ocp;
 	int				row;
 	int				col;
-	int				value;
+	long			value;
 	unsigned int	byte_pos;
 	unsigned int	byte_sz;
 	unsigned int	exec_sz;
@@ -159,8 +159,8 @@ t_asm				*init_struct(int fd, char *filename, char *file);
 
 int					ft_readline(int fd, char **str, char **line);
 void				parse(t_asm *p);
-void				parse_symbol(t_asm *p, t_token *new, char **l, int start);
-void				parse_header(t_asm *p, t_token *newnode, char **line);
+void				parse_symbol(t_asm *p, t_token *new, int start);
+void				parse_header(t_asm *p, t_token *newnode);
 
 /*
 **		TOKEN MANAGEMENT

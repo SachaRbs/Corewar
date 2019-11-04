@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 17:24:50 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:10:32 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:49:52 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,3 @@ void	skip_comment(t_asm *p, char *line)
 		while (line[p->col] != '\n')
 			p->col++;
 }
-
-// return (c == '\0'
-// 			|| c == '\n'
-// 			|| is_whitespace(c)
-// 			|| c == COMMAND_CHAR
-// 			|| c == '\"'
-// 			|| c == DIRECT_CHAR
-// 			|| c == SEPARATOR_CHAR
-// 			|| c == COMMENT_CHAR
-// 			|| c == ALT_COMMENT_CHAR)
