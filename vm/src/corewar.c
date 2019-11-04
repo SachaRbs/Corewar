@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   corewar.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/11 10:39:50 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/03 19:27:04 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   corewar.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
+/*   Updated: 2019/11/04 11:27:50 by sarobber         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "corewar.h"
 #include "operations.h"
 #include "op.h"
@@ -125,8 +125,6 @@ void	run_corewar(t_vm *vm)
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle
 	&& (proc = vm->proc))
 	{
-		if (vm->cycle == 1275)
-			write (1, "0", 1);
 		if (vm->v == 1 || vm->v == 3)
 			printf("It is now cycle %d\n", vm->cycle);
 		while (proc && proc->pnu)
