@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:41:43 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 16:01:36 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ t_token		*init_token(t_asm *p, t_type type)
 void		get_value(t_token **token)
 {
 	if ((*token)->type == REGISTER)
-		(*token)->value = ft_atoi(ft_strchr((*token)->str, 'r') + 1);
+		(*token)->value = ft_atol(ft_strchr((*token)->str, 'r') + 1);
 	else if ((*token)->type == INDEX)
-		(*token)->value = ft_atoi((*token)->str);
+		(*token)->value = ft_atol((*token)->str);
 	else if ((*token)->type == DIRECT)
-		(*token)->value = ft_atoi((*token)->str);
+		(*token)->value = ft_atol((*token)->str);
 }
 
 void		add_token(t_token **head, t_token *new)
