@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr_printf.c                                 :+:      :+:    :+:   */
+/*   ft_wstrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:52 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/10 18:20:52 by crfernan         ###   ########.fr       */
+/*   Created: 2019/04/02 16:04:26 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/04/02 16:04:44 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr_printf(const char *ptr, int value)
+size_t	ft_wstrlen(const int *str)
 {
-	char	*where;
+	size_t i;
 
-	where = (char*)ptr;
-	while (*where != '\0')
-	{
-		if (*where == (char)value)
-			return (where);
-		where++;
-	}
-	if (*where == (char)value)
-		return (where);
-	return (NULL);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

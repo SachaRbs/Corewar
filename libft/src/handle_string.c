@@ -1,33 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy_zero.c                                  :+:      :+:    :+:   */
+/*   handle_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:58 by crfernan          #+#    #+#             */
+/*   Created: 2019/01/11 14:29:36 by yoann             #+#    #+#             */
 /*   Updated: 2019/11/04 12:48:21 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "../includes/ft_printf.h"
 
 
-char	*ft_strncpy_zero(char *dest, const char *src, size_t n)
+void		print_strwidth(t_parser *p, int len, int *ret)
 {
-	char	*from;
-	char	*to;
+	if (!(p->f & LEFT_ALIGN))
+		while (len < p->width)
+		{
+			ft_putchar(' ');
+			(*ret)++;
+			len++;
+		}
+}
 
-	from = (char*)src;
-	to = dest;
-	while (n != 0)
+int			handle_string(t_parser *p, va_list args)
+{
+	int		len;
+	int		i;
+
+	i = 0;
+	p->s = va_arg(args, char *);
+	if (!p->s)
+		p->s = "(null)";
+	len = ft_strlen(p->s);
+	if (p->f & PRECISION)
+		len = (len < p->precision ? len : p->precision);
+	print_strwidth(p, len, &i);
+	while ((*p->s && (!(p->f & PRECISION) || p->precision--)))
 	{
-		*to = *from;
-		to++;
-		from++;
-		n--;
+		ft_putchar(*p->s);
+		p->s++;
+		i++;
 	}
-	*to = '\0';
-	return (dest);
+	print_width(p, len, &i, 1);
+	return (i);
 }

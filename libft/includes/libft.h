@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 14:02:17 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/28 16:50:56 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/04 14:16:08 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,13 @@ char			*ft_ctoa(char c);
 char			*ft_nctoa(char c, size_t n);
 
 char			*ft_itoa_printf(long long nbr);
-size_t			ft_strlen_printf(const char *str);
-char			*ft_strchr_printf(const char *ptr, int value);
-int				ft_strcmp_printf(const char *ptr1, const char *ptr2);
-char			*ft_strtolower_printf(char *s);
 int				ft_atoi_printf(const char *str);
 
 int				ft_power(int num, int pow);
 long long		ft_max(long long a, long long b);
 long long		ft_min(long long a, long long b);
 char			*ft_itoa_base(unsigned long long nbr, unsigned short base);
+unsigned int	ft_abs(int value);
 
 int				ft_printf(const char *format, ...);
 
@@ -120,12 +117,17 @@ int				ft_printf(const char *format, ...);
 */
 
 int				ft_atoi_base(const char *str, int size, int base);
+long			ft_atol(const char *str);
 
 /*
-***		FUNCTIONS FROM THE LIB OF YOANN
+***		FUNCTIONS FROM THE LIB OF YOANN (INCLUDING PRINTF FUNCTIONS)
 */
 
 char			*ft_strnjoin(char *s1, char *s2, int n);
 char			*ft_strndup(char const *src, int n);
+char			*ft_strtoupper(char *str);
 int				ft_islower(int c);
+size_t			ft_wstrlen(const int *str);
+unsigned int	ft_nblen(unsigned long long n, int base);
+
 #endif

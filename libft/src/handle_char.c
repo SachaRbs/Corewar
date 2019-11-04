@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy_zero.c                                  :+:      :+:    :+:   */
+/*   handle_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:58 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 12:48:21 by epham            ###   ########.fr       */
+/*   Created: 2018/12/19 17:38:56 by yoann             #+#    #+#             */
+/*   Updated: 2019/11/04 12:47:31 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "../includes/ft_printf.h"
 
-
-char	*ft_strncpy_zero(char *dest, const char *src, size_t n)
+int			handle_char(t_parser *p, va_list args)
 {
-	char	*from;
-	char	*to;
+	char		chr;
+	int			buf[BUF_SIZE];
+	int			len;
+	int			ret;
+	int			i;
 
-	from = (char*)src;
-	to = dest;
-	while (n != 0)
+	ret = 0;
+	len = 1;
+	chr = va_arg(args, int);
+	buf[0] = chr;
+	i = len;
+	if (!(p->f & LEFT_ALIGN) && !(p->f & ZERO_FILL))
+		while (i++ < p->width)
+		{
+			ft_putchar(' ');
+			ret++;
+		}
+	i = -1;
+	while (++i < len)
 	{
-		*to = *from;
-		to++;
-		from++;
-		n--;
+		ft_putchar(buf[len - i - 1]);
+		ret++;
 	}
-	*to = '\0';
-	return (dest);
+	print_width(p, len, &ret, 1);
+	return (ret);
 }

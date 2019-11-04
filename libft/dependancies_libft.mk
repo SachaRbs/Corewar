@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    dependancies_libft.mk                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
+#    By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 16:39:55 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/28 16:51:11 by epham            ###   ########.fr        #
+#    Updated: 2019/11/04 15:00:45 by yoribeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ L_LIBFT_DIR	:= libft
 NAME_LIBFT	:= libft.a
 
 SRC_LIBFT = \
+	ft_abs.c \
 	ft_strjoin.c \
 	ft_memalloc.c \
 	ft_strcat.c \
@@ -90,29 +91,30 @@ SRC_LIBFT = \
 	ft_nctoa.c \
 	ft_ftoa.c \
 	ft_itoa_printf.c \
-	ft_strchr_printf.c \
-	ft_strcmp_printf.c \
-	ft_strlen_printf.c \
-	ft_strtolower_printf.c \
 	ft_atoi_printf.c \
 	ft_max.c \
 	ft_min.c \
 	ft_power.c \
-	for_csppercent.c \
-	for_di.c \
-	for_f.c \
-	for_uoxx.c \
-	ft_argument_value.c \
-	ft_color.c \
-	ft_dupexit.c \
-	ft_filling.c \
-	ft_getting_argument.c \
-	ft_importants.c \
 	ft_strncpy_zero.c \
 	ft_printf_main.c \
 	ft_strnjoin.c \
 	ft_strndup.c \
-	ft_islower.c
+	ft_strtoupper.c \
+	ft_islower.c \
+	handle_char.c \
+	handle_escape.c \
+	handle_float.c \
+	handle_int.c \
+	handle_pointer.c \
+	handle_string.c \
+	handle_unsigned.c \
+	handle_wchar.c \
+	handlers.c \
+	parsers.c \
+	utils.c \
+	ft_wstrlen.c \
+	ft_nblen.c \
+	ft_atol.c
 
 INC_LIBFT					:=	libft.h \
 								ft_printf.h

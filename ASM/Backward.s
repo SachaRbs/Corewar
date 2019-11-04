@@ -1,6 +1,5 @@
 .name    "sebc"
-.comment "sebc"
-.extend
+.comment "cebc"
 
 	st	r1, :l1+1
 	ld	%4, r3

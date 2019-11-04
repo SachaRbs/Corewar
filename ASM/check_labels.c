@@ -6,13 +6,13 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 12:04:37 by epham            ###   ########.fr       */
+/*   Updated: 2019/10/30 15:52:20 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-void		print_label_lists(t_asm *env)
+void	print_label_lists(t_asm *env)
 {
 	t_label *head_labels;
 	t_label *head_mentions;
@@ -22,15 +22,13 @@ void		print_label_lists(t_asm *env)
 	printf("LABELS :\n");
 	while (head_labels)
 	{
-		printf(" [%s %d:%d]",
-		head_labels->name, head_labels->row, head_labels->col + 1);
+		printf(" [%s %d:%d]", head_labels->name, head_labels->row, head_labels->col + 1);
 		head_labels = head_labels->next;
 	}
 	printf("\n\nMENTIONS :\n");
 	while (head_mentions)
 	{
-		printf(" [%s %d:%d]",
-		head_mentions->name, head_mentions->row, head_mentions->col + 1);
+		printf(" [%s %d:%d]", head_mentions->name, head_mentions->row, head_mentions->col + 1);
 		head_mentions = head_mentions->next;
 	}
 	printf("\n");
@@ -40,18 +38,20 @@ void		print_label_lists(t_asm *env)
 ***		SAVING LABELS AND MENTIONS TO ENV
 */
 
-void		save_label(t_label **to, t_token *token)
+void	save_label(t_label **to, t_token *token)
 {
 	t_label *head;
 	t_label *new;
 
 	head = *to;
+	printf("SAVING LABEL %s\n", token->str);
+	if (!head)
+		printf("FIRST LABEL TO BE SAVED\n");
 	if (!(new = malloc(sizeof(t_label))))
 		return ;
 	new->name = ft_strdup(token->str);
 	new->col = token->col;
 	new->row = token->row;
-	new->byte_pos = 0;
 	new->from = token;
 	new->next = NULL;
 	if (!(*to))
@@ -71,29 +71,28 @@ void		save_label(t_label **to, t_token *token)
 
 t_label		*check_labels(t_asm *env)
 {
-	t_label	*lab;
-	t_label	*men;
+	t_label	*labels;
+	t_label	*mentions;
 	int		check;
-
-	lab = env->labels;
-	men = env->mentions;
-	while (men)
+	
+	labels = env->labels;
+	mentions = env->mentions;
+	while (mentions)
 	{
 		check = 0;
-		while (lab)
+		while (labels)
 		{
-			if (!ft_strcmp(men->name, lab->name))
+			if (!ft_strcmp(mentions->name, labels->name))
 			{
 				check = 1;
-				men->from->value = lab->from->byte_pos - men->from->byte_pos;
 				break ;
 			}
-			lab = lab->next;
+			labels = labels->next;
 		}
 		if (check == 0)
-			return (men);
-		men = men->next;
-		lab = env->labels;
+			return (mentions);
+		mentions = mentions->next;
+		labels = env->labels;
 	}
 	return (NULL);
 }
