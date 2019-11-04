@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   init_vm.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 13:56:05 by sarobber     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/02 17:53:09 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_vm.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
+/*   Updated: 2019/11/04 20:21:00 by crfernan         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "corewar.h"
 #include "error.h"
 
@@ -69,7 +69,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 	int32_t		out;
 
 	(void)name;
-	if (!(h = ft_memalloc(sizeof(header_t))))
+	if (!(h = (header_t*)ft_memalloc(sizeof(header_t))))
 		ft_exit(vm, ERROR_MALLOC);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0)
 		ft_exit(vm, FAIL_ON_READ);
@@ -81,12 +81,14 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
+	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char) * strlen(h->prog_name))))
+		ft_exit(vm, ERROR_MALLOC);
+	// ft_memcpy(vm->contestants[current->pnu], h->prog_name, strlen(h->prog_name));
 	vm->contestants[current->pnu] = h->prog_name;
 	out = reverser_32(h->prog_size);
 	free(h);
 	h = NULL;
 	return (out);
-	// return (reverser_32(h->prog_size));
 }
 
 int		find_playernum(t_vm *vm)
@@ -165,8 +167,7 @@ void	set_values_vm(t_vm *vm)
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
 	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
-	while(++i < MAX_PLAYERS)
-		vm->contestants[i] = NULL;
+	ft_bzero(vm->contestants, MAX_PLAYERS + 1); // * sizeof(something)
 	vm->v = 0;
 	vm->dump = -1;
 	vm->pct = 0;
