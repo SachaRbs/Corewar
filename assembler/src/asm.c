@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 15:20:48 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 17:50:35 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,15 @@ char	*check_filename(char *file)
 {
 	char	*filename;
 	char	*dot;
-	char	*tmp;
 
-	tmp = file;
-	// if ((tmp = ft_strrchr(tmp, '/')))
-		// file = tmp + 1;
 	if (!(dot = ft_strrchr(file, '.')))
 		return (NULL);
 	if (ft_strcmp(dot, ".s"))
 		return (NULL);
 	filename = ft_strnew(dot - file + 4);
-	// filename = ft_strnew(ft_strlen(file) + 2);
-	ft_strncpy(filename, file, (dot - file + 1));
-	ft_strncpy(ft_strchr(filename, '.') + 1, "cor", 3);
+	ft_strncpy(filename, file, (dot - file));
+	ft_strncpy(filename + ft_strlen(filename), ".cor", 4);
 	return (filename);
-}
-
-char	*ft_strnjoinfree(char const *s1, char const *s2, size_t n)
-{
-	char			*str;
-	char			*ptr;
-	char			*tmp;
-
-	if (!s1 || !s2)
-		return (NULL);
-	tmp = (char *)s1;
-	if (!(str = ft_strnew(ft_strlen(s1) + n + 1)))
-		return (NULL);
-	ptr = str;
-	while (*s1)
-		*str++ = *s1++;
-	while (n-- > 0 && *s2)
-		*str++ = *s2++;
-	*str = 0;
-	free((void *)tmp);
-	return (ptr);
 }
 
 int		ft_readline(int fd, char **str, char **line)
@@ -93,10 +67,7 @@ int		main(int argc, char **argv)
 	p = init_struct(fd, filename, argv[1]);
 	parse(p);
 	if ((p->fd = open(p->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-	{
-		printf("WRONG CREATIONG FILE\n");
-		return (0);
-	}
+		ft_error("file creation error");
 	write_to_file(p);
 	free_asm(p);
 }

@@ -200,7 +200,7 @@ void				skip_comment(t_asm *p, char *line);
 int					get_error(t_asm *env, t_token *token);
 void				print_error(t_asm *p);
 int					ft_error(char *str);
-int					ft_lexerror(t_asm *p);
+int					lexical_error(t_asm *p);
 
 /*
 ***		ENCODING
