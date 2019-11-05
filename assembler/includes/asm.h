@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/05 11:24:34 by epham             #+#    #+#             */
-/*   Updated: 2019/11/05 11:24:40 by epham            ###   ########.fr       */
+/*   Created: 2019/11/04 13:09:05 by epham             #+#    #+#             */
+/*   Updated: 2019/11/05 18:24:34 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void				parse_header(t_asm *p, t_token *newnode);
 */
 
 t_token				*init_token(t_asm *p, t_type type);
-void				add_token(t_token **head, t_token *newnode);
+void				add_token(t_asm *p, t_token **head, t_token *newnode);
 int					check_token(t_asm *env);
 void				print_token(t_token *head);
 void				free_tokens(t_token *head);

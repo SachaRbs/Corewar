@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:47:17 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 18:45:07 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:21:46 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,37 @@ t_token		*init_token(t_asm *p, t_type type)
 	return (token);
 }
 
-void		get_value(t_token **token)
+long		check_value(t_asm *p, char *str)
 {
-	if ((*token)->type == REGISTER)
-		(*token)->value = ft_atol(ft_strchr((*token)->str, 'r') + 1);
-	else if ((*token)->type == INDEX)
-		(*token)->value = ft_atol((*token)->str);
-	else if ((*token)->type == DIRECT)
-		(*token)->value = ft_atol((*token)->str);
+	size_t	str_len;
+	size_t	size;
+	long	value;
+
+	value = ft_atol(str);
+	str_len = ft_strlen(str);
+	size = *str == '-' ? str_len - 1 : str_len;
+	if (size != ft_nbrlen(value)
+	|| value > UINT_MAX
+	|| value < INT_MIN)
+		lexical_error(p, 1);
+	return (value);
 }
 
-void		add_token(t_token **head, t_token *new)
+void		get_value(t_asm *p, t_token *token)
+{
+	if ((token)->type == REGISTER)
+		(token)->value = check_value(p, ft_strchr((token)->str, 'r') + 1);
+	else if ((token)->type == INDEX)
+		(token)->value = check_value(p, (token)->str);
+	else if ((token)->type == DIRECT)
+		(token)->value = check_value(p, (token)->str);
+}
+
+void		add_token(t_asm *p, t_token **head, t_token *new)
 {
 	t_token		*tmp;
 
-	if (new->type == REGISTER || new->type == INDEX || new->type == DIRECT)
-		get_value(&new);
+	get_value(p, new);
 	if (!(*head))
 	{
 		*head = new;

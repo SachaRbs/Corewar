@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:08:33 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 18:35:29 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:16:51 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_digits(t_asm *p, t_token *new, int start)
 	if ((p->col > size) && (is_divider(p->line[p->col]) || new->type == DIRECT))
 	{
 		parse_content(p, new, start, p->col - start);
-		add_token(&p->tokens, new);
+		add_token(p, &p->tokens, new);
 	}
 	else if (new->type != DIRECT)
 	{
@@ -69,7 +69,7 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 	{
 		parse_content(p, new, size, p->col - size - 1);
 		new->type = LABEL;
-		add_token(&p->tokens, new);
+		add_token(p, &p->tokens, new);
 	}
 	else if ((p->col > size) && is_divider(p->line[p->col]))
 	{
@@ -80,7 +80,7 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 			new->type = is_reg(p, new->str) ? REGISTER : OP;
 		if (new->type == OP)
 			new->op_index = is_instruction(new->str);
-		add_token(&p->tokens, new);
+		add_token(p, &p->tokens, new);
 	}
 	else
 		lexical_error(p, 2);
@@ -89,9 +89,9 @@ void	parse_symbol(t_asm *p, t_token *new, int start)
 void	parse_token(t_asm *p)
 {
 	if ((p->line)[p->col] == SEPARATOR_CHAR && ++p->col)
-		add_token(&p->tokens, init_token(p, SEPARATOR));
+		add_token(p, &p->tokens, init_token(p, SEPARATOR));
 	else if ((p->line)[p->col] == '\n' && ++p->col)
-		add_token(&p->tokens, init_token(p, NEWLINE));
+		add_token(p, &p->tokens, init_token(p, NEWLINE));
 	else if ((p->line)[p->col] == '.')
 		parse_symbol(p, init_token(p, NAME), p->col++);
 	else if ((p->line)[p->col] == DIRECT_CHAR && ++p->col)
