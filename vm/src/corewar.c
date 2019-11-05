@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 18:14:54 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:24:05 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,32 @@ void		*check_live(t_vm *vm)
 		if (vm->v == 1 || vm->v == 3)
 			printf("Cycle to die is now %d\n", vm->cycle_to_die);
 	}
+	// while (proc)
+	// {
+	// 	if (!proc->live)
+	// 	{
+	// 		proc->alive = 0;
+	// 		// if (tmp)
+	// 		// 	tmp->next = proc->next;
+	// 		// else
+	// 		// 	vm->proc = vm->proc->next;
+	// 		// if (proc)
+	// 		// 	free(proc);
+	// 		// proc = tmp ? tmp->next : vm->proc;
+	// 	}
+	// 	else if ((tmp = proc))
+	// 	{
+	// 		proc->live = 0;
+	// 		proc = proc->next;
+	// 	}
+	// }
 	while (proc)
 	{
 		if (!proc->live)
-		{
-			if (tmp)
-				tmp->next = proc->next;
-			else
-				vm->proc = vm->proc->next;
-			if (proc)
-				free(proc);
-			proc = tmp ? tmp->next : vm->proc;
-		}
-		else if ((tmp = proc))
-		{
+			proc->alive = 0;
+		else
 			proc->live = 0;
-			proc = proc->next;
-		}
+		proc = proc->next;
 	}
 	vm->nbr_live = 1;
 	vm->next_check = vm->cycle_to_die;
@@ -120,34 +129,41 @@ void	run_corewar(t_vm *vm)
 	t_proc			*proc;
 	t_operations	*operation;
 	int				operation_failed;
+	int 			cpt;
 
+	cpt = 1;
 	operation = fill_operations(vm);
 	while ((vm->dump == -1 || vm->cycle < vm->dump) && ++vm->cycle
-	&& (proc = vm->proc))
+	&& (proc = vm->proc) && cpt)
 	{
 		if (vm->v == 1 || vm->v == 3)
 			printf("It is now cycle %d\n", vm->cycle);
+		cpt = 0;
 		while (proc && proc->pnu)
 		{
-			if (vm->cycle == proc->cycle)
+			if (proc->alive)
 			{
-				if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
-					operation->op[proc->action - 1](vm, proc);
-				if (vm->v == 2 || vm->v == 3)
-					print_action(proc, vm, operation_failed);
-				proc->pc = proc->read;
-				arg_to_zero(proc);
-			}
-			else if (proc->cycle < vm->cycle)
-			{
-				proc->read = proc->pc;
-				proc->action = read_mem_and_move_pc(vm, proc->pc, 1, proc);
-				if (proc->action > 0 && proc->action <= NBR_OP)
-					proc->cycle += g_op_tab[proc->action].cycle;
-				else
+				cpt = 1;
+				if (vm->cycle == proc->cycle)
 				{
-					proc->pc++;
-					proc->cycle++;
+					if ((operation_failed = get_arg(vm, proc, g_op_tab[proc->action])))
+						operation->op[proc->action - 1](vm, proc);
+					if (vm->v == 2 || vm->v == 3)
+						print_action(proc, vm, operation_failed);
+					proc->pc = proc->read;
+					arg_to_zero(proc);
+				}
+				else if (proc->cycle < vm->cycle)
+				{
+					proc->read = proc->pc;
+					proc->action = read_mem_and_move_pc(vm, proc->pc, 1, proc);
+					if (proc->action > 0 && proc->action <= NBR_OP)
+						proc->cycle += g_op_tab[proc->action].cycle;
+					else
+					{
+						proc->pc++;
+						proc->cycle++;
+					}
 				}
 			}
 			proc = proc->next;

@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 18:48:17 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:16:43 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		current->pnu = find_playernum(vm);
 	else
 		current->pnu = vm->pnum[pn];
+	current->alive = 1;
 	load_proc(vm, fd, current, pn);
 }
 

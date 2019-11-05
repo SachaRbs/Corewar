@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 12:08:29 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:16:48 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 typedef struct			s_proc
 {
+	int					alive;
 	int					procnum;
 	int					pnu;
 	int					pc;

@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 14:53:20 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 13:07:42 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:26:08 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*ft_lfork(t_vm *vm, t_proc *proc)
 	while (++i < REG_NUMBER)
 		newproc->reg[i] = proc->reg[i];
 	newproc->carry = proc->carry;
+	newproc->alive = 1;
 	newproc->cycle_live = proc->cycle_live;
 	newproc->cycle = vm->cycle;
 	newproc->pnu = proc->pnu;
