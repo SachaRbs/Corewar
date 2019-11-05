@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:08:42 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 12:04:37 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/05 20:56:10 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void		print_label_lists(t_asm *env)
 
 	head_labels = env->labels;
 	head_mentions = env->mentions;
-	printf("LABELS :\n");
+	ft_printf("LABELS :\n");
 	while (head_labels)
 	{
-		printf(" [%s %d:%d]",
+		ft_printf(" [%s %d:%d]",
 		head_labels->name, head_labels->row, head_labels->col + 1);
 		head_labels = head_labels->next;
 	}
-	printf("\n\nMENTIONS :\n");
+	ft_printf("\n\nMENTIONS :\n");
 	while (head_mentions)
 	{
-		printf(" [%s %d:%d]",
+		ft_printf(" [%s %d:%d]",
 		head_mentions->name, head_mentions->row, head_mentions->col + 1);
 		head_mentions = head_mentions->next;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
 
 /*

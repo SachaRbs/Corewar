@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/05 15:14:12 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:02:33 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		write_to_file(t_asm *p)
 
 	header = NULL;
 	exec = NULL;
-	printf(BOLDWHITE"Wrote output program to %s\n"RESET, p->filename);
+	ft_printf(BOLDWHITE"Wrote output program to %s\n"RESET, p->filename);
 	header = write_header(p);
 	exec = write_exec(p);
 	write(p->fd, header, SIZE);

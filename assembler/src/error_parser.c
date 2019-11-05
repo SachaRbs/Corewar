@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 14:28:58 by epham             #+#    #+#             */
-/*   Updated: 2019/11/05 20:20:44 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:02:21 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	syntax_error(t_asm *p, t_token *token, char *str)
 {
-	printf(BOLDWHITE"%s: ", p->file);
-	printf(BOLDRED"SYNTAX ERROR"RESET);
-	printf(BOLDWHITE" %s", str);
-	printf(" at [%d:%d]\n"RESET, token->row, token->col);
+	ft_printf(BOLDWHITE"%s: ", p->file);
+	ft_printf(BOLDRED"SYNTAX ERROR"RESET);
+	ft_printf(BOLDWHITE" %s", str);
+	ft_printf(" at [%d:%d]\n"RESET, token->row, token->col);
 }
 
 int		op_error(t_asm *env, t_token *token)
