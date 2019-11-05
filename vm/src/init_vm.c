@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/10/31 16:50:05 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:40:37 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	pushfront_proc(t_proc **head, t_proc *new)
 {
+	new->next = NULL;
 	if (head && *head && new)
 	{
 		new->next = *head;
@@ -35,12 +36,21 @@ void	parsing(t_vm *vm, int ac, char **av)
 		{
 			if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
 			{
-				if ((vm->pnum[vm->pct] = ft_atoi(av[i])) > MAX_PLAYERS)
+				vm->pnum[vm->pct] = ft_atoi(av[i]);
+				if (vm->pnum[vm->pct] > MAX_PLAYERS || vm->pnum[vm->pct] < 1)
 					ft_exit(vm, INVALID_INPUT);
 				vm->play_free[vm->pnum[vm->pct]] = 1;
 			}
 			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
-				vm->dump = ft_atoi(av[i]);
+			{
+				if ((vm->dump = ft_atoi(av[i])) < 0)
+					ft_exit(vm, INVALID_INPUT);
+			}
+			else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
+			{
+				if ((vm->v = ft_atoi(av[i])) < 0 || vm->v > 3)
+					ft_exit(vm, INVALID_INPUT);
+			}
 			else
 				ft_exit(vm, MAUVAISE_OPTION);
 		}
@@ -67,7 +77,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 	int32_t		out;
 
 	(void)name;
-	if (!(h = ft_memalloc(sizeof(header_t))))
+	if (!(h = (header_t*)ft_memalloc(sizeof(header_t))))
 		ft_exit(vm, ERROR_MALLOC);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0)
 		ft_exit(vm, FAIL_ON_READ);
@@ -79,12 +89,14 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	vm->contestants[current->pnu] = h->prog_name;
+	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char) * ft_strlen(h->prog_name))))
+		ft_exit(vm, ERROR_MALLOC);
+	ft_strcpy(vm->contestants[current->pnu], h->prog_name);
 	out = reverser_32(h->prog_size);
-	free(h);
+	if (h)
+		free(h);
 	h = NULL;
 	return (out);
-	// return (reverser_32(h->prog_size));
 }
 
 int		find_playernum(t_vm *vm)
@@ -116,7 +128,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
 	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[1] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
+	current->reg[1] = -current->pnu;
 }
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)
@@ -135,6 +147,7 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 		current->pnu = find_playernum(vm);
 	else
 		current->pnu = vm->pnum[pn];
+	current->alive = 1;
 	load_proc(vm, fd, current, pn);
 }
 
@@ -163,8 +176,9 @@ void	set_values_vm(t_vm *vm)
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
 	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
-	while(++i < MAX_PLAYERS)
-		vm->contestants[i] = NULL;
+	// if (!(vm->contestants = (char**)ft_memalloc(sizeof(char*) * (MAX_PLAYERS + 1))))
+	// 	ft_exit(vm, ERROR_MALLOC);
+	vm->v = 0;
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
@@ -190,8 +204,9 @@ int		initialize(t_vm *vm, int ac, char **av)
 	ft_putendl("Introducing contestants...");
 	while (++i < vm->pct)
 	{
-		if ((proc = ft_memalloc(sizeof(t_proc))) == NULL)
+		if (!(proc = (t_proc*)ft_memalloc(sizeof(t_proc))))
 			ft_exit(vm, ERROR_MALLOC);
+		proc->next = NULL;
 		check_proc(vm, proc, i);
 	}
 	vm->last_alive = find_player_alive(vm);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+         #
+#    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:23:17 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/14 16:09:09 by sarobber         ###   ########.fr        #
+#    Updated: 2019/11/05 12:05:35 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,16 +47,13 @@ $(OBJ_DIR):
 
 %.o:%.c $(DEPENDANCIES_COREWAR_O)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -g3 $(CFLAGS) -c $< -o $(OBJ_DIR)/$@
-	# $(CC) $(OPTI_FLAGS) $(CFLAGS) -c $< -o $(OBJ_DIR)/$@
+	$(CC) $(OPTI_FLAGS) $(CFLAGS) -c $< -o $(OBJ_DIR)/$@
 
 -include $(DEPENDANCY_OBJ_INC_FILE)
 
 $(NAME): $(OBJ) $(DEPENDANCIES_COREWAR)
-	$(MAKE) -C $(L_FT) --no-print-directory
-	# $(MAKE) -C $(L_FT) "OPTI_FLAGS=$(OPTI_FLAGS)" --no-print-directory
-	$(CC) -g3 $(CFLAGS) $(EXFLAGS)  $(addprefix $(OBJ_DIR)/,$(OBJ)) -o $(NAME)
-	# $(CC) $(OPTI_FLAGS) $(CFLAGS) $(EXFLAGS)  $(addprefix $(OBJ_DIR)/,$(OBJ)) -o $(NAME)
+	$(MAKE) -C $(L_FT) "OPTI_FLAGS=$(OPTI_FLAGS)" --no-print-directory
+	$(CC) $(OPTI_FLAGS) $(CFLAGS) $(EXFLAGS)  $(addprefix $(OBJ_DIR)/,$(OBJ)) -o $(NAME)
 
 clean:
 	$(MAKE) clean -C $(L_FT) --no-print-directory

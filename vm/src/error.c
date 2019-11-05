@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:53:45 by crfernan          #+#    #+#             */
-/*   Updated: 2019/10/15 19:10:58 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:19:27 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void	free_proc(t_vm *vm)
 		next = current->next;
 		while (next)
 		{
-			free(current);
+			if (current)
+				free(current);
 			current = next;
 			next = current->next;
 		}
-		free(current);
+		if (current)
+			free(current);
 		current = NULL;
 	}
 	vm->proc = NULL;
@@ -52,8 +54,19 @@ void	free_proc(t_vm *vm)
 
 void	close_program(t_vm *vm, int out)
 {
+	int		i;
+
+	i = -1;
 	if (vm)
 	{
+		while (++i < MAX_PLAYERS + 1)
+		{
+			if (vm->contestants[i])
+			{
+				free(vm->contestants[i]);
+				vm->contestants[i] = NULL;
+			}
+		}
 		free_proc(vm);
 		free(vm);
 		vm = NULL;
