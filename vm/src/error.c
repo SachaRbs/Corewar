@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:53:45 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 20:27:56 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 12:14:27 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void	free_proc(t_vm *vm)
 		next = current->next;
 		while (next)
 		{
-			free(current);
+			if (current)
+				free(current);
 			current = next;
 			next = current->next;
 		}
-		free(current);
+		if (current)
+			free(current);
 		current = NULL;
 	}
 	vm->proc = NULL;
@@ -54,9 +56,6 @@ void	close_program(t_vm *vm, int out)
 {
 	if (vm)
 	{
-		/*
-		*** WE ARE LEAKING BECAUSE WE'RE NOT FREEING VM->CONTESTANTS
-		*/
 		free_proc(vm);
 		free(vm);
 		vm = NULL;
