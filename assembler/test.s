@@ -12,10 +12,10 @@ Have Fun"
 			start:
 
 live:
-	live	%41
-	live	%0
-	live	%-42
-	live	%-0
+#	live	%41
+#	live	%0
+#	live	%-42
+#	live	%-0
 #	live	%-9223372036854775808
 #	live	%9223372036854775807
 #	live	%4294967297424443545

@@ -167,7 +167,7 @@ void				parse_header(t_asm *p, t_token *newnode);
 */
 
 t_token				*init_token(t_asm *p, t_type type);
-void				add_token(t_token **head, t_token *newnode);
+void				add_token(t_asm *p, t_token **head, t_token *newnode);
 int					check_token(t_asm *env);
 void				print_token(t_token *head);
 void				free_tokens(t_token *head);

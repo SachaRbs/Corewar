@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:35:52 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 18:34:11 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:23:00 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		lexical_error(t_asm *p, int errcode)
 	if (errcode == 5)
 		ft_printf("Wrong command");
 	if (errcode == 6)
-		ft_printf("Register value out of bounds\n");
+		ft_printf("Register value out of bounds");
 	ft_printf(BOLDWHITE" at [%d:%d]\n"RESET, p->row, p->col);
 	free_asm(p);
 	exit(1);
