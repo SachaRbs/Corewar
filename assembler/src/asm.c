@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 18:42:07 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:03:41 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*check_filename(char *file)
 		return (NULL);
 	filename = ft_strnew(dot - file + 4);
 	ft_strncpy(filename, file, (dot - file));
+	if (!ft_strlen(filename))
+		ft_error("file error");
 	ft_strncpy(filename + ft_strlen(filename), ".cor", 4);
 	return (filename);
 }
@@ -67,7 +69,7 @@ int		main(int argc, char **argv)
 	p = init_struct(fd, filename, argv[1]);
 	parse(p);
 	if (check_token(p) == -1)
-		ft_error("token error");
+		exit(1);
 	if ((p->fd = create_file(filename)) == -1)
 		ft_error("file creation error");
 	write_to_file(p);

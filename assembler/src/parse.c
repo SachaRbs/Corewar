@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:08:33 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/05 16:16:51 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:59:27 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,7 @@ void	parse(t_asm *p)
 		p->row++;
 		ft_strdel(&p->line);
 	}
+	if (!p->comment && !p->champ)
+		lexical_error(p, 7);
+
 }
