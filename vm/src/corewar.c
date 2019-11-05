@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/04 19:08:16 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:14:54 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void		*check_live(t_vm *vm)
 	t_proc *proc;
 	t_proc *tmp;
 
-
 	tmp = NULL;
 	proc = vm->proc;
 	if ((vm->nbr_live > NBR_LIVE || ++vm->check > MAX_CHECKS) && (vm->check = 1))
@@ -101,8 +100,8 @@ void		*check_live(t_vm *vm)
 				tmp->next = proc->next;
 			else
 				vm->proc = vm->proc->next;
-			free(proc);
-			proc = NULL;
+			if (proc)
+				free(proc);
 			proc = tmp ? tmp->next : vm->proc;
 		}
 		else if ((tmp = proc))
@@ -159,7 +158,7 @@ void	run_corewar(t_vm *vm)
 		print_memory(vm->mem, vm->proc, 1);
 	else
 		if (vm->last_alive > 0 && vm->last_alive < 5)
-			printf("Contestant %d, \"%s\", has won !\n", vm->last_alive, vm->contestants[vm->last_alive]);
+			printf("Cylce = %d\nContestant %d, \"%s\", has won !\n", vm->cycle, vm->last_alive, vm->contestants[vm->last_alive]);
 		else
 			printf("vm->last_alive WRONG\n");
 	if (operation)

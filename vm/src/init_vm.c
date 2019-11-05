@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/04 20:21:00 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:22:43 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, FAIL_ON_READ);
 	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char) * strlen(h->prog_name))))
+	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char) * ft_strlen(h->prog_name))))
 		ft_exit(vm, ERROR_MALLOC);
-	// ft_memcpy(vm->contestants[current->pnu], h->prog_name, strlen(h->prog_name));
-	vm->contestants[current->pnu] = h->prog_name;
+	ft_strcpy(vm->contestants[current->pnu], h->prog_name);
 	out = reverser_32(h->prog_size);
-	free(h);
+	if (h)
+		free(h);
 	h = NULL;
 	return (out);
 }
@@ -120,7 +120,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	while (++i < vm->sizes[pn])
 		vm->mem[current->pc + i] = prog[i];
 	bzero(current->reg, REG_NUMBER * REG_SIZE);
-	current->reg[1] = -current->pnu; //This was one, but the first reg it's the one containing te player number, to it's reg[0]
+	current->reg[1] = -current->pnu;
 }
 
 void	check_proc(t_vm *vm, t_proc *current, int pn)
@@ -167,7 +167,8 @@ void	set_values_vm(t_vm *vm)
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
 	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
-	ft_bzero(vm->contestants, MAX_PLAYERS + 1); // * sizeof(something)
+	// if (!(vm->contestants = (char**)ft_memalloc(sizeof(char*) * (MAX_PLAYERS + 1))))
+	// 	ft_exit(vm, ERROR_MALLOC);
 	vm->v = 0;
 	vm->dump = -1;
 	vm->pct = 0;
@@ -194,7 +195,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	ft_putendl("Introducing contestants...");
 	while (++i < vm->pct)
 	{
-		if ((proc = ft_memalloc(sizeof(t_proc))) == NULL)
+		if (!(proc = (t_proc*)ft_memalloc(sizeof(t_proc))))
 			ft_exit(vm, ERROR_MALLOC);
 		check_proc(vm, proc, i);
 	}
