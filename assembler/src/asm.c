@@ -6,7 +6,11 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/11/05 20:05:19 by epham            ###   ########.fr       */
+=======
+/*   Updated: 2019/11/05 20:27:31 by yoribeir         ###   ########.fr       */
+>>>>>>> 79d53a34053dce562b8d81a9305230ab7fa75d83
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,8 @@ char	*check_filename(char *file)
 		return (NULL);
 	filename = ft_strnew(dot - file + 4);
 	ft_strncpy(filename, file, (dot - file));
+	if (!ft_strlen(filename))
+		ft_error("file error");
 	ft_strncpy(filename + ft_strlen(filename), ".cor", 4);
 	return (filename);
 }
@@ -71,7 +77,6 @@ int		main(int argc, char **argv)
 	parse(p);
 	if (check_token(p) == -1)
 		exit(1);
-		// ft_error("token error");
 	if ((p->fd = create_file(filename)) == -1)
 		ft_error("file creation error");
 	write_to_file(p);
