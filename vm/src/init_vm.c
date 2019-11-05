@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 18:22:43 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:48:17 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,21 @@ void	parsing(t_vm *vm, int ac, char **av)
 		{
 			if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
 			{
-				if ((vm->pnum[vm->pct] = ft_atoi(av[i])) > MAX_PLAYERS)
+				vm->pnum[vm->pct] = ft_atoi(av[i]);
+				if (vm->pnum[vm->pct] > MAX_PLAYERS || vm->pnum[vm->pct] < 1)
 					ft_exit(vm, INVALID_INPUT);
 				vm->play_free[vm->pnum[vm->pct]] = 1;
 			}
 			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
-				vm->dump = ft_atoi(av[i]);
+			{
+				if ((vm->dump = ft_atoi(av[i])) < 0)
+					ft_exit(vm, INVALID_INPUT);
+			}
 			else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
-				vm->v = ft_atoi(av[i]);
+			{
+				if ((vm->v = ft_atoi(av[i])) < 0 || vm->v > 3)
+					ft_exit(vm, INVALID_INPUT);
+			}
 			else
 				ft_exit(vm, MAUVAISE_OPTION);
 		}

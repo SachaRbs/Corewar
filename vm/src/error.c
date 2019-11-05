@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:53:45 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/05 18:34:06 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:40:02 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ void	close_program(t_vm *vm, int out)
 	{
 		while (++i < MAX_PLAYERS + 1)
 		{
-			printf("%d ", i);
 			if (vm->contestants[i])
 			{
-				printf("%s\n", vm->contestants[i]);
 				free(vm->contestants[i]);
 				vm->contestants[i] = NULL;
 			}
