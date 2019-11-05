@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 19:16:43 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:40:37 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	pushfront_proc(t_proc **head, t_proc *new)
 {
+	new->next = NULL;
 	if (head && *head && new)
 	{
 		new->next = *head;
@@ -205,6 +206,7 @@ int		initialize(t_vm *vm, int ac, char **av)
 	{
 		if (!(proc = (t_proc*)ft_memalloc(sizeof(t_proc))))
 			ft_exit(vm, ERROR_MALLOC);
+		proc->next = NULL;
 		check_proc(vm, proc, i);
 	}
 	vm->last_alive = find_player_alive(vm);

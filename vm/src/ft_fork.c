@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 14:47:53 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/05 19:26:00 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:42:29 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	*ft_fork(t_vm *vm, t_proc *proc)
 	newproc->pc = mod_address(proc->pc + (proc->arg_v[0] % IDX_MOD));
 	newproc->pnu = proc->pnu;
 	newproc->procnum = vm->procct;
+	newproc->next = NULL;
 	pushfront_proc(&vm->proc, newproc);
 	return (NULL);
 }

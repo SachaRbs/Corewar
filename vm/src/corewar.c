@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 19:24:05 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:37:07 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	run_corewar(t_vm *vm)
 		if (vm->v == 1 || vm->v == 3)
 			printf("It is now cycle %d\n", vm->cycle);
 		cpt = 0;
-		while (proc && proc->pnu)
+		while (proc)
 		{
 			if (proc->alive)
 			{
