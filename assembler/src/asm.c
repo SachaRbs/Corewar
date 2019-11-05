@@ -6,7 +6,7 @@
 /*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/05 11:22:36 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/05 20:05:19 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,5 @@ int		main(int argc, char **argv)
 		ft_error("file creation error");
 	write_to_file(p);
 	free_asm(p);
+	return (0);
 }
