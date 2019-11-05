@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 18:42:07 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 11:22:36 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,17 @@ int		main(int argc, char **argv)
 	if (argc != 2)
 		ft_error("usage: ./asm champion.s");
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
+	{
+		ft_error("Unable to open file");
 		exit(1);
+	}
 	if (!(filename = check_filename(argv[1])))
 		ft_error("file error");
 	p = init_struct(fd, filename, argv[1]);
 	parse(p);
 	if (check_token(p) == -1)
-		ft_error("token error");
+		exit(1);
+		// ft_error("token error");
 	if ((p->fd = create_file(filename)) == -1)
 		ft_error("file creation error");
 	write_to_file(p);
