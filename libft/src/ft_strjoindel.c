@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strjoindel.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 17:53:36 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 18:46:51 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/04 18:46:56 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+char	*ft_strjoindel(char *s1, char *s2)
 {
-	size_t			x;
-	unsigned char	*dst1;
-	unsigned char	*src1;
+	char	*str;
 
-	dst1 = (unsigned char *)dst;
-	src1 = (unsigned char *)src;
-	x = 0;
-	while (x < n)
-	{
-		dst1[x] = src1[x];
-		x++;
-	}
-	return (dst);
+	if (!s1 || !s2)
+		return (0);
+	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+		return (0);
+	ft_strcpy(str, s1);
+	ft_strcat(str, s2);
+	ft_strdel(&s1);
+	return (str);
 }

@@ -6,34 +6,19 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:32:24 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 14:12:36 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:38:21 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
 
-char		*ft_itoa_bse(unsigned int n, int base, int len)
+int			create_file(char *filename)
 {
-	char	*str;
-	char	*sbase;
+	int		fd;
 
-	sbase = "0123456789abcdef";
-	if (!(str = ft_strnew(len)))
-		return (NULL);
-	len--;
-	while (len >= 0)
-	{
-		str[len] = sbase[n % base];
-		n /= base;
-		len--;
-	}
-	return (str);
+	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	return (fd);
 }
-
-/*
-*** n = nth byte
-*** int x = (number >> (8*n)) & 0xff;
-*/
 
 void		write_byte(char *byte, int pos, int value, size_t size)
 {

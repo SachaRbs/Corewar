@@ -6,27 +6,11 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:38:19 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 14:30:42 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:50:03 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/asm.h"
-
-// to add to libft
-
-char	*ft_strjoindel(char *s1, char *s2)
-{
-	char	*str;
-
-	if (!s1 || !s2)
-		return (0);
-	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
-		return (0);
-	ft_strcpy(str, s1);
-	ft_strcat(str, s2);
-	ft_strdel(&s1);
-	return (str);
-}
 
 void	parse_multiline(t_asm *p, int flag)
 {
@@ -77,9 +61,9 @@ void	parse_champion(t_asm *p)
 			parse_multiline(p, 0);
 	}
 	else
-		ft_lexerror(p);
+		lexical_error(p, 2);
 	if (!p->champ || ft_strlen(p->champ) > PROG_NAME_LENGTH)
-		ft_lexerror(p);
+		lexical_error(p, 3);
 }
 
 void	parse_comment(t_asm *p)
@@ -102,8 +86,10 @@ void	parse_comment(t_asm *p)
 		else
 			parse_multiline(p, 1);
 	}
+	else
+		lexical_error(p, 2);
 	if (!p->comment || ft_strlen(p->comment) > COMMENT_LENGTH)
-		ft_lexerror(p);
+		lexical_error(p, 4);
 }
 
 void	parse_header(t_asm *p, t_token *new)
@@ -127,5 +113,5 @@ void	parse_header(t_asm *p, t_token *new)
 			p->col++;
 	}
 	else
-		ft_lexerror(p);
+		lexical_error(p, 5);
 }

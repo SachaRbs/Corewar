@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strjoinfree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:20:34 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/04 17:53:36 by yoribeir         ###   ########.fr       */
+/*   Created: 2019/11/04 17:47:13 by yoribeir          #+#    #+#             */
+/*   Updated: 2019/11/04 17:47:18 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+char	*ft_strnjoinfree(char const *s1, char const *s2, size_t n)
 {
-	size_t			x;
-	unsigned char	*dst1;
-	unsigned char	*src1;
+	char			*str;
+	char			*ptr;
+	char			*tmp;
 
-	dst1 = (unsigned char *)dst;
-	src1 = (unsigned char *)src;
-	x = 0;
-	while (x < n)
-	{
-		dst1[x] = src1[x];
-		x++;
-	}
-	return (dst);
+	if (!s1 || !s2)
+		return (NULL);
+	tmp = (char *)s1;
+	if (!(str = ft_strnew(ft_strlen(s1) + n + 1)))
+		return (NULL);
+	ptr = str;
+	while (*s1)
+		*str++ = *s1++;
+	while (n-- > 0 && *s2)
+		*str++ = *s2++;
+	*str = 0;
+	free((void *)tmp);
+	return (ptr);
 }

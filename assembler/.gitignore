@@ -1,6 +1,7 @@
 output
 output.c
 todo
+ASM/*
 champs/*
 *.cor
 *.s
@@ -12,6 +13,7 @@ champs/*
 # Executables
 example
 asm
+corewar
 *.out
 sasm
 # Debug files

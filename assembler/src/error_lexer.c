@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:35:52 by yoribeir          #+#    #+#             */
-/*   Updated: 2019/11/04 15:15:19 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:34:11 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,28 @@ int		ft_error(char *str)
 
 void	print_error(t_asm *p)
 {
-	char	*err_buffer;
-	int		i;
-
-	i = 0;
-	err_buffer = ft_strnew(p->col + 11);
 	printf(BOLDWHITE"%s: ", p->file);
 	printf(BOLDRED"LEXICAL ERROR"RESET);
-	printf(BOLDWHITE" at %d:%d\n", p->row, p->col);
-	printf(RESET"          ");
-	printf(RESET"%s", p->line);
-	while (i < p->col + 10)
-	{
-		err_buffer[i] = ' ';
-		i++;
-	}
-	err_buffer[i] = '^';
-	printf(RED"%s\n"RESET, err_buffer);
-	ft_strdel(&err_buffer);
-	// printf(RED"%*s\n"RESET, 1 + p->col + 10, "^");
+	printf(BOLDWHITE" at [%d:%d]\n", p->row, p->col);
 }
 
-int		ft_lexerror(t_asm *p)
+int		lexical_error(t_asm *p, int errcode)
 {
-	print_error(p);
+	ft_printf(BOLDWHITE"%s: ", p->file);
+	ft_printf(BOLDRED"LEXICAL ERROR "BOLDWHITE);
+	if (errcode == 1)
+		ft_printf("Token value overflows");
+	if (errcode == 2)
+		ft_printf("Unexpected character");
+	if (errcode == 3)
+		ft_printf("Wrong champion name");
+	if (errcode == 4)
+		ft_printf("Wrong comment name");
+	if (errcode == 5)
+		ft_printf("Wrong command");
+	if (errcode == 6)
+		ft_printf("Register value out of bounds\n");
+	ft_printf(BOLDWHITE" at [%d:%d]\n"RESET, p->row, p->col);
 	free_asm(p);
 	exit(1);
 }
