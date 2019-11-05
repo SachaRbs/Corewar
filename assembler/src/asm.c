@@ -6,7 +6,7 @@
 /*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/05 20:03:41 by yoribeir         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:27:31 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ int		main(int argc, char **argv)
 		ft_error("file creation error");
 	write_to_file(p);
 	free_asm(p);
+	return (0);
 }
