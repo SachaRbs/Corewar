@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 19:40:37 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 12:39:36 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ void	pushfront_proc(t_proc **head, t_proc *new)
 		*head = new;
 }
 
+void	get_option(t_vm *vm, char **av, int ac, int i)
+{
+	if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
+	{
+		vm->pnum[vm->pct] = ft_atoi(av[i]);
+		if (vm->pnum[vm->pct] > MAX_PLAYERS || vm->pnum[vm->pct] < 1)
+			ft_exit(vm, INVALID_INPUT);
+		vm->play_free[vm->pnum[vm->pct]] = 1;
+	}
+	else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
+	{
+		if ((vm->dump = ft_atoi(av[i])) < 0)
+			ft_exit(vm, INVALID_INPUT);
+	}
+	else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
+	{
+		if ((vm->v = ft_atoi(av[i])) < 0 || vm->v > 3)
+			ft_exit(vm, INVALID_INPUT);
+	}
+	else if (av[i][1] == 'p' && !av[i][2] && ac > i + 1)
+		vm->p = 1;
+	else
+		ft_exit(vm, MAUVAISE_OPTION);
+}
+
 void	parsing(t_vm *vm, int ac, char **av)
 {
 	int		i;
@@ -33,27 +58,7 @@ void	parsing(t_vm *vm, int ac, char **av)
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
-		{
-			if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
-			{
-				vm->pnum[vm->pct] = ft_atoi(av[i]);
-				if (vm->pnum[vm->pct] > MAX_PLAYERS || vm->pnum[vm->pct] < 1)
-					ft_exit(vm, INVALID_INPUT);
-				vm->play_free[vm->pnum[vm->pct]] = 1;
-			}
-			else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
-			{
-				if ((vm->dump = ft_atoi(av[i])) < 0)
-					ft_exit(vm, INVALID_INPUT);
-			}
-			else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
-			{
-				if ((vm->v = ft_atoi(av[i])) < 0 || vm->v > 3)
-					ft_exit(vm, INVALID_INPUT);
-			}
-			else
-				ft_exit(vm, MAUVAISE_OPTION);
-		}
+			get_option(vm, av, ac, i);
 		else if (vm->pct < MAX_PLAYERS)
 		{
 			vm->names[vm->pct] = av[i];
@@ -70,13 +75,12 @@ void	parsing(t_vm *vm, int ac, char **av)
 ***	PARSE LE CHAMPION
 */
 
-int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *vm)
+int		read_proc(t_proc *current, int fd, unsigned char *prog, t_vm *vm)
 {
 	header_t	*h;
 	int			rd;
 	int32_t		out;
 
-	(void)name;
 	if (!(h = (header_t*)ft_memalloc(sizeof(header_t))))
 		ft_exit(vm, ERROR_MALLOC);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0)
@@ -85,16 +89,16 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *
 		ft_exit(vm, NOMBRE_MAGIQUE);
 	if (reverser_32(h->prog_size) > CHAMP_MAX_SIZE)
 		ft_exit(vm, SIZE_TROP_GRANDE);
-	if (read(fd, prog, INT_MAX) < 0) // check size of champ
+	if (read(fd, prog, INT_MAX) < 0)
 		ft_exit(vm, FAIL_ON_READ);
-	printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char) * ft_strlen(h->prog_name))))
+	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char)
+	* ft_strlen(h->prog_name))))
 		ft_exit(vm, ERROR_MALLOC);
 	ft_strcpy(vm->contestants[current->pnu], h->prog_name);
 	out = reverser_32(h->prog_size);
-	if (h)
-		free(h);
+	free(h);
 	h = NULL;
 	return (out);
 }
@@ -105,7 +109,7 @@ int		find_playernum(t_vm *vm)
 	int		min;
 
 	i = 0;
-	min = 20; 
+	min = 20;
 	while (i++ < MAX_PLAYERS)
 		if (min > i && vm->play_free[i] == 0)
 			min = i;
@@ -122,7 +126,7 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	int				i;
 	unsigned char	prog[CHAMP_MAX_SIZE];
 
-	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm)) == -1)
+	if ((vm->sizes[pn] = read_proc(current, fd, prog, vm)) == -1)
 		ft_exit(vm, READ_PROCESUS);
 	i = -1;
 	while (++i < vm->sizes[pn])
@@ -153,32 +157,30 @@ void	check_proc(t_vm *vm, t_proc *current, int pn)
 
 int		find_player_alive(t_vm *vm)
 {
-	int max;
-	t_proc *current;
+	int			max;
+	t_proc		*current;
 
 	current = vm->proc;
 	max = -1;
-	while(current)
+	while (current)
 	{
 		if (current->pnu > max)
 			max = current->pnu;
 		current = current->next;
 	}
-	return(max);
+	return (max);
 }
 
 void	set_values_vm(t_vm *vm)
 {
-	int i;
-	i = -1;
 	ft_bzero(vm->play_free, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->pnum, (MAX_PLAYERS + 1) * sizeof(int));
 	ft_bzero(vm->sizes, (MAX_PLAYERS + 1) * sizeof(long));
-	ft_bzero(vm->names, MAX_PLAYERS); // * sizeof(something)
+	ft_bzero(vm->names, MAX_PLAYERS);
 	ft_bzero(vm->mem, MEM_SIZE * sizeof(unsigned char));
-	// if (!(vm->contestants = (char**)ft_memalloc(sizeof(char*) * (MAX_PLAYERS + 1))))
-	// 	ft_exit(vm, ERROR_MALLOC);
 	vm->v = 0;
+	vm->p = 0;
+	vm->cpt = 1;
 	vm->dump = -1;
 	vm->pct = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
