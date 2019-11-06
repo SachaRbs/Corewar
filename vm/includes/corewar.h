@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 19:16:48 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:08:05 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ typedef struct			s_vm
 	int					cycle_to_die;
 	int					next_check;
 	int					last_alive;
+	int					cpt;
 	int					v;
+	int					p;
 	int					nbr_live;
 	int					check;
 	int					pct;

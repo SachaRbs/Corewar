@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 12:48:50 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:46:47 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int					argument(t_vm *vm, t_proc *proc, int arg)
 		return (proc->reg[proc->arg_v[arg]]);
 	if (proc->arg_t[arg] == DIR_CODE)
 		return (proc->arg_v[arg]);
-	return(read_mem(vm, proc->arg_v[arg], 4));
+	return (read_mem(vm, proc->arg_v[arg], 4));
 }
 
-int		find_procnum(t_vm *vm)
+int					find_procnum(t_vm *vm)
 {
 	int			out;
 	t_proc		*current;
