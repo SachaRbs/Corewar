@@ -6,15 +6,26 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:59:26 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/05 20:47:37 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:40:34 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "error.h"
 
-void		*ft_memcpy_mod(void *restrict dst,
-			const void *restrict src, int add, int size)
+unsigned int		big_endian(unsigned int num, int n)
+{
+	if (n == 1)
+		return (num);
+	else if (n == 2)
+		return (reverser_16(num));
+	else if (n == 4)
+		return (reverser_32(num));
+	return (-1);
+}
+
+void				*ft_memcpy_mod(void *restrict dst,
+					const void *restrict src, int add, int size)
 {
 	int				i;
 	unsigned char	*dst1;
@@ -32,7 +43,7 @@ void		*ft_memcpy_mod(void *restrict dst,
 ***		THE SECOND FUNCTION NEVER MOVES proc->read [GET = 0]
 */
 
-int			read_mem(t_vm *vm, int address, int size)
+int					read_mem(t_vm *vm, int address, int size)
 {
 	int		val;
 
@@ -45,7 +56,8 @@ int			read_mem(t_vm *vm, int address, int size)
 ***		THE SECOND FUNCTION ALWAYS MOVES proc->read [GET = 1]
 */
 
-int			read_mem_and_move_pc(t_vm *vm, int address, int size, t_proc *proc)
+int					read_mem_and_move_pc(t_vm *vm,
+					int address, int size, t_proc *proc)
 {
 	int		val;
 

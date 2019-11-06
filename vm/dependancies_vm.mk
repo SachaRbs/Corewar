@@ -6,7 +6,7 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:26:01 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/29 17:13:18 by crfernan         ###   ########.fr        #
+#    Updated: 2019/11/06 14:46:32 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,8 @@ L_COREWAR_DIR				:=	vm
 NAME_COREWAR				:=	corewar
 
 SRC_COREWAR 				=	corewar.c \
-								init_vm.c \
-								main_vm.c \
-								utils.c \
+								corewar_helpers.c \
 								error.c \
-								op.c \
-								read_mem.c \
-								write_mem.c \
-								print.c \
-								operations.c \
 								ft_add.c \
 								ft_aff.c \
 								ft_and.c \
@@ -49,9 +42,16 @@ SRC_COREWAR 				=	corewar.c \
 								ft_sti.c \
 								ft_sub.c \
 								ft_xor.c \
-								ft_zjmp.c
-
-# fuctions_that_we_dont_use_anymore.c
+								ft_zjmp.c \
+								init_helpers.c \
+								init_vm.c \
+								main_vm.c \
+								op.c \
+								operations.c \
+								print.c \
+								read_mem.c \
+								utils.c \
+								write_mem.c
 
 INC_COREWAR					:=	corewar.h \
 								error.h \

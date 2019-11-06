@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:54:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 20:46:47 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:40:48 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,6 @@ int32_t				reverser_32(int32_t a)
 	return (tmp);
 }
 
-unsigned int		big_endian(unsigned int num, int n)
-{
-	if (n == 1)
-		return (num);
-	else if (n == 2)
-		return (reverser_16(num));
-	else if (n == 4)
-		return (reverser_32(num));
-	return (-1);
-}
-
 int					mod_address(int add)
 {
 	while (add >= MEM_SIZE)
@@ -57,18 +46,14 @@ int					argument(t_vm *vm, t_proc *proc, int arg)
 	return (read_mem(vm, proc->arg_v[arg], 4));
 }
 
-int					find_procnum(t_vm *vm)
+void				pushfront_proc(t_proc **head, t_proc *new)
 {
-	int			out;
-	t_proc		*current;
-
-	out = 0;
-	current = vm->proc;
-	while (current)
+	new->next = NULL;
+	if (head && *head && new)
 	{
-		if (out <= current->procnum)
-			out = current->procnum + 1;
-		current = current->next;
+		new->next = *head;
+		*head = new;
 	}
-	return (out);
+	else
+		*head = new;
 }
