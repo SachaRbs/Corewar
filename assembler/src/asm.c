@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:01:15 by epham             #+#    #+#             */
-/*   Updated: 2019/11/05 11:22:36 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/06 12:27:12 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*check_filename(char *file)
 		return (NULL);
 	filename = ft_strnew(dot - file + 4);
 	ft_strncpy(filename, file, (dot - file));
+	if (!ft_strlen(filename))
+		ft_error("file error");
 	ft_strncpy(filename + ft_strlen(filename), ".cor", 4);
 	return (filename);
 }
@@ -71,9 +73,9 @@ int		main(int argc, char **argv)
 	parse(p);
 	if (check_token(p) == -1)
 		exit(1);
-		// ft_error("token error");
 	if ((p->fd = create_file(filename)) == -1)
 		ft_error("file creation error");
 	write_to_file(p);
 	free_asm(p);
+	return (0);
 }
