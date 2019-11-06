@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:41:55 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:52:34 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int						wrong_ocp(t_proc *proc, t_op op);
 int						get_size(t_op op, t_proc *proc, int code, int i);
 void					arg_to_zero(t_proc *proc);
 void					*check_live(t_vm *vm);
-void					last_check(t_vm *vm, t_operations *operation);
+int						get_arg(t_vm *vm, t_proc *proc, t_op op);
 
 /*
 ***		INIT HELPERS

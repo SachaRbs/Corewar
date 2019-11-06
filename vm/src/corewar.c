@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:38:23 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:52:51 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,21 @@
 #include "operations.h"
 #include "op.h"
 
-int			get_arg(t_vm *vm, t_proc *proc, t_op op)
+void		last_check(t_vm *vm, t_operations *operation)
 {
-	int				i;
-	unsigned int	size;
-	unsigned int	code;
-
-	i = -1;
-	proc->arcode = op.ocp ?
-	read_mem_and_move_pc(vm, proc->read, 1, proc) : DIR_CODE << 6;
-	vm->procct += (proc->action == 12 || proc->action == 15) ? 1 : 0;
-	while (++i < MAX_ARGS_NUMBER)
+	if (vm->proc && vm->dump != -1 && vm->cycle == vm->dump)
+		print_memory(vm->mem, vm->proc, 1);
+	else
 	{
-		code = ((proc->arcode >> (6 - i * 2)) & 3);
-		if (i < op.nb_arg)
-		{
-			if (!(size = get_size(op, proc, code, i)))
-				return (0);
-			proc->arg_a[i] = proc->read;
-			proc->arg_t[i] = code;
-			proc->arg_v[i] = read_mem_and_move_pc(vm, proc->read, size, proc);
-		}
-		else if (code != 0)
-			return (0);
+		if (vm->last_alive > 0 && vm->last_alive < 5)
+			ft_printf("Cylce = %d\nContestant %d, \"%s\", has won !\n",
+			vm->cycle, vm->last_alive, vm->contestants[vm->last_alive]);
+		else
+			ft_printf("vm->last_alive WRONG\n");
 	}
-	return (1);
+	if (operation)
+		free(operation);
+	operation = NULL;
 }
 
 void		run_action(t_vm *vm, t_operations *operation, t_proc *proc)

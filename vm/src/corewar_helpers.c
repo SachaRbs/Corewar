@@ -6,12 +6,11 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:33:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/06 14:40:07 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:53:01 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-#include "operations.h"
 #include "op.h"
 
 int			wrong_ocp(t_proc *proc, t_op op)
@@ -91,19 +90,29 @@ void		*check_live(t_vm *vm)
 	return (NULL);
 }
 
-void		last_check(t_vm *vm, t_operations *operation)
+int			get_arg(t_vm *vm, t_proc *proc, t_op op)
 {
-	if (vm->proc && vm->dump != -1 && vm->cycle == vm->dump)
-		print_memory(vm->mem, vm->proc, 1);
-	else
+	int				i;
+	unsigned int	size;
+	unsigned int	code;
+
+	i = -1;
+	proc->arcode = op.ocp ?
+	read_mem_and_move_pc(vm, proc->read, 1, proc) : DIR_CODE << 6;
+	vm->procct += (proc->action == 12 || proc->action == 15) ? 1 : 0;
+	while (++i < MAX_ARGS_NUMBER)
 	{
-		if (vm->last_alive > 0 && vm->last_alive < 5)
-			ft_printf("Cylce = %d\nContestant %d, \"%s\", has won !\n",
-			vm->cycle, vm->last_alive, vm->contestants[vm->last_alive]);
-		else
-			ft_printf("vm->last_alive WRONG\n");
+		code = ((proc->arcode >> (6 - i * 2)) & 3);
+		if (i < op.nb_arg)
+		{
+			if (!(size = get_size(op, proc, code, i)))
+				return (0);
+			proc->arg_a[i] = proc->read;
+			proc->arg_t[i] = code;
+			proc->arg_v[i] = read_mem_and_move_pc(vm, proc->read, size, proc);
+		}
+		else if (code != 0)
+			return (0);
 	}
-	if (operation)
-		free(operation);
-	operation = NULL;
+	return (1);
 }
