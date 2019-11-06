@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 17:06:14 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/06 13:33:53 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:36:55 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-#include "operations.h"
 #include "op.h"
 
 void	print_memory(unsigned char *mem, t_proc *proc, int d)

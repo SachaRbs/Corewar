@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/05 21:08:05 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:41:55 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include "../includes/op.h"
 # include "../libft/includes/libft.h"
 # include <stdio.h>
-
-/*
-***		typedef int				bool; // What is this for??
-*/
 
 # define TRUE			1
 # define FALSE			0
@@ -64,7 +60,7 @@ typedef struct			s_vm
 	int					nbr_live;
 	int					check;
 	int					pct;
-	int 				procct;
+	int					procct;
 	int					dump;
 	int					cycle;
 	t_proc				*proc;
@@ -72,39 +68,32 @@ typedef struct			s_vm
 
 extern t_op				g_op_tab[17];
 
+/*
+***		FROM MAIN
+*/
 
 int						initialize(t_vm *vm, int ac, char **av);
 void					run_corewar(t_vm *vm);
-void					pushfront_proc(t_proc **head, t_proc *new);
 
 /*
-***		UTILS
+***		COREWAR HELPERS
 */
 
+int						wrong_ocp(t_proc *proc, t_op op);
+int						get_size(t_op op, t_proc *proc, int code, int i);
+void					arg_to_zero(t_proc *proc);
+void					*check_live(t_vm *vm);
+void					last_check(t_vm *vm, t_operations *operation);
 
-int16_t					reverser_16(int16_t a);
-int32_t					reverser_32(int32_t a);
-unsigned int			big_endian(unsigned int num, int n);
-int						mod_address(int add);
-int						argument(t_vm *vm, t_proc *proc, int arg);
+/*
+***		INIT HELPERS
+*/
+
 int						find_procnum(t_vm *vm);
-
-
-
-
-/*
-***		READ_MEM
-*/
-
-int						read_mem(t_vm *vm, int address, int size);
-int						read_mem_and_move_pc(t_vm *vm, int address,
-						int size, t_proc *proc);
-
-/*
-***		WRITE_MEM
-*/
-
-void					writing_mem(t_vm *vm, int pc, int bytes, int value);
+void					set_values_vm(t_vm *vm);
+int						find_player_alive(t_vm *vm);
+int						find_playernum(t_vm *vm);
+void					get_option(t_vm *vm, char **av, int ac, int i);
 
 /*
 ***		PRINT
@@ -112,5 +101,30 @@ void					writing_mem(t_vm *vm, int pc, int bytes, int value);
 
 void					print_action(t_proc *proc, t_vm *vm, int action_failed);
 void					print_memory(unsigned char *mem, t_proc *proc, int d);
+
+/*
+***		READ_MEM
+*/
+
+unsigned int			big_endian(unsigned int num, int n);
+int						read_mem(t_vm *vm, int address, int size);
+int						read_mem_and_move_pc(t_vm *vm, int address,
+						int size, t_proc *proc);
+
+/*
+***		UTILS
+*/
+
+int16_t					reverser_16(int16_t a);
+int32_t					reverser_32(int32_t a);
+int						mod_address(int add);
+int						argument(t_vm *vm, t_proc *proc, int arg);
+void					pushfront_proc(t_proc **head, t_proc *new);
+
+/*
+***		WRITE_MEM
+*/
+
+void					writing_mem(t_vm *vm, int pc, int bytes, int value);
 
 #endif
