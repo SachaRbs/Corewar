@@ -6,20 +6,23 @@
 #    By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:55:40 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/29 17:13:49 by crfernan         ###   ########.fr        #
+#    Updated: 2019/11/06 14:45:15 by crfernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-corewar.o: corewar.h error.h
+
+error.o: corewar.h error.h
+init_helpers.o: corewar.h error.h
 init_vm.o: corewar.h error.h
 main_vm.o: corewar.h error.h
-utils.o: corewar.h error.h
-op.o: corewar.h
-error.o: corewar.h error.h
-
-read_mem.o: corewar.h error.h
-write_mem.o: corewar.h error.h
+op.o: corewar.h error.h
 print.o: corewar.h error.h
+read_mem.o: corewar.h error.h
+utils.o: corewar.h error.h
+write_mem.o: corewar.h error.h
+
+corewar.o: corewar.h error.h operations.h
+corewar_helpers.o: corewar.h error.h operations.h
 
 operations.o: operations.h error.h
 ft_add.o: operations.h error.h
