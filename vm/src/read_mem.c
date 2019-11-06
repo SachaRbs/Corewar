@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   read_mem.c                                       .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: sacha <sacha@student.le-101.fr>            +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/29 16:59:26 by crfernan     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/03 19:53:54 by sacha       ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_mem.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/29 16:59:26 by crfernan          #+#    #+#             */
+/*   Updated: 2019/11/05 20:47:37 by crfernan         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 #include "corewar.h"
 #include "error.h"
 
@@ -38,7 +38,7 @@ int			read_mem(t_vm *vm, int address, int size)
 
 	val = 0;
 	ft_memcpy_mod(&val, vm->mem, address, size);
-		return (big_endian(val, size));
+	return (big_endian(val, size));
 }
 
 /*

@@ -6,7 +6,7 @@
 #    By: epham <epham@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/25 15:23:17 by crfernan          #+#    #+#              #
-#    Updated: 2019/10/30 19:11:14 by epham            ###   ########.fr        #
+#    Updated: 2019/11/05 21:29:07 by epham            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,5 +68,3 @@ debug: OPTI_FLAGS := $(SHARE_DEBUG)
 debug: re clean
 
 re: fclean all
-
-.SILENT:

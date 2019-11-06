@@ -6,7 +6,7 @@
 /*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 12:39:36 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:35:14 by crfernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,30 @@ void	parsing(t_vm *vm, int ac, char **av)
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
+		{
 			get_option(vm, av, ac, i);
+			// if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
+			// {
+			// 	vm->pnum[vm->pct] = ft_atoi(av[i]);
+			// 	if (vm->pnum[vm->pct] > MAX_PLAYERS || vm->pnum[vm->pct] < 1)
+			// 		ft_exit(vm, INVALID_INPUT);
+			// 	vm->play_free[vm->pnum[vm->pct]] = 1;
+			// }
+			// else if (av[i][1] == 'd' && !av[i][2] && ac > ++i)
+			// {
+			// 	if ((vm->dump = ft_atoi(av[i])) < 0)
+			// 		ft_exit(vm, INVALID_INPUT);
+			// }
+			// else if (av[i][1] == 'v' && !av[i][2] && ac > ++i)
+			// {
+			// 	if ((vm->v = ft_atoi(av[i])) < 0 || vm->v > 3)
+			// 		ft_exit(vm, INVALID_INPUT);
+			// }
+			// else if (av[i][1] == 'p' && !av[i][2] && ac > i + 1)
+			// 	vm->p = 1;
+			// else
+			// 	ft_exit(vm, MAUVAISE_OPTION);
+		}
 		else if (vm->pct < MAX_PLAYERS)
 		{
 			vm->names[vm->pct] = av[i];
@@ -75,12 +98,13 @@ void	parsing(t_vm *vm, int ac, char **av)
 ***	PARSE LE CHAMPION
 */
 
-int		read_proc(t_proc *current, int fd, unsigned char *prog, t_vm *vm)
+int		read_proc(t_proc *current, int fd, unsigned char *prog, char **name, t_vm *vm)
 {
 	header_t	*h;
 	int			rd;
 	int32_t		out;
 
+	(void)name;
 	if (!(h = (header_t*)ft_memalloc(sizeof(header_t))))
 		ft_exit(vm, ERROR_MALLOC);
 	if ((rd = read(fd, h, sizeof(header_t))) < 0)
@@ -93,7 +117,7 @@ int		read_proc(t_proc *current, int fd, unsigned char *prog, t_vm *vm)
 		ft_exit(vm, FAIL_ON_READ);
 	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		current->pnu, reverser_32(h->prog_size), h->prog_name, h->comment);
-	if (!(vm->contestants[current->pnu] = (char*)ft_memalloc(sizeof(char)
+	if (!(vm->contestants[current->pnu] = ft_memalloc(sizeof(char)
 	* ft_strlen(h->prog_name))))
 		ft_exit(vm, ERROR_MALLOC);
 	ft_strcpy(vm->contestants[current->pnu], h->prog_name);
@@ -126,7 +150,8 @@ void	load_proc(t_vm *vm, int fd, t_proc *current, int pn)
 	int				i;
 	unsigned char	prog[CHAMP_MAX_SIZE];
 
-	if ((vm->sizes[pn] = read_proc(current, fd, prog, vm)) == -1)
+	if ((vm->sizes[pn] = read_proc(current, fd, prog, &vm->names[pn], vm))
+		== -1)
 		ft_exit(vm, READ_PROCESUS);
 	i = -1;
 	while (++i < vm->sizes[pn])
