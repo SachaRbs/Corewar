@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yoribeir <yoribeir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:26:48 by epham             #+#    #+#             */
-/*   Updated: 2019/11/04 15:36:44 by epham            ###   ########.fr       */
+/*   Updated: 2019/11/05 19:28:42 by yoribeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,6 @@ int		g_syntactic_tab[40][12] =
 	{-1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1},
 	{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1}
 };
-
-void	aff_token(t_asm *env, t_token *token)
-{
-	if (token->type == OP || token->type == LABEL)
-		ft_printf("\n==== NEW INSTRUCTIONS ====\n");
-	ft_printf(" ________________________\n");
-	ft_printf("|%10s %-12d |\n", "State", env->syntax_state);
-	ft_printf("|%10s %-12s |\n", "Type", g_typestab[token->type]);
-	ft_printf("|%10s %-12s |\n", "Value", token->str);
-	ft_printf("|%10s %-12d |\n", "Row", token->row);
-	ft_printf("|%10s %-12d |\n", "Col", token->col);
-	ft_printf("|%10s %-12d |\n", "Op ind", token->op_index);
-	ft_printf("|________________________|\n");
-}
 
 int		check_end_syntax(t_asm *env, t_token *token)
 {
