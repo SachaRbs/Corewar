@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:32:03 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:57:19 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parsing(t_vm *vm, int ac, char **av)
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
-			get_option(vm, av, ac, i);
+			i = get_option(vm, av, ac, i);
 		else if (vm->pct < MAX_PLAYERS)
 		{
 			vm->names[vm->pct] = av[i];

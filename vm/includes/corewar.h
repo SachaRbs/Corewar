@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 12:13:44 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:52:34 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:01:00 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int						find_procnum(t_vm *vm);
 void					set_values_vm(t_vm *vm);
 int						find_player_alive(t_vm *vm);
 int						find_playernum(t_vm *vm);
-void					get_option(t_vm *vm, char **av, int ac, int i);
+int						get_option(t_vm *vm, char **av, int ac, int i);
 
 /*
 ***		PRINT

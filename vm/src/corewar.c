@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:39:50 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:52:51 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:58:31 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		last_check(t_vm *vm, t_operations *operation)
 	else
 	{
 		if (vm->last_alive > 0 && vm->last_alive < 5)
-			ft_printf("Cylce = %d\nContestant %d, \"%s\", has won !\n",
-			vm->cycle, vm->last_alive, vm->contestants[vm->last_alive]);
+			ft_printf("Contestant %d, \"%s\", has won !\n",
+			vm->last_alive, vm->contestants[vm->last_alive]);
 		else
 			ft_printf("vm->last_alive WRONG\n");
 	}

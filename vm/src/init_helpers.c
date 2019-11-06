@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crfernan <crfernan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:14:24 by crfernan          #+#    #+#             */
-/*   Updated: 2019/11/06 14:32:00 by crfernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:56:54 by sarobber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		find_playernum(t_vm *vm)
 	return (min);
 }
 
-void	get_option(t_vm *vm, char **av, int ac, int i)
+int		get_option(t_vm *vm, char **av, int ac, int i)
 {
 	if (av[i][1] == 'n' && !av[i][2] && ac > ++i)
 	{
@@ -101,4 +101,5 @@ void	get_option(t_vm *vm, char **av, int ac, int i)
 		vm->p = 1;
 	else
 		ft_exit(vm, MAUVAISE_OPTION);
+	return (i);
 }
