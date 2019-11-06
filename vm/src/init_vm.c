@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sarobber <sarobber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epham <epham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:56:05 by sarobber          #+#    #+#             */
-/*   Updated: 2019/11/06 14:57:19 by sarobber         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:05:39 by epham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	parsing(t_vm *vm, int ac, char **av)
 
 int		read_proc(t_proc *current, int fd, unsigned char *prog, t_vm *vm)
 {
-	header_t	*h;
+	t_header	*h;
 	int			rd;
 	int32_t		out;
 
-	if (!(h = (header_t*)ft_memalloc(sizeof(header_t))))
+	if (!(h = (t_header*)ft_memalloc(sizeof(t_header))))
 		ft_exit(vm, ERROR_MALLOC);
-	if ((rd = read(fd, h, sizeof(header_t))) < 0)
+	if ((rd = read(fd, h, sizeof(t_header))) < 0)
 		ft_exit(vm, FAIL_ON_READ);
 	if (reverser_32(h->magic) != COREWAR_EXEC_MAGIC)
 		ft_exit(vm, NOMBRE_MAGIQUE);
