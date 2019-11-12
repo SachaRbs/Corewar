@@ -14,3 +14,6 @@ Virtual Machine :
 make && ./corewar file.cor
 ```
 Assembler :
+```
+make && ./asm file.s
+```
